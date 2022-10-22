@@ -1,0 +1,1552 @@
+<html>
+
+<head>
+	<meta charset="ISO-8859-1">
+	<TITLE>Electrostatics 3D</TITLE>
+	<!-- CHAMAMOS Ó CSS -->
+	<link rel="stylesheet" type="text/css" href="../../style.css" />
+	<!-------------------------------->
+</HEAD>
+
+<body lang="EN" id="top">
+
+<h3> <a href="#_Toc316292674">3.2. Electrostatics 3D</a></P></h3>
+
+<a name="top"><strong>Table of contents</strong></a>
+<ul>
+<li><a href="#what"> What MaxFEM Solves</a></li>
+<li><a href="#mesh"> The Mesh</a></li>
+<li><a href="#properties"> The Properties</a></li>
+<li><a href="#boundary"> The Boundary Conditions</a></li>
+<ul>
+<li><a href="#dirichlet"> Dirichlet boundary conditions</a></li>
+<li><a href="#neumann"> Neumann boundary conditions</a></li>
+</ul>
+<li><a href="#sources"> The Sources</a></li>
+<ul>
+<li><a href="#point"> Point charge</a></li>
+<li><a href="#line"> Line charge density</a></li>
+<li><a href="#surface"> Surface charge density</a></li>
+<li><a href="#volumetric"> Volumetric charge density</a></li>
+</ul>
+<li><a href="#temperature"> Temperature Dependent Data</a></li>
+<li><a href="#post"> Post-Processing Quantities Available</a></li>
+<li><a href="#visualization"> Visualization</a></li>
+<li><a href="#examples"> Tutorial Examples</a></li>
+<ul>
+<li><a href="#example1"> Example 1: Volumetric charged sphere</a></li>
+<li><a href="#example2"> Example 2: One uniformly charged sphere</a></li>
+<li><a href="#example3"> Example 3: Two uniformly charged spheres</a></li>
+<li><a href="#example4"> Example 4: One uniformly charged segment</a></li>
+<li><a href="#example5"> Example 5: One charged point</a></li>
+<li><a href="#example6"> Example 6: Two charged points</a></li>
+</ul>
+</ul>
+
+
+<p>&nbsp;</p>
+
+<h3><a name="_Toc316292674">3.2. Electrostatics 3D</a></h3>
+
+	<h4><a name="what">&#9633; What MaxFEM Solves</a></h4>
+
+<p>The <b>MaxFEM Electrostatics 3D</b> application numerically solves electrostatics bidimensional problems in Cartesian coordinates. You can find extensive information about the <!--<a href="../../c-Math models/Electrostatics.html">-->electrostatic mathematical model in the <a href="../../c-Math models/index.html">MaxFEM Models</a> user guide.</p>
+<p>MaxFEM allows to consider linear dielectric materials or conducting media as well as different kinds of charge densities. The admissible options both in the 2D and 3D cases are summarized in the tables below.</p>
+
+<div align=center>
+<table style="border:none;">
+	<tr>
+		<td class="fila_superior1"><b>Material properties (&#949;)</b></td>
+		<td class="fila_superior2"><b>2D</b></td>
+		<td class="fila_superior2"><b>3D</b></td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia1">Linear and isotropic</td>
+		<td class="fila_intermedia2">Yes</td>
+		<td class="fila_intermedia2">Yes</td>
+	</tr>
+	<tr>
+		<td class="fila_final1">Linear and orthotropic</td>
+		<td class="fila_final2">Yes</td>
+		<td class="fila_final2">Yes</td>
+	</tr>
+</table>
+</div>
+
+<br>
+
+<div align=center>
+<table style="border:none;">
+	<tr>
+		<td class="fila_superior1"><b>Admisible charges</b></td>
+		<td class="fila_superior2"><b>Cartesian 2D</b></td>
+		<td class="fila_superior2"><b>Cartesian 3D</b></td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia1">Point charges</td>
+		<td class="fila_intermedia2">--</td>
+		<td class="fila_intermedia2">Yes</td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia1">Linear charges</td>
+		<td class="fila_intermedia2">Yes</td>
+		<td class="fila_intermedia2">Yes</td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia1">Surface charges</td>
+		<td class="fila_intermedia2">Yes</td>
+		<td class="fila_intermedia2">Yes</td>
+	</tr>
+	<tr>
+		<td class="fila_final1">Volumetric charges</td>
+		<td class="fila_final2">Yes</td>
+		<td class="fila_final2">Yes</td>
+	</tr>	
+</table>
+</div>
+
+<p><b>Remark:</b> See <a href="./Electrostatics 2D.html">MaxFEM Electrostatics 2D</a> user guide for further information about 2D electrostatic problems.</p>
+
+<p>For the numerical approximation of electrostatics problems, MaxFEM uses Lagrange <!--<a href="../../c-Math models/Appendix A.html">-->finite elements of order one to compute the electric potential <i>V</i>.
+ Thus the electric field is approximated by piecewise functions in each element of the mesh (triangles in 2D and tetrahedra in 3D).</p>
+
+<p>To use the electrostatic application the user needs:</p>
+
+<OL>
+	<LI><p>To provide a finite element <a href="#mesh">mesh</a> of the domain: menu <b>Mesh</b>.</p>
+	<LI><p>To impose the <a href="#boundary">boundary conditions</a> on the boundaries: menu <b>Boundary Conditions</b>.</p>
+	<LI><p>To assign materials to the different components of the domain: menu <b>Properties</b>. Materials must be previously selected and/or defined in the <b>Materials database</b>.</p>
+	<LI><p>To assign source properties: menu <b>Sources</b>.</p>
+	<LI><p>To solve the problem in direct or <a href="../Graph_interface/run_remote.html">remote mode</a>: menu <b>Solver/Run</b> or <b>Solver/Run remote</b>, respectively. The user can stop the computation before it is completed in the label <b>Solver/Stop</b>.</p>
+	<LI><p>Once the problem has been solved, various quantities and fields based on the potential can be computed. It is also possible to create displays of the results: menu <a href="#visualization">Visualization</a>.</p>
+</OL>
+
+<p>All the previous steps are described in the items below</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<p>&nbsp;</p>
+<h4><a name="mesh">&#9633; The Mesh</a></h4>
+
+<p>MaxFEM does not include a mesh generator tool so the user must provide its own meshes. In the electrostatic application, mesh files can be in 
+<a href="../Graph_interface/MaxFEM mesh files.html#unv">unv</a> or 
+<a href="../Graph_interface/MaxFEM mesh files.html#mfm">mfm</a>
+format (see section <a href="../Graph_interface/MaxFEM mesh files.html">MaxFEM mesh files</a> for a complete description of the mesh formats).  MaxFEM allows P1 Lagrange triangular finite elements for 2D problems and P1 Lagrange tetrahedral finite elements in the 3D case. Mesh may be loaded from the <b>Mesh</b> menu by choosing</p>
+
+<p style='text-align:center'><b>Mesh  &#8594; Open &rarr;</b> <b class="gris">Choose mesh file &rarr;</b>	<i>name.unv</i></p>
+
+Preferably, mesh file must be in <a href="../Graph_interface/MaxFEM mesh files.html#unv">unv format</a>, but <a href="../Graph_interface/MaxFEM mesh files.html#mfm">mfm format</a> is also allowed. 
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<p>&nbsp;</p>
+<h4><a name="properties">&#9633; The Properties</a></h4>
+<p>In the menu <b>Properties</b> the user can assign a material to the different parts of the computational domain.</p>
+<ol type=a>	
+<li><p>First, you must select the number assigned to the surface reference in the mesh (1, for instance)</p>
+    <p><b>Properties &rarr; Materials &rarr;</b><b class="gris"> Choose surface references &rarr;</b> <i>1</i> </p>
+<li><p>Then, you select the material (copper, for instance) </p>
+    <p><b>Properties &rarr; Materials &rarr;</b><b class="gris"> Choose material &rarr;</b> <i>copper</i> </p>
+</ol>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<p>&nbsp;</p>
+<h4><a name="boundary">&#9633; The Boundary Conditions</a></h4>
+<p><b>Boundary conditions</b> is a menu entry to define boundary or interface conditions and attach them to specific boundaries. Electrostatics application considers two types of boundary conditions.</p>
+
+<p style="COLOR:#8000ff;">
+<b><a name="dirichlet"><i>Dirichlet boundary conditions</i></a></b>
+</p>
+
+<p>In this case, the value V<sub>D</sub> of the electrostatic potential on  the boundary &#915;<i><sub>D</sub></i> must be given. To do that, you need:</p>
+
+<ol type=a>
+<li><p>Define the boundary condition (for instance, blocking_1) </p>
+    <p><b>Boundary conditions &rarr; Dirichlet: electrostatic potential, V (V) &rarr;</b> <i>blocking_1</i> <b class="gris">&rarr; Add</b> </p>
+<li><p>Define the boundary condition via a constant or a precompiled function </p>
+    <p><b class="gris">Dirichlet conditions:</b> <i>blocking_1</i> </p>
+	<p><b class="gris">The condition is given by:</b> A constant or a function </p>
+<li><p>Assign the boundary condition to the corresponding boundary reference(s). For instance: </p>
+    <p><b class="gris">The condition is given by &rarr; A constant &rarr; Line references &rarr;</b> <i>1 2 4</i> </p>
+<li><p>If V<sub>D</sub>  takes a constant value, define this value: </p>
+    <p><b class="gris">The condition is given by: A constant &rarr; Constant value &rarr;</b> <i>0.10</i> </p>
+<li><p>If V<sub>D</sub> is a precompiled function, select  <i>“Function defined by user”</i>: </p>
+    <p><b class="gris">The condition is given by: A function &rarr; Function name &rarr; Function defined by user  </b></p>
+	<p>In this case, the user must edit the file <b>modulos_electros.f90</b> of the folder $INSTALLDIR/sources/electrostatics3d/ of the installing directory and 
+	define its own function in the line 676 of the <b>module bloqueo</b>, just after the sentences</p>
+<code>
+elseif (dir%fun(indice)  == 1) then ! 'Function defined by user'<br>
+!'User defined: Function defined by user'
+</code>
+<LI><p>Then, the user must <a href="../Graph_interface/Solvers compilation and installation.html">recompilate the solver</a> before running it. </p>	
+</OL>
+
+<p style="COLOR:#8000ff;">
+<b><a name="neumann"><i>Neumann boundary conditions</i></a></b>
+</p>
+
+<p>In this case, the value -<b>D</b>·<b>n</b> of the surface charge density across the boundary 
+
+&#8706;&#937;<sub>N</sub>  
+
+must be given. To do that, you need to follow the same steps as for the Dirichlet conditions but selecting </p>
+
+<p style='text-align:center'><b>Boundary conditions &#8594; Neumann: normal component of electric field</b></p>
+
+<OL type=a>
+<LI><p>If the user defines -<b>D</b>.<b>n</b> as a precompiled function, select <i>"Function defined by user"</i> as follows:</p>
+	<p><b class="gris">The condition is given by: A function <b>&#8594;</b> Function name <b>&#8594;</b> Function defined by user</b></p>
+	
+	<p>In this case, the user must edit the file <b>modulos_electros.f90</b> of the folder $INSTALLDIR/sources/electrostatics3d/ 
+	of the installing directory and define its own function in the line 724 of the <b>module neumann</b>, just after the sentence</p>
+	
+<code>
+elseif (neu%fun(indice)  == 1) then ! 'Function defined by user'<br>
+!'User defined: Function defined by user'
+</code>
+
+<p>Then, you must <a href="../Graph_interface/Solvers compilation and installation.html">recompilate the solver</a> before running it. </p>	
+</OL>
+	
+<div class="back"><a href="#top">Back to top</a></div>
+
+<p>&nbsp;</p>
+<h4><a name="sources">&#9633; The Sources</a></h4>
+<p>In the electrostatic 3D application, sources can be:</p>
+<UL>
+    <LI><p>Point charge, &#961;<sub>p</sub> (C) </p>
+	<LI><p>Line charge density, &#961;<sub>l</sub> (C/m) </p>
+	<LI><p>Surface charge density, &#961;<sub>s</sub> (C/m<sup>2</sup>)</p>
+	<LI><p>Volumetric charge density, &#961;<sub>v</sub> (C/m<sup>3</sup>)</p>
+</UL>
+<p>To impose a charge density, the user must perform the following steps depending on the type of charge.</p>
+
+
+<p style="COLOR:#8000ff;">
+<b><a name="point"><i>Point charge</i></a></b>
+</p>
+<OL type=a>
+	<LI><p>Choose the type of charge in the <b>Sources</b> item of the application. </p>
+	<p style='text-align:center'><b>Sources &#8594; Point charge, &#961;<sub>p</sub> (C)</b></p>	
+	<LI><p>Then, define a new charge and press the button <b class="gris">Add</b> of the dialog box.</p>
+	<p style='text-align:center'><b class="gris">Point sources:</b> <i>source _1</i> &#8594; <b class="gris">Add</b></p>
+	<LI><p>Press the name <i>source _1</i> you have just created. Then a new dialog box appears where you must introduce the coordinates of the point(s) where the charge is imposed and its value(s).
+	Notice that you can introduce an array of points where you can define the corresponding charge value.</p>
+</OL>
+
+<p style="COLOR:#8000ff;">
+<b><a name="line"><i>Line charge density</i></a></b>
+</p>
+
+<ol type=a>
+<li><p>Choose the type of charge density in the <b>Sources</b> item of the application. </p>
+    <p style="text-align:center"><b>Sources &rarr; Line charge density, &rho;<sub>l</sub> (C/m)</b></p>
+<li><p>Then, define a new charge and press the button <font color=#6B6B6B><b>Add</b></font> of the dialog box. </p>
+    <p style="text-align:center"><font color=#6B6B6B><b>Line sources:</b></font> <i>source _1</i> <b>&rarr; <font color=#6B6B6B>Add</font></b></p>
+	<LI><p>Press the name <i>source_1</i> you have just created and define the charge via a constant or a precompiled function </p>
+	<p style="text-align:center"><b class="gris">Line sources</b>: source_1</p>
+	<LI><p>If the source takes a constant value, define its value and the corresponding line reference(s):</p>
+		<p><b class="gris">The condition is given by &#8594; A constant &#8594; Line references &#8594;</b> <i>1 2 4</i></p>
+		<p><b class="gris">The condition is given by <b>&#8594;</b> A constant <b>&#8594;</b> Constant value &#8594;</b> <i>0.1e-10</i></p>	
+	<LI><p>If the source is a precompiled function, select</p>
+		<p><b class="gris">The condition is given by &#8594; A constant &#8594; Line references &#8594;</b> <i>1 2 4</i></p>
+		<p><b class="gris">The condition is given by <b>&#8594;</b> A function <b>&#8594;</b> Function name &#8594;</b> <i>Function defined by user</i></p>	
+	<p>In this case, the user must edit the file <b>modulos_electros.f90</b> of the folder $INSTALLDIR/sources/electrostatics3d/ of the installing directory and define its own source function in the line 453 of the <b>module cargacur</b>, just after the sentence</p>
+<code>
+elseif (cur%fun(indice) == 1) then ! fun_0 == 'Function defined by user'</code>
+	<LI><p>Then, the user must <a href="../Graph_interface/Solvers compilation and installation.html">recompilate the solver</a> before running it. </p>	
+</OL>
+
+
+<p style="COLOR:#8000ff;">
+<b><a name="surface"><i>Surface charge density</i></a></b>
+</p>
+<OL type=a>
+	<LI><p>Choose the type of charge density in the <b>Sources</b> item of the application. </p>
+	<p style='text-align:center'><b>Sources &#8594; Surface charge density, &#961;<sub>s</sub> (C/m<sup>2</sup>)</b></p>
+	<LI><p>Then, define a new charge and press the button <b class="gris">Add</b> of the dialog box.</p>
+	<p style='text-align:center'><b class="gris">Surface sources</b>: <i>source _1</i> &#8594;<b class="gris">Add</b></p>
+	<LI><p>Press the name <i>source_1</i> you have just created and define the charge via a constant or a precompiled function </p>
+	<p style='text-align:center'><b class="gris">Surface sources</b>: source_1</p>	
+	<LI><p>If the source takes a constant value, define its value and the corresponding Surface reference(s):</p>
+		<p><b class="gris">The condition is given by <b>&#8594;</b> A constant <b>&#8594;</b> Surface references &#8594;</b> <i>1 2 4</i></p>
+	<p><b class="gris">The condition is given by <b>&#8594;</b> A constant <b>&#8594;</b> Constant value &#8594;</b> <i>0.1e-10</i></p>	
+	<LI><p>If the source is a precompiled function, select</p>
+    <p><b class="gris">The condition is given by <b>&#8594;</b> A function <b>&#8594;</b> Surface references &#8594;</b> <i>1 2 4</i></p>
+	<p><b class="gris">The condition is given by <b>&#8594;</b> A function <b>&#8594;</b> Function name &#8594;</b> <i>Function defined by user</i></p>
+	
+	<p>In this case, the user must edit the file <b>modulos_electros.f90</b> of the folder $INSTALLDIR/sources/electrostatics3d/ of the installing directory and define its own source function in the line 398 of the <b>module cargasup</b>, just after the sentence</p>
+<code>
+elseif (sup%fun(indice) == 1)     then ! fun_0 == 'Function defined by user'</code>
+	<LI><p>Then, the user must <a href="../Graph_interface/Solvers compilation and installation.html">recompilate the solver</a> before running it. </p>
+</OL>
+
+<p style="COLOR:#8000ff;">
+<b><a name="volumetric"><i>Volumetric charge density</i></a></b>
+</p>
+
+<OL type=a>
+	<LI><p>Choose the type of charge density in the <b>Sources</b> item of the application. </p>
+	<p style='text-align:center'><b>Sources &#8594; Volumetric charge density, &#961;<sub>v</sub> (C/m<sup>3</sup>)</b></p>
+	<LI><p>Then, define a new charge and press the button <b class="gris">Add</b> of the dialog box.</p>
+	<p style='text-align:center'><b class="gris">Volumetric sources</b>: <i>source _1</i> &#8594; <b class="gris">Add</b></p>
+	<LI><p>Press the name <i>source_1</i> you have just created and define the charge via a constant or a precompiled function </p>
+	<p><b class="gris">Volumetric sources</b>: source_1</p>
+	<LI><p>If the source takes a constant value, define its value and the corresponding domain reference(s):</p>
+		<p><b class="gris">The condition is given by <b>&#8594;</b> A constant <b>&#8594;</b> Domain references &#8594;</b> <i>1 2 4</i></p>
+		<p><b class="gris">The condition is given by <b>&#8594;</b> A constant <b>&#8594;</b> Constant value &#8594;</b> <i>0.1e-10</i></p>
+	<LI><p>If the source is a precompiled function, select</p>
+    <p><b class="gris">The condition is given by <b>&#8594;</b> A function <b>&#8594;</b> Domain references &#8594;</b> <i>1 2 4</i></p>
+	<p><b class="gris">The condition is given by <b>&#8594;</b> A function <b>&#8594;</b> Function name &#8594;</b> <i>Function defined by user</i></p>
+	<p>In this case, the user must edit the file <b>funciones3D.f90</b> of the folder $INSTALLDIR/sources/electrostatics3d/ of the installing directory and 
+	define its own source function in the line 20, just after the sentence</p>
+<code>
+elseif (vol%fun(indice) == 1) then ! 'Function defined by user'
+</code>
+	<LI><p>Then, the user must <a href="../Graph_interface/Solvers compilation and installation.html">recompilate the solver</a> before running it. </p>
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+	<h4><a name="temperature">&#9633; Temperature Dependent Data</a></h4>
+
+<p>If a physical quantity describing a material is temperature dependent, the user must select this option in the item <b>Data</b> of the menu bar:</p>
+
+<p style='text-align:center'><b>Data &#8594; Temperature field for materials T (ºC)</b></p>
+
+<p>A dialog box appears where the file name which contains the temperature and the values of the property as a function of those of the temperature must be added</p>
+<p style='text-align:center'><b class="gris">Choose temperature field</b>: <i>Temperature.mff</i></p>
+<p>The field must be written in <a href="../Graph_interface/MaxFEM mesh files.html#mfm">mff</a> format and contain a value for each of the degrees of freedom of the mesh.</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<p>&nbsp;</p>
+<h4><a name="post">&#9633; Post-Processing Quantities Available</a></h4>
+<p>From the resolution of the electrostatic problem, appropriate derived quantities can be computed. The post-processing quantities available in the MaxFEM electrostatic application are summarized in the tables below.</p>
+
+<div align=center>
+<table style="border:none;">
+	<tr>
+		<td class="fila_superior2"><b>Symbol</b></td>
+		<td class="fila_superior2"><b>Magnitude</b></td>
+		<td class="fila_superior2"><b>Type</b></td>
+		<td class="fila_superior2"><b>Unit</b></td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia2">V</td>
+		<td class="fila_intermedia2">Electrostatic potential</td>
+		<td class="fila_intermedia2">S</td>
+		<td class="fila_intermedia2">V</td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia2"><b>E</b></td>
+		<td class="fila_intermedia2">Electric field intensity</td>
+		<td class="fila_intermedia2">V</td>
+		<td class="fila_intermedia2">V/m</td>
+	</tr>
+	<tr>
+		<td class="fila_final2">T</td>
+		<td class="fila_final2">Temperature field</td>
+		<td class="fila_final2">S</td>
+		<td class="fila_final2">ºC</td>
+	</tr>	
+</table>
+</div>
+
+<p style="text-align:center;">
+Electrostatic application postprocessing quantities<br>S: Scalar quantity, V: vectorial quantity
+</p>
+
+	<h4><a name="visualization">&#9633; Visualization</a></h4>
+
+<p>MaxFEM provides a  set tools for postprocessing and visualization which are available through the item <b>Visualization</b>  of the menu bar. The options and their characteristics are summarized in the table below.</p>
+
+
+<table  border="1" bordercolor=#000000; style="border-style:solid">
+	<tr>
+		<td class="fila_superior22">	<b>Item</b> </td>
+		<td class="fila_superior11">	<b>Visualization options</b> </td>
+		<td class="fila_superior33">	<b>Description</b> </td>  
+	</tr>
+	<tr>  
+		<td class="columna_primera" rowspan="11"><p><b>Mesh</b></p></td>
+		<td class="fila_intermedia3">Triangulation</td>
+		<td class="fila_intermedia3">Represents the mesh of the domain</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Domain references</td>
+		<td class="fila_intermedia3">Displays subdomains reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Surface references</td>
+		<td class="fila_intermedia3">Displays surface reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Line references</td>
+		<td class="fila_intermedia3">Displays lines reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Point references</td>
+		<td class="fila_intermedia3">Displays points reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Element numbering</td>
+		<td class="fila_intermedia3">Displays elements reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Vertex numbering</td>
+		<td class="fila_intermedia3">Displays the number of a vertex previously chosen with the mouse</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Materials</td>
+		<td class="fila_intermedia3">Displays the name of the material assigned to a subdomain</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Slice</td>
+		<td class="fila_intermedia3">Displays the intersection of the domain with a plane</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Cut</td>
+		<td class="fila_intermedia3">Displays one part of the domain after intersecting with a plane</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Rough cut</td>
+		<td class="fila_intermedia3">Displays one part of the domain after intersecting with a plane without cutting the elements</td>
+	</tr>
+	<tr>  
+		<td class="columna_primera" rowspan="7"><p><b>Temperature field</b> T,<br><b>Potential </b>V</p></td>
+		<td class="fila_intermedia3">Filled</td>
+		<td class="fila_intermedia3">Displays the field  distribution on the domain</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Threshold</td>
+		<td class="fila_intermedia3">Extracts the cells that fall between a given lower and upper thresholds of the field</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Isosurfaces</td>
+		<td class="fila_intermedia3">Displays the curves along which the field has a constant value. A set of scalar values can be specified to extract more than one isoline at a time</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Plot over line</td>
+		<td class="fila_intermedia3">Cuts a 3D data object with a plane. An interactive widget can be used for placing the plane in the appropriated place </td>
+	</tr>
+	<tr><td class="fila_intermedia3">Slice</td>
+		<td class="fila_intermedia3">Displays the field on the intersection of the domain with a plane</td>
+	</tr>	
+	<tr><td class="fila_intermedia3">Cut</td>
+		<td class="fila_intermedia3">Displays the field over one part of the domain after intersecting with a plane</td>
+	</tr>		
+	<tr><td class="fila_intermedia3">Rough cut</td>
+		<td class="fila_intermedia3">Displays the field over one part of the domain after intersecting with a plane without cutting the elements</td>
+	</tr> 
+	<tr>  
+		<td class="columna_primera" rowspan="2"><p><b>Electric field E</b></p></td>
+		<td class="fila_intermedia3">Vectors</td>
+		<td class="fila_intermedia3">Displays the vector field <b>E</b></td>
+	</tr>
+	
+	<tr><td class="fila_intermedia3">Vectors components</td>
+		<td class="fila_intermedia3">Displays each of the components of the vector field <b>E</b></td>
+	</tr>
+	
+	<tr><td class="columna_primera"><b>Close all</b></td>
+		<td class="fila_intermedia3">--- </td>	
+		<td class="fila_intermedia3">Close all the windows containing visualization results </td>
+	</tr>
+	
+</table>
+<p>&nbsp;</p>
+
+
+<p>The user can modify the arrows size by using the parameter <b class="gris">Scale</b> in the dialog box:</p>
+<p style="text-align:center;">
+<b>Electric field</b> &rarr; <b class="gris">Vectors &rarr; Choose options for arrows &rarr; Scale</b></p>
+
+<p>It is also possible to modify the number of vectors in the plot by using the parameter <b class="gris">Density</b> in the dialog box:</p>
+<p style="text-align:center;">
+<b>Electric field</b> &rarr; <b class="gris">Vectors &rarr; Choose options for arrows &rarr; Density</b></p>
+
+<p>&nbsp;</p>
+<div align=center>
+<table>
+	<tr><td>Scale: 0.07 ;Density: 50%</td>
+		<td>Scale: 0.07 ;Density: 100%</td>	
+	</tr>	
+	<tr><td><img border=0 width=310 height=222 src="EL2D_Graph_images/image004.jpg"></td>
+		<td><img border=0 width=310 height=222 src="EL2D_Graph_images/image005.jpg"></td>	
+	</tr>
+	<tr><td>Scale: 0.3  ;Density: 50%</td>
+		<td>Scale: 0.3  ;Density: 100%</td>	
+	</tr>	
+	<tr><td><img border=0 width=310 height=222 src="EL2D_Graph_images/image006.jpg"></td>
+		<td><img border=0 width=310 height=222 src="EL2D_Graph_images/image007.jpg"></td>	
+	</tr>	
+</table>
+</div>
+
+
+<p>It is also possible to modify the number of vectors in the plot by using the parameter <b class="gris">Density</b> in the dialog box:</p>
+<p style="text-align:center;">
+<b>Electric field</b> &rarr; <b class="gris">Vectors &rarr; Choose options for arrows &rarr; Density</b></p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<p>&nbsp;</p>
+<h4><a name="examples">&#9633; Tutorial Examples</a></h4>
+<p>The goal of this section is to familiarize the user with the MaxFEM electrostatics 3D application by means of simple
+ examples. These examples contain the 
+general steps and all the data needed to describe the physics and to solve the given cases.</p>
+<p>To reproduce exactly the examples, keep all the options in the different menus at the default settings. It is important to note that in the cases where the analytical solution is provided, this solution corresponding with the default settings; the one corresponding with other options the user may have changed is not necessarily the same.</p>
+<p>Remember that before start to work with a particular application, the user must choose a working directory. This directory will be used to store the files associated with the application. In particular, when a sample data is selected, the interface will automatically make a copy of the files associated with that sample in the working directory.</p>
+<p>The following examples can be found:</p>
+
+<UL>
+	<LI><p><a href="#example1">Example 1: Volumetric charged sphere</a></p>
+	<LI><p><a href="#example2">Example 2: One uniformly charged sphere</a></p>
+	<LI><p><a href="#example3">Example 3: Two uniformly charged spheres</a></p>
+	<LI><p><a href="#example4">Example 4: One uniformly charged segment</a></p>
+	<LI><p><a href="#example5">Example 5: One charged point</a></p>
+	<LI><p><a href="#example6">Example 6: two charged points</a></p>
+</LI>
+
+<p>&nbsp;</p>
+
+<div style="margin-left:-30pt;">
+
+<p><a href="#e1_introduction"><i><font color="blueviolet"><b>References</b></font></i></a></p>
+<OL>
+<LI><p>Johnk, C.<i> Engineering electromagnetic fields and waves</i>.  Wiley &#38; Sons. 1988. </p>
+<LI><p>Popovic, B. <i>Introductrory Engineering Electromagnetics</i>. Addison Wesley. 1971 </p>
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<p>&nbsp;</p>
+
+
+<!--  EJEMPLO1 ***********************************************************************************-->
+<h4 style="background-color:#E6E6E6;"><a name="example1"><font COLOR="black"> Example 1:  Volumetric charged sphere </font></a></h4>
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Statement of the problem</strong></i></a></p>
+
+<p>In this example, the electrostatic potential <i>V</i> generated by a 
+uniformly volumetric charged sphere with center the origin and radius <i> R=1</i>
+is computed.
+ Its volumetric charge density is denoted by &#961;<sub>v</sub>  (C/m<sup>3</sup>).
+ Then, the analytical expression for the potential in a point of coordinates <i>(x,y,z)</i>  is given by (see[1]). </p>
+  <div align=center>
+<p><img border=0 src="EL3D_Graph_images/image004.jpg"></p>
+</div>
+<p>where &#949;<sub>0</sub>  denotes the vacuum electric permittivity. The modulus of the electric field  
+ is given by </p>
+  <div align=center>
+<p><img border=0 src="EL3D_Graph_images/image005.jpg"></p>
+</div>
+<p>For the numerical resolution, a sphere of center <i>(0,0,0)</i> and radius <i>2</i> containing the concentric charged sphere of radius 1 is considered as computational domain. 
+ The relative permittivity is considered to be constant and equal to 1. The volumetric charge density is &#961;<sub>v</sub>= 1.e-10 C/m<sup>3</sup>.</p>
+
+<p>&nbsp;</p>
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Resolution procedure</strong></i></a></p>
+
+<OL>
+	<LI><p>Once MaxFEM is open, the user must select the application <b>Electrostatic3D</b> from the <b>Project</b> of the menu bar.</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Applications</b>&#8594;  <b>Electrostatic3D</b></p>
+<p>Remember that before start to work with a particular application, the user must
+choose a working directory.</p>
+<p>Then, from the item <b>Project</b> of the Menu bar, select</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Sample Data</b>&#8594;  <b>Example 1: Volumetric charged sphere</b></p>
+
+<LI><p>The computational domain is a circle of center <i>(0,0)</i> and  radius 2 containig a concentric circle of radius 1. The user must
+upload the mesh <i>malla3Dcs_tet.mfm</i> from the <b>Mesh</b> item of the menu bar.</p>
+<P style='text-align:center'><b>Mesh &#8594;  open &#8594;</b> <b class="gris">Choose mesh file &#8594; </b> <i>malla3Dcs_tet.mfm</i> </P>	
+
+<p>The user can display the mesh of the computational domain by choosing the option
+<b>Visualization &#8594;  Mesh</b> of the Menu bar. If not, the computational domain will be
+displayed when selecting any item from the menu bar.</p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image001.jpg"></p>
+<p> <b> Figure 1:</b> Computational domain.<p>
+</div>
+
+<p> After we have the mesh, we start to go through the menu bar from the left to right
+and we choose the different options related to the whole simulation.</p>
+<LI><p>The material considered in this example are  the so-called <i>Test material 2</i> and <i>Test material 3</i> and their properties have been previously defined in the materials database of the interface.
+To assign these materials to the computational domain, the user must:</p>
+
+<OL type=a> 
+<LI><p>  Select the item <b>Properties &#8594; Materials</b> of the Menu bar.  </p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>1</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 2</i> associated to the reference <i>1</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>2</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 3</i> associated to the reference <i>2</i> is displayed.
+</p>
+</OL>
+<p> The user can display the different properties of this material in <b>Materials
+database</b> item of the menu bar. To do that, </p>
+<OL type=a>
+<LI> <p>Select the option <b>Materials database &#8594;  Open</b> </p>
+<LI> <p>A dialog box appears where the different materials are displayed. Select <i>Test
+material 2</i>. </p>
+<LI> <p>A new dialog box appears where the different electromagnetic magnitudes
+are displayed. Click on the property of your interest, for instance, <b class="gris">Relative permittivity</b>.</p>
+<LI> <p> Choose <b class="gris">A constant</b> in the box below and then <b class="gris">Isotropic</b>
+in the <b class="gris">Behavior</b> box.</p>
+<LI><p><b class="gris">Value</b> displays the value of relative electric permittivity for the selected material, in this case, <i>1</i>.</p>
+
+</OL>
+
+<LI><p>Now we are going to impose the boundary conditions.
+ A Dirichlet boundary condition computed from the analytical solution is considered; 
+ thus, the default value <i>5.64716513</i> corresponds to the potential at the boundary of the sphere. 
+To impose this boundary condition the user must:</p>
+<OL type=a>
+<LI> <p> Select the option <b>Boundary conditions &#8594; Dirichlet: electric scalar
+potential</b> in the menu bar.</p>
+<LI> <p> Click on <i>Condition 1</i> on the <b class="gris">Dirichlet conditions</b> dialog box.</p>
+<LI> <p> In the dialog box <b class="gris">The condition is given by</b>, select the option <b class="gris">A constant</b></p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, references <i>1 2 3 4 2 9 10 13</i>  and <i>16</i> associated to this
+boundary condition are displayed in the box below. </p>
+<LI> <p>Click on <b class="gris">Constant value</b>. By default, in the dialog box <b class="gris">Constant value</b> below the value <i>5.64716513</i> appears.</p>
+<LI> <p>Click on the item <b>Sources</b> of the Menu bar to continue with the resolution procedure.</p>
+
+</OL>
+<LI>  <p>To define the source of the problem, select the option <b>Sources &#8594; Volumetric charge density, &#961;<sub>v</sub> (C/m<sup>3</sup>)</b> in the menu bar. 
+A dialog box appears where the user can select/define  the volumetric charge density options. In this example, the default option <i>Source 1</i> is displayed.
+So now we need to specify the volumetric charge density at the inner sphere. To do that, the user must:</p>
+<OL type=a>
+<LI> <p>Click on <i>Source 1</i>. A dialog box is displayed below.</p>
+<LI> <p> In the dialog box <b class="gris">The source is given by</b>, select the option <b class="gris">A constant</b></p>
+<LI> <p> Click on <b class="gris">Domain reference</b>. By default, reference <i>2</i> associated to this
+source is displayed in the box below. </p>
+ <LI> <p>Click on <b class="gris">Constant value</b> to display/define the value of the charge density. 
+ In this example, the default value is <i>3d-10</i> (in C/m<sup>3</sup>).</p>
+</OL>
+
+<LI>  <p>Select the item <b>Run</b> (or <b>Run remote</b> depending on your preference) of the menu bar to proceed with the resolution of the problem.</p>
+<LI>  <p>Select the item <b>Visualization</b> of the menu bar to display the results.</p>
+
+<OL type=a>
+<LI> <p> Click on the option <b>Potential</b> to display the potential. A dialog box appears
+where the user can choose the field representation. </p>
+<LI> <p> Choose the option <b class="gris">cut</b> and select <b class="gris"> iso view</b> in the graphic window to display the potential 
+in the domain cut by a plane.</p>
+
+
+<P style='text-align:center'><b>Visualization &#8594; Potential &#8594; </b><b class="gris">Cut  </b></P>
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="El3D_Graph_images/image002.jpg"></p>
+<p> <b> Figure 2:</b> Electric potential in the domain cut by a plane.<p>
+</div>
+
+<LI> <p>Choose the option <b class="gris">Plot over line</b> to display the potential both in the domain and along a line.
+The user can modify the coordinates of the extreme points of the line in the <b class="gris"> Extreme points coordinates</b> box or manually at the graphic window. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image003.jpg"></p>
+<p> <b> Figure 3:</b> Plot over line representation of the potential.<p>
+</div>
+
+<LI> <p>Choose the option <b class="gris">Rough cut</b> and select <b class="gris"> iso view</b> in the graphic window to display the potential on the part of the domain determined by a given plane.
+The user can modify the origin and normal vector of the cutting plane in the <b class="gris"> Configuration</b> box or manually at the graphic window. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image006.jpg"></p>
+<p> <b> Figure 4:</b> Rough cut representation of the potential.<p>
+</div>
+
+<LI> <p> To display the electric field, choose the option <b>Visualization &#8594; Electric field</b> of the menu bar. 
+Select the option <b class="gris">Vectors</b> of the dialog box and then
+state the values for the scale and density of the arrows on the boxes below.
+For this picture, the scale is 0.02 and the density is 100.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image025.jpg"></p>
+<p> <b> Figure 5:</b> Electric field.<p>
+</div>
+
+<LI> <p>A zoom of the field can be done by using the right buttom of the mouse.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image026.jpg"></p>
+<p> <b> Figure 6:</b> Zoom of the electric field representation.<p>
+</div>
+
+<LI> <p>Select the option <b class="gris">Vector components</b> to represent each component of the electric field or its modulus.
+ The options  <b class="gris">Vector components &#8594; X component &#8594; Cut</b> were chosen for the next figure as well as <b class="gris"> iso view</b> in the graphic window 
+ .</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image027.jpg"></p>
+<p> <b> Figure 7:</b> First component of the electric field.<p>
+</div>
+
+</OL>
+
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<!--  FIN DE EJEMPLO 1  -->
+
+<p>&nbsp;</p>
+<h4 style="background-color:#E6E6E6;"><a name="example2"><font COLOR="black">Example 2: One uniformly charged sphere </font></a></h4>
+
+<!--  EJEMPLO2 -->
+
+<p><b><i><font color="blueviolet">Statement of the problem</font></i></b></p>
+
+<p><p>In this example, the electrostatic potential <i>V</i> generated by a 
+uniformly surface charged sphere with center the origin and radius <i> R=1</i>
+is computed.
+ Its surface charge density is denoted by &#961;<sub>S</sub>  (C/m<sup>2</sup>).
+ Then, the analytical expression for the potential in a point of coordinates <i>(x,y,z)</i>  is given by . </p>
+<div align=center>
+<p><img border=0 src="EL3D_Graph_images/image007.jpg"></p>
+</div> 
+ 
+<p>where &#949;<sub>0</sub>  denotes the vacuum electric permittivity.
+ The modulus of the electric field  
+ is given by </p>
+ <div align=center>
+<p><img border=0 src="EL3D_Graph_images/image008.jpg"></p>
+</div>
+
+ <p>For the numerical resolution, a sphere of center <i>(0,0,0)</i> and radius <i>2</i> 
+ containing the concentric charged sphere of radius 1 is considered as computational domain. 
+ The relative permittivity is considered to be constant and equal to 1. The surface charge density is &#961;<sub>S</sub>= 1.e-10 C/m<sup></sup>.</p>
+
+  
+<p>&nbsp;</p>
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Resolution procedure</strong></i></a></p>
+
+<OL>
+	<LI><p>Once MaxFEM is open, the user must select the application <b>Electrostatic3D</b> from the <b>Project</b> of the menu bar.</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Applications</b>&#8594;  <b>Electrostatic3D</b></p>
+<p>Remember that before start to work with a particular application, the user must
+choose a working directory.</p>
+<p>Then, from the item <b>Project</b> of the Menu bar, select</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Sample Data</b>&#8594;  <b>Example 1: Volumetric charged sphere</b></p>
+
+<LI><p>The computational domain is a circle of center <i>(0,0)</i> and  radius 2 containig a concentric circle of radius 1. The user must
+upload the mesh <i>mesh_e3d_e2.unv</i> from the <b>Mesh</b> item of the menu bar
+.</p>
+<P style='text-align:center'><b>Mesh &#8594;  open &#8594; </b><b class="gris"> Choose mesh file &#8594; </b> <i>mesh_e3d_e2.unv</i> </P>	
+
+<p>The user can display the mesh of the computational domain by choosing the option
+<b>Visualization &#8594;  Mesh</b> of the Menu bar. If not, the computational domain will be
+displayed when selecting any item from the menu bar.</p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image009.jpg"></p>
+<p> <b> Figure 1:</b> Computational domain with the inner sphere in blue.<p>
+</div>
+
+<p> After we have the mesh, we start to go through the menu bar from the left to right
+and we choose the different options related to the whole simulation.</p>
+<LI><p>The material considered in this example are  the so-called <i>Test material 2</i> and <i>Test material 3</i> and their properties have been previously defined in the materials database of the interface.
+To assign these materials to the computational domain, the user must:</p>
+
+<OL type=a> 
+<LI><p>  Select the item <b>Properties &#8594; Materials</b> of the Menu bar.  </p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>1</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 2</i> associated to the reference <i>1</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>2</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 3</i> associated to the reference <i>2</i> is displayed.
+</p>
+</OL>
+<p> The user can display the different properties of this material in <b>Materials
+database</b> item of the menu bar. To do that, </p>
+<OL type=a>
+<LI> <p>Select the option <b>Materials database &#8594;  Open</b> </p>
+<LI> <p>A dialog box appears where the different materials are displayed. Select <i>Test
+material 2</i>. </p>
+<LI> <p>A new dialog box appears where the different electromagnetic magnitudes
+are displayed. Click on the property of your interest, for instance, <b class="gris">Relative permittivity</b>.</p>
+<LI> <p> Choose <b class="gris">A constant</b> in the box below and then <b class="gris">Isotropic</b>
+in the <b class="gris">Behavior</b> box.</p>
+<LI> <p>  <b class="gris">Value</b> displays the  value of relative electric permittivity for the selected material, in this case, <i>1</i>.</p>
+
+</OL>
+
+<LI><p>Now we are going to impose the boundary conditions.
+ A Dirichlet boundary condition introduced as a predefined function is considered in boundary reference 1; 
+ furthermore, a Neumann boundary introduced as a predefined function is considered in boundary reference 2. 
+To impose these boundary conditions the user must:</p>
+<OL type=a>
+<LI> <p> Select the option <b>Boundary conditions &#8594; Dirichlet: electric scalar
+potential</b> in the menu bar.</p>
+<LI> <p> Click on <i>Condition 1</i> on the <b class="gris">Dirichlet conditions</b> dialog box.</p>
+<LI> <p> In the dialog box <b class="gris">The condition is given by</b>, select the option <b class="gris">A function</b></p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, reference <i>1</i> associated to this
+boundary condition is displayed in the box below. </p>
+<LI> <p>Click on <b class="gris">Function name</b>. By default, <i>Example 2: One uniformly charged sphere</i> appears in <b class="gris">Choose function name</b> box.</p>
+<LI> <p> Select the option <b>Boundary conditions &#8594; Neumann: normal component of electric field</b> in the menu bar.</p>
+<LI> <p> Click on <i>Condition 2</i> on the <b class="gris">Neumann conditions</b> dialog box.</p>
+<LI> <p> In the dialog box <b class="gris">The condition is given by</b>, select the option <b class="gris">A function</b></p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, reference <i>2</i> associated to this
+boundary condition is displayed in the box below. </p>
+<LI> <p>Click on <b class="gris">Function name</b>. By default, <i>Example 2: One uniformly charged sphere</i> appears in <b class="gris">Choose function name</b> box.</p>
+<LI> <p>Click on the item <b>Sources</b> of the Menu bar to continue with the resolution procedure.</p>
+
+</OL>
+<LI>  <p>To define the source of the problem, select the option <b>Sources &#8594; Surface charge density, &#961;<sub>S</sub> (C/m<sup>2</sup>)</b> in the menu bar. 
+A dialog box appears where the user can select/define  the surface charge density options. In this example, the default option <i>Source 1</i> is displayed.
+So now we need to specify the surface charge density at the inner sphere. To do that, the user must:</p>
+<OL type=a>
+<LI> <p>Click on <i>Source 1</i>. A dialog box is displayed below.</p>
+<LI> <p> In the dialog box <b class="gris">The source is given by</b>, select the option <b class="gris">A constant</b></p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, references <i>3</i> and <i>4</i> associated to this
+source is displayed in the box below. </p>
+ <LI> <p>Click on <b class="gris">Constant value</b> to display/define the value of the charge density. 
+ In this example, the default value is <i>1e-10</i> (in C/m<sup>2</sup>).</p>
+</OL>
+
+<LI>  <p>Select the item <b>Run</b> (or <b>Run remote</b> depending on your preference) of the menu
+bar to proceed with the resolution of the problem.</p>
+<LI>  <p>Select the item <b>Visualization</b> of the menu bar to display the results.</p>
+
+<OL type=a>
+<LI> <p> Click on the option <b>Potential</b> to display the potential. A dialog box appears
+where the user can choose the field representation. </p>
+
+<LI> <p>Choose the option <b class="gris">Plot over line</b> and select <b class="gris">iso view</b> in the graphic window to display the potential both in the domain and along a line.
+The user can modify the coordinates of the extreme points of the line in the <b class="gris">Extreme points coordinates</b> box or manually at the graphic window. 
+In the next figure, the potential is plotted over the line from point <i>(-2,0,0)</i> to <i>(2,0,0)</i>. As it was expected, the potential has a constant value in the inner charged sphere </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image010.jpg"></p>
+<p> <b> Figure 2:</b> Plot over line representation of the potential.<p>
+</div>
+
+<LI> <p>Choose the option <b class="gris">Rough cut</b> and select <b> iso view</b> in the graphic window to display the potential on the part of the domain determined by a given plane.
+The user can modify the origin and normal vector of the cutting plane in the <b class="gris"> Configuration</b> box or manually at the graphic window. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image011.jpg"></p>
+<p> <b> Figure 3:</b> Rough cut representation of the potential.<p>
+</div>
+
+<LI> <p> To display the electric field, choose the option <b>Visualization &#8594; Electric field</b> of the menu bar. 
+Select the option <b class="gris">Vectors</b> of the dialog box and then
+state the values for the scale and density of the arrows on the boxes below.
+For this picture, the scale is 0.02 and the density is 100.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image028.jpg"></p>
+<p> <b> Figure 4:</b> Electric field.<p>
+</div>
+
+<LI> <p>A zoom of the field can be done by using the right buttom of the mouse.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image029.jpg"></p>
+<p> <b> Figure 5:</b> Zoom of the electric field representation.<p>
+</div>
+
+<LI> <p>Select the option <b class="gris">Vector components</b> to represent each of the components of the electric field or its modulus.
+ The options  <b class="gris">Vector components &#8594; Modulus &#8594; Plot over line</b> were chosen for the next figure.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image030.jpg"></p>
+<p> <b> Figure 6:</b> Modulus of the electric field.<p>
+</div>
+
+</OL>
+
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<!--  FIN DE EJEMPLO 2  -->
+
+<p>&nbsp;</p>
+<h4 style="background-color:#E6E6E6;"><a name="example3"><font COLOR="black">Example 3: Two uniformly charged spheres </font></a></h4>
+
+<!--  EJEMPLO3 -->
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Statement of the problem</strong></i></a></p>
+
+<p>In this example, the electrostatic potential <i>V</i> generated by two
+uniformly surface charged spheres with center the origin and radius <i> R<sub>1</sub> = 2</i> and <i> R<sub>2</sub> = 1</i>
+is computed.
+ Its surface charge density is denoted by &#961;<sub>S</sub>  (C/m<sup>2</sup>).
+ Then, the analytical expression for the potential in a point of coordinates <i>(x,y,z)</i>  is given by . </p>
+<div align=center>
+<p><img border=0 src="EL3D_Graph_images/image012.jpg"></p>
+</div> 
+ 
+<p>where &#949;<sub>0</sub>  denotes the vacuum electric permittivity.
+ The modulus of the electric field  
+ is given by </p>
+ <div align=center>
+<p><img border=0 src="EL3D_Graph_images/image013.jpg"></p>
+</div>
+
+ <p>For the numerical resolution, a sphere of center <i>(0,0,0)</i> and radius <i>3</i> 
+ containing the two concentric charged spheres of radius 1 and 2 is considered as computational domain. 
+ The relative permittivity is considered to be constant and equal to 1. The surface charge density is &#961;<sub>S</sub>= 1e-10 C/m<sup>2</sup> on the inner sphere and &#961;<sub>S</sub>= 2.5e-11 C/m<sup>2</sup> on the outer sphere.</p>
+
+<p>&nbsp;</p>
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Resolution procedure</strong></i></a></p>
+
+<OL>
+	<LI><p>Once MaxFEM is open, the user must select the application <b>Electrostatic3D</b> from the <b>Project</b> of the menu bar.</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Applications</b>&#8594;  <b>Electrostatic3D</b></p>
+<p>Remember that before start to work with a particular application, the user must
+choose a working directory.</p>
+<p>Then, from the item <b>Project</b> of the Menu bar, select</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Sample Data</b>&#8594;  <b>Example 3: Two uniformly charged spheres</b></p>
+
+<LI><p>The computational domain is a sphere of center <i>(0,0,0)</i> and radius <i>3</i> 
+ containing the two concentric charged spheres of radius 1 and 2. The user must
+upload the mesh <i>malla3Dcs2e_tet.mfm</i> from the <b>Mesh</b> item of the menu bar
+.</p>
+<P style='text-align:center'><b>Mesh &#8594;  Open &#8594;</b><b class="gris">  Choose mesh file &#8594; </b> <i>malla3Dcs2e_tet.mfm</i> </P>	
+
+<p>The user can display the mesh of the computational domain by choosing the option
+<b>Visualization &#8594;  Mesh</b> of the Menu bar. If not, the computational domain will be
+displayed when selecting any item from the menu bar.</p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image014.jpg"></p>
+<p> <b> Figure 1:</b> Computational domain with the inner sphere in blue.<p>
+</div>
+
+<p> After we have the mesh, we start to go through the menu bar from the left to right
+and we choose the different options related to the whole simulation.</p>
+<LI><p>The materials considered in this example are  the so-called <i>Test material 2</i> and <i>Test material 3</i>, and air, and their properties have been previously defined in the materials database of the interface.
+In order to assign these materials to the computational domain, the user must:</p>
+
+<OL type=a> 
+<LI><p>  Select the item <b>Properties &#8594; Materials</b> of the Menu bar.  </p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>1</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 2</i> associated to the reference <i>1</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>2</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Air</i> associated to the reference <i>2</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>3</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 3</i> associated to the reference <i>3</i> is displayed.
+</p>
+</OL>
+<p> The user can display the different properties of this material in <b>Materials
+database</b> item of the menu bar. To do that, </p>
+<OL type=a>
+<LI> <p>Select the option <b>Materials database &#8594;  Open</b> </p>
+<LI> <p>A dialog box appears where the different materials are displayed. Select <i>Test
+material 2</i>. </p>
+<LI> <p>A new dialog box appears where the different electromagnetic magnitudes
+are displayed. Click on the property of your interest, for instance, <b class="gris">Relative permittivity</b>.</p>
+<LI> <p> Choose <b class="gris">A constant</b> in the box below and then <b class="gris">Isotropic</b>
+in the <b class="gris">Behavior</b> box.</p>
+<LI> <p>  <b class="gris">Value</b> displays the  value of relative electric permittivity for the selected material, in this case, <i>1</i>.</p>
+
+</OL>
+
+<LI><p>Now we are going to impose the boundary conditions.
+ A Dirichlet boundary condition introduced as a constant is considered in boundary references <i>1, 2, 3, 4, 13, 14, 19</i> and <i>24</i>. 
+To impose these boundary conditions the user must:</p>
+<OL type=a>
+<LI> <p> Select the option <b>Boundary conditions &#8594; Dirichlet: electric scalar
+potential</b> in the menu bar.</p>
+<LI> <p> Click on <i>Condition 1</i> on the <b class="gris">Dirichlet conditions</b> dialog box.</p>
+<LI> <p> In the dialog box <b class="gris">The condition is given by</b>, select the option <b class="gris">A constant</b></p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, references <i>1, 2, 3, 4, 13, 14, 19, 24</i> associated to this
+boundary condition are displayed in the box below. </p>
+<LI> <p>Click on <b class="gris">Constant value</b>. By default, <i>5.647165</i> appears in <b class="gris">Constant value</b> box.</p>
+<LI> <p>Click on the item <b>Sources</b> of the Menu bar to continue with the resolution procedure.</p>
+
+</OL>
+<LI>  <p>To define the source of the problem, select the option <b>Sources &#8594; Surface charge density, &#961;<sub>S</sub> (C/m<sup>2</sup>)</b> in the menu bar. 
+A dialog box appears where the user can select/define  the surface charge density options. In this example, the default option <i>Source 1</i>  and <i>Source 2</i> are displayed.
+So now we need to specify the surface charge density at the two charged spheres. To do that, the user must:</p>
+<OL type=a>
+<LI> <p>Click on <i>Source 1</i>. A dialog box is displayed below.</p>
+<LI> <p> In the dialog box <b class="gris">The source is given by</b>, select the option <b class="gris">A constant</b></p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, references <i>9, 10, 11, 12, 17, 18, 21, 22</i> associated to this
+source are displayed in the box below. </p>
+ <LI> <p>Click on <b class="gris">Constant value</b> to display/define the value of the charge density. 
+ In this example, the default value is <i>1e-10</i> (in C/m<sup>2</sup>).</p>
+ <LI> <p>Click on <i>Source 2</i>. A dialog box is displayed below.</p>
+<LI> <p> In the dialog box <b class="gris">The source is given by</b>, select the option <b class="gris">A constant</b></p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, references <i>5, 6, 7, 8, 15, 16, 20, 23</i> associated to this
+source are displayed in the box below. </p>
+ <LI> <p>Click on <b class="gris">Constant value</b> to display/define the value of the charge density. 
+ In this example, the default value is <i>2.5e-11</i> (in C/m<sup>2</sup>).</p>
+</OL>
+
+<LI>  <p>Select the item <b>Run</b> (or <b>Run remote</b> depending on your preference) of the menu
+bar to proceed with the resolution of the problem.</p>
+<LI>  <p>Select the item <b>Visualization</b> of the menu bar to display the results.</p>
+
+<OL type=a>
+<LI> <p> Click on the option <b>Potential</b> to display the potential. A dialog box appears
+where the user can choose the field representation. </p>
+
+<LI> <p>Choose the option <b class="gris">Plot over line</b> and select <b class="gris"> XY view</b> in the graphic window to display the potential both in the domain and along a line.
+The user can modify the coordinates of the extreme points of the line in the <b class="gris"> Extreme points coordinates</b> box or manually at the graphic window. 
+In the next figure, the potential is plotted over the line from point <i>(-3,0,0)</i> to <i>(3,0,0)</i>. As it was expected, the potential has a constant value in the inner charged sphere. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image015.jpg"></p>
+<p> <b> Figure 2:</b> Plot over line representation of the potential.<p>
+</div>
+
+<LI> <p>Choose the option <b class="gris">Rough cut</b> and select <b class="gris"> iso view</b> in the graphic window to display the potential on the part of the domain determined by a given plane.
+The user can modify the origin and normal vector of the cutting plane in the <b class="gris"> Configuration</b> box or manually at the graphic window. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image016.jpg"></p>
+<p> <b> Figure 3:</b> Rough cut representation of the potential.<p>
+</div>
+
+<LI> <p> To display the electric field, choose the option <b>Visualization &#8594; Electric field</b> of the menu bar. 
+Select the option <b class="gris">Vectors</b> of the dialog box and then
+state the values for the scale and density of the arrows on the boxes below.
+For this picture, the scale is 0.04 and the density is 100.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image017.jpg"></p>
+<p> <b> Figure 4:</b> Electric field.<p>
+</div>
+
+<LI> <p>A zoom of the field can be done by using the right buttom of the mouse.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image018.jpg"></p>
+<p> <b> Figure 5:</b> Zoom of the electric field representation.<p>
+</div>
+
+<LI> <p>Select the option <b class="gris">Vector components</b> 
+to represent each of the components of the electric field or its modulus.
+The options  <b class="gris">Vector components &#8594; X component &#8594; Rough cut</b> were chosen for the next figure as well as <b class="gris"> iso view</b> in the graphic window.
+ 
+ .</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image019.jpg"></p>
+<p> <b> Figure 6:</b> First component of the electric field.<p>
+</div>
+
+</OL>
+
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<!--  FIN DE EJEMPLO 3  -->
+
+<p>&nbsp;</p>
+<h4 style="background-color:#E6E6E6;"><a name="example4"><font COLOR="black">Example 4: One uniformly charged segment </font></a></h4>
+
+<!--  EJEMPLO4 -->
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Statement of the problem</strong></i></a></p>
+
+<p>In this example, the electrostatic potential <i>V</i> generated by a
+uniformly charged segment
+is computed.
+ Its line charge density is denoted by &#961;<sub>l</sub>  (C/m).
+ Then, the analytical expression for the potential in a point of coordinates <i>(x,y,z)</i>  is given by (see [1]) </p>
+<div align=center>
+<p><img border=0 src="EL3D_Graph_images/image031.jpg"></p>
+</div> 
+
+<p>where &#949;<sub>0</sub>  denotes the vacuum electric permittivity.
+ The electric field  
+ is given by </p>
+ 
+ <div align=center>
+<p><img border=0 src="EL3D_Graph_images/image032.jpg"></p>
+</div>
+
+
+ <p>For the numerical resolution, a cylinder with axis the Z axis, radius 1 and height 3 containing the charged segment with extreme points <i>(0,0,-1)</i> and <i>(0,0,1)</i>
+  is considered as computational domain. 
+ The relative permittivity is considered to be constant and equal to 1.
+ The line charge density is &#961;<sub>l</sub>= 1.d-10 C/m which is introduced by a predefined function.</p>
+
+  
+<p>&nbsp;</p>
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Resolution procedure</strong></i></a></p>
+
+<OL>
+	<LI><p>Once MaxFEM is open, the user must select the application <b>Electrostatic3D</b> from the <b>Project</b> of the menu bar.</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Applications</b>&#8594;  <b>Electrostatic3D</b></p>
+<p>Remember that before start to work with a particular application, the user must
+choose a working directory.</p>
+<p>Then, from the item <b>Project</b> of the Menu bar, select</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Sample Data</b>&#8594;  <b>Example 4: One uniformly charged segment</b></p>
+
+<LI><p>The computational domain is a cylinder with axis the Z axis, radius 1 and height 3 containing the segment with extreme points <i>(0,0,-1)</i> and <i>(0,0,1)</i>.
+ The user must
+upload the mesh <i>malla3D_curvilinea.mfm</i> from the <b>Mesh</b> item of the menu bar
+.</p>
+<P style='text-align:center'><b>Mesh &#8594;  Open &#8594;</b><b class="gris">  Choose mesh file &#8594; </b> <i>malla3D_curvilinea.mfm</i> </P>	
+
+<p>The user can display the charged segment by choosing the option
+<b>Visualization &#8594; Mesh &#8594;</b><b class="gris">  Line references</b> of the Menu bar and choosing the reference <i>9</i> and also <b class="gris"> iso view</b> in the graphic window. 
+If not, the computational domain will be
+displayed when selecting any item from the menu bar.</p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image020.jpg"></p>
+<p> <b> Figure 1:</b> Computational domain with the charged segment in blue.<p>
+</div>
+
+<p> After we have the mesh, we start to go through the menu bar from the left to right
+and we choose the different options related to the whole simulation.</p>
+<LI><p>The material considered in this example is  the so-called <i>Test material 2</i> and its properties have been previously defined in the materials database of the interface.
+in order to assign this material to the computational domain, the user must:</p>
+
+<OL type=a> 
+<LI><p>  Select the item <b>Properties &#8594; Materials</b> of the Menu bar.  </p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>1</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 2</i> associated to the reference <i>1</i> is displayed.
+</p>
+</OL>
+<p> The user can display the different properties of this material in <b>Materials
+database</b> item of the menu bar. To do that, </p>
+<OL type=a>
+<LI> <p>Select the option <b>Materials database &#8594;  Open</b> </p>
+<LI> <p>A dialog box appears where the different materials are displayed. Select <i>Test
+material 2</i>. </p>
+<LI> <p>A new dialog box appears where the different electromagnetic magnitudes
+are displayed. Click on the property of your interest, for instance, <b class="gris">Relative permittivity</b>.</p>
+<LI> <p> Choose <b class="gris">A constant</b> in the box below and then <b class="gris">Isotropic</b>
+in the <b class="gris">Behavior</b> box.</p>
+<LI> <p>  <b class="gris">Value</b> displays the  value of relative electric permittivity for the selected material, in this case, <i>1</i>.</p>
+
+</OL>
+
+<LI><p>Now we are going to impose the boundary conditions.
+ A Dirichlet boundary condition introduced as a constant is considered in boundary references <i>1, 2, 3, 4, 5</i> and <i>6</i>. 
+To impose these boundary conditions the user must:</p>
+<OL type=a>
+<LI> <p> Select the option <b>Boundary conditions &#8594; Dirichlet: electric scalar
+potential</b> in the menu bar.</p>
+<LI> <p> Click on <i>Condition 1</i> on the <b class="gris">Dirichlet conditions</b> dialog box.</p>
+<LI> <p> In the dialog box <b class="gris">The condition is given by</b>, select the option <b class="gris">A function</b>.</p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, references <i>1, 2, 3, 4, 5, 6</i> associated to this
+boundary condition are displayed in the box below. </p>
+<LI> <p>Click on <b class="gris">Function name</b>. By default, <i>Example 4: One uniformly charged segment</i> appears in <b class="gris">Choose Function name</b> box.</p>
+<LI> <p>Click on the item <b>Sources</b> of the Menu bar to continue with the resolution procedure.</p>
+
+</OL>
+<LI>  <p>To define the source of the problem, select the option <b>Sources &#8594; line charge density, &#961;<sub>l</sub> (C/m)</b> in the menu bar. 
+A dialog box appears where the user can select/define  the line charge density options. In this example, the default option <i>Source 1</i> is displayed.
+So now we need to specify the line charge density at the segment. To do that, the user must:</p>
+<OL type=a>
+<LI> <p>Click on <i>Source 1</i>. A dialog box is displayed below.</p>
+<LI> <p> In the dialog box <b class="gris">The source is given by</b>, select the option <b class="gris">A function</b>.</p>
+<LI> <p> Click on <b class="gris">Line reference</b>. By default, reference <i>9</i> associated to this
+source is displayed in the box below. </p>
+ <LI> <p>Click on <b class="gris">Function name</b> to display/define the value of the charge. 
+ In this example, the default value is <i>Example 4: One uniformly charged segment</i>. Its value of &#961;<sub>l</sub>= 1.d-10 C/m<sup></sup> is introduced as a predefined function. </p>
+</OL>
+
+<LI>  <p>Select the item <b>Run</b> (or <b>Run remote</b> depending on your preference) of the menu
+bar to proceed with the resolution of the problem.</p>
+<LI>  <p>Select the item <b>Visualization</b> of the menu bar to display the results.</p>
+
+<OL type=a>
+<LI> <p> Click on the option <b>Potential</b> to display the potential. A dialog box appears
+where the user can choose the field representation. </p>
+
+<LI> <p>Choose the option <b class="gris">Plot over line</b> and select <b class="gris"> iso view</b> in the graphic window to display the potential both in the domain and along a line.
+The user can modify the coordinates of the extreme points of the line in the <b class="gris"> Extreme points coordinates</b> box or manually at the graphic window. 
+In the next figure, the potential is plotted over the line from point <i>(-1,0,0)</i> to <i>(1,0,0)</i>. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image021.jpg"></p>
+<p> <b> Figure 2:</b> Plot over line representation of the potential.<p>
+</div>
+
+<LI> <p>Choose the option <b class="gris">Rough cut</b> and select <b class="gris"> iso view</b> in the graphic window to display the potential on the part of the domain determined by a given plane.
+The user can modify the origin and normal vector of the cutting plane in the <b> Configuration</b> box or manually at the graphic window. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image022.jpg"></p>
+<p> <b> Figure 3:</b> Rough cut representation of the potential.<p>
+</div>
+
+<LI> <p> To display the electric field, choose the option <b>Visualization &#8594; Electric field</b> of the menu bar. 
+Select the option <b class="gris">Vectors</b> of the dialog box and then
+state the values for the scale and density of the arrows on the boxes below.
+For this picture, the scale is 0.01 and the density is 100.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image023.jpg"></p>
+<p> <b> Figure 4:</b> Electric field.<p>
+</div>
+
+
+<LI> <p>Select the option <b class="gris">Vector components</b> 
+to represent each of the components of the electric field or its modulus.
+The options  <b class="gris">Vector components &#8594; X component &#8594; Slice</b> were chosen for the next figure as well as <b class="gris"> iso view</b> in the graphic window.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image024.jpg"></p>
+<p> <b> Figure 5:</b> First component of the electric field.<p>
+</div>
+
+</OL>
+
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<!--  FIN DE EJEMPLO 4 -->
+
+<p>&nbsp;</p>
+<h4 style="background-color:#E6E6E6;"><a name="example5"><font COLOR="black">Example 5: One charged point </font></a></h4>
+
+<!--  EJEMPLO5 -->
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Statement of the problem</strong></i></a></p>
+
+<p>In this example, the electrostatic potential <i>V</i> generated by one charged point located at the origin of coordinates 
+is computed.
+ Its charge is denoted by &#961;<sub>p</sub> (C).
+ Then, the analytical expression for the potential in a point of coordinates <i>(x,y,z)</i>  is given by </p>
+<div align=center>
+<p><img border=0 src="EL3D_Graph_images/image033.jpg"></p>
+</div> 
+
+<p>where &#949;<sub>0</sub>  denotes the vacuum electric permittivity.
+ The electric field is given by </p>
+ 
+ <div align=center>
+<p><img border=0 src="EL3D_Graph_images/image034.jpg"></p>
+</div>
+
+
+ <p>For the numerical resolution, a sphere of center <i>(0,0,0)</i> and radius 1
+  is considered as computational domain. 
+ The relative permittivity is considered to be constant and equal to 1.
+ The line charge density is &#961;<sub>l</sub>= 1e-10 C.</p>
+
+  
+<p>&nbsp;</p>
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Resolution procedure</strong></i></a></p>
+
+<OL>
+	<LI><p>Once MaxFEM is open, the user must select the application <b>Electrostatic3D</b> from the <b>Project</b> of the menu bar.</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Applications</b>&#8594;  <b>Electrostatic3D</b></p>
+<p>Remember that before start to work with a particular application, the user must
+choose a working directory.</p>
+<p>Then, from the item <b>Project</b> of the Menu bar, select</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Sample Data</b>&#8594;  <b>Example 5: One charged point</b></p>
+
+<LI><p>The computational domain is a sphere of center <i>(0,0,0)</i> and radius <i>1</i>.
+ The user must
+upload the mesh <i>malla3Ddiscor1_tet.mfm</i> from the <b>Mesh</b> item of the menu bar
+.</p>
+<P style='text-align:center'><b>Mesh &#8594;  Open &#8594;</b><b class="gris">  Choose mesh file &#8594; </b> <i>malla3Ddiscor1_tet.mfm</i> </P>	
+
+<p>The user can display the computational domain by choosing the option
+<b>Visualization &#8594;  Mesh</b> of the Menu bar. 
+If not, the computational domain will be
+displayed when selecting any item from the menu bar.</p>
+
+<p> After we have selected the mesh, we start to go through the menu bar from the left to right
+and we choose the different options related to the whole simulation.</p>
+<LI><p>The material considered in this example is the so-called <i>Test material 3</i> and its properties have been previously defined in the materials database of the interface.
+in order to assign this material to the computational domain, the user must:</p>
+
+<OL type=a> 
+<LI><p>  Select the item <b>Properties &#8594; Materials</b> of the Menu bar.  </p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>1</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 3</i> associated to the reference <i>1</i> is displayed.
+</p>
+</OL>
+<p> The user can display the different properties of this material in <b>Materials
+database</b> item of the menu bar. To do that, </p>
+<OL type=a>
+<LI> <p>Select the option <b>Materials database &#8594;  Open</b> </p>
+<LI> <p>A dialog box appears where the different materials are displayed. Select <i>Test
+material 3</i>. </p>
+<LI> <p>A new dialog box appears where the different electromagnetic magnitudes
+are displayed. Click on the property of your interest, for instance, <b class="gris">Relative permittivity</b>.</p>
+<LI> <p> Choose <b class="gris">A constant</b> in the box below and then <b class="gris">Isotropic</b>
+in the <b class="gris">Behavior</b> box.</p>
+<LI> <p>  <b class="gris">Value</b> displays the  value of relative electric permittivity for the selected material, in this case, <i>1</i>.</p>
+
+</OL>
+
+
+<LI><p>Now we are going to impose the boundary conditions.
+ A Dirichlet boundary condition introduced as a constant is considered in boundary references 1, 2, 3, 4, 5, 6, 7 and 8. 
+In order to impose these boundary conditions the user must:</p>
+<OL type=a>
+<LI> <p> Select the option <b>Boundary conditions &#8594; Dirichlet: electric scalar
+potential</b> in the menu bar.</p>
+<LI> <p> Click on <i>Condition 1</i> on the <b class="gris">Dirichlet conditions</b> dialog box.</p>
+<LI> <p> In the dialog box <b class="gris">The condition is given by</b>, select the option <b class="gris">A constant</b>.</p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, references <i>1, 2, 3, 4, 5, 6, 7, 8</i> associated to this
+boundary condition are displayed in the box below. </p>
+<LI> <p>Click on <b class="gris">Constant value</b>. By default, <i>0.898774243250380</i> appears in <b class="gris">Constant value</b> box.</p>
+<LI> <p>Click on the item <b>Sources</b> of the Menu bar to continue with the resolution procedure.</p>
+
+</OL>
+<LI>  <p>To define the source of the problem, select the option <b>Sources &#8594; point charge  &#961;<sub>p</sub> (C)</b> in the menu bar. 
+A dialog box appears where the user can select/define  the point charge options. In this example, the default option <i>Source 1</i> is displayed.
+So now we need to specify the point charge at the origin. To do that, the user must:</p>
+<OL type=a>
+<LI> <p>Click on <i>Source 1</i>. A dialog box is displayed below.</p>
+<LI> <p>Click on <b class="gris">X coordinates</b>, then on <b class="gris">Y coordinates</b> and, finally, on <b class="gris"> Z coordinates</b> 
+ to display the coordinates of the point source. 
+ In this example, the point <i>(0,0,0)</i> is considered.</p>
+ <LI> <p>Click on <b class="gris">Values</b> to display/define the value of the charge. 
+ In this example, the default value is <i>1e-10</i> (in C).</p>
+ </OL>
+
+<LI>  <p>Select the item <b>Run</b> (or <b>Run remote</b> depending on your preference) of the menu
+bar to proceed with the resolution of the problem.</p>
+<LI>  <p>Select the item <b>Visualization</b> of the menu bar to display the results.</p>
+
+<OL type=a>
+<LI> <p> Click on the option <b>Potential</b> to display the potential. A dialog box appears
+where the user can choose the field representation. </p>
+
+<LI> <p>Choose the option <b class="gris">Plot over line</b> and select <b class="gris"> iso view</b> in the graphic window to display the potential both in the domain and along a line.
+The user can modify the coordinates of the extreme points of the line in the <b class="gris"> Extreme points coordinates</b> box or manually at the graphic window. 
+In the next figure, the potential is plotted over the line from point <i>(-1,0,0)</i> to <i>(1,0,0)</i>. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image035.jpg"></p>
+<p> <b> Figure 1:</b> Plot over line representation of the potential.<p>
+</div>
+
+<LI> <p>Choose the option <b class="gris">Rough cut</b> and select <b> iso view</b> in the graphic window to display the potential on the part of the domain determined by a given plane.
+The user can modify the origin and normal vector of the cutting plane in the <b class="gris"> Configuration</b> box or manually at the graphic window. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image036.jpg"></p>
+<p> <b> Figure 2:</b> Rough cut representation of the potential.<p>
+</div>
+
+<LI> <p> To display the electric field, choose the option <b>Visualization &#8594; Electric field</b> of the menu bar. 
+Select the option <b class="gris">Vectors</b> of the dialog box and then
+state the values for the scale and density of the arrows on the boxes below.
+For this picture, the scale is 0.002 and the density is 100.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image037.jpg"></p>
+<p> <b> Figure 3:</b> Electric field.<p>
+</div>
+
+
+<LI> <p>Select the option <b class="gris">Vector components</b> 
+to represent each of the components of the electric field or its modulus.
+The options  <b class="gris">Vector components &#8594; X component &#8594; Cut</b> were chosen for the next figure as well as <b class="gris"> iso view</b> in the graphic window.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image038.jpg"></p>
+<p> <b> Figure 4:</b> First component of the electric field.<p>
+</div>
+
+</OL>
+
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<!--  FIN DE EJEMPLO 5 -->
+
+<p>&nbsp;</p>
+<h4 style="background-color:#E6E6E6;"><a name="example6"><font COLOR="black">Example 6: Two charged points </font></a></h4>
+
+<!--  EJEMPLO6 -->
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Statement of the problem</strong></i></a></p>
+
+<p>In this example, the electrostatic potential <i>V</i> generated by two charged points located at <i>p<sub>1</sub> = (2,0,0)</i> and <i>p<sub>2</sub> = (-2,0,0)</i>
+is computed.
+ Their charges are denoted by &#961;<sub>p<sub>1</sub></sub> and &#961;<sub>p<sub>2</sub></sub> (C).
+ Then, the analytical expression for the potential in a point of coordinates <i>(x,y,z)</i>  is given by </p>
+<div align=center>
+<p><img border=0 src="EL3D_Graph_images/image039.jpg"></p>
+</div> 
+
+<p>where &#949;<sub>0</sub>  denotes the vacuum electric permittivity.
+ The electric field is given by </p>
+ 
+ <div align=center>
+<p><img border=0 src="EL3D_Graph_images/image040.jpg"></p>
+</div>
+
+
+ <p>For the numerical resolution, an ellipsoid with semi-principal axes of length <i>a = 4</i>, <i>b</i> = <i>c</i> = 1
+  is considered as computational domain. 
+ The relative permittivity is considered to be constant and equal to 1.
+ The point charges are &#961;<sub>p<sub>1</sub></sub> = 1e-10 and &#961;<sub>p<sub>2</sub></sub> = -1e-10 C.</p>
+
+  
+<p>&nbsp;</p>
+
+<p><a href="#e1_introduction"> <i><strong style="color: BlueViolet;">Resolution procedure</strong></i></a></p>
+
+<OL>
+	<LI><p>Once MaxFEM is open, the user must select the application <b>Electrostatic3D</b> from the <b>Project</b> of the menu bar.</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Applications</b>&#8594;  <b>Electrostatic3D</b></p>
+<p>Remember that before start to work with a particular application, the user must
+choose a working directory.</p>
+<p>Then, from the item <b>Project</b> of the Menu bar, select</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Sample Data</b>&#8594;  <b>Example 6: two charged points</b></p>
+
+<LI><p>The computational domain is an ellipsoid with semi-principal axes of length <i>a = 4</i>, <i>b</i> = <i>c</i> = 1.
+ The user must
+upload the mesh <i>malla3Dcp2p_tet.mfm</i> from the <b>Mesh</b> item of the menu bar
+.</p>
+<P style='text-align:center'><b>Mesh &#8594;  Open &#8594;</b><b class="gris">  Choose mesh file &#8594; </b> <i>malla3Dcp2p_tet.mfm</i> </P>	
+
+<p>The user can display the mesh of the computational domain by choosing the option
+<b>Visualization &#8594;  Mesh</b> of the Menu bar. If not, the computational domain will be
+displayed when selecting any item from the menu bar.</p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image041.jpg"></p>
+<p> <b> Figure 1:</b> Mesh of the computational domain.<p>
+</div>
+
+<p> After we have selected the mesh, we start to go through the menu bar from the left to right
+and we choose the different options related to the whole simulation.</p>
+<LI><p>The material considered in this example is the so-called <i>Test material 3</i> and its properties have been previously defined in the materials database of the interface.
+in order to assign this material to the computational domain, the user must:</p>
+
+<OL type=a> 
+<LI><p>  Select the item <b>Properties &#8594; Materials</b> of the Menu bar.  </p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>1</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Test material 3</i> associated to the reference <i>1</i> is displayed.
+</p>
+</OL>
+<p> The user can display the different properties of this material in <b>Materials
+database</b> item of the menu bar. To do that, </p>
+<OL type=a>
+<LI> <p>Select the option <b>Materials database &#8594;  Open</b> </p>
+<LI> <p>A dialog box appears where the different materials are displayed. Select <i>Test
+material 3</i>. </p>
+<LI> <p>A new dialog box appears where the different electromagnetic magnitudes
+are displayed. Click on the property of your interest, for instance, <b class="gris">Relative permittivity</b>.</p>
+<LI> <p> Choose <b class="gris">A constant</b> in the box below and then <b class="gris">Isotropic</b>
+in the <b class="gris">Behavior</b> box.</p>
+<LI> <p>  <b class="gris">Value</b> displays the  value of relative electric permittivity for the selected material, in this case, <i>1</i>.</p>
+
+</OL>
+<p>&nbsp;</p> 
+
+<LI><p>Now we are going to impose the boundary conditions.
+ A Dirichlet boundary condition introduced as a predefined function is considered in boundary references 1, 2, 3, 4, 5, 6, 7 and 8. 
+In order to impose these boundary conditions the user must:</p>
+<OL type=a>
+<LI> <p> Select the option <b>Boundary conditions &#8594; Dirichlet: electric scalar
+potential</b> in the menu bar.</p>
+<LI> <p> Click on <i>Condition 1</i> on the <b class="gris">Dirichlet conditions</b> dialog box.</p>
+<LI> <p> In the dialog box <b class="gris">The condition is given by</b>, select the option <b class="gris">A function</b>.</p>
+<LI> <p> Click on <b class="gris">Surface reference</b>. By default, references <i>1, 2, 3, 4, 5, 6, 7, 8</i> associated to this
+boundary condition are displayed in the box below. </p>
+<LI> <p>Click on <b class="gris">Function name</b>. By default, <i>Example 6: two charged points</i> appears in <b class="gris">Choose Function name</b> box.</p>
+<LI> <p>Click on the item <b>Sources</b> of the Menu bar to continue with the resolution procedure.</p>
+
+</OL>
+<LI>  <p>To define the source of the problem, select the option <b>Sources &#8594; point charge  &#961;<sub>p</sub> (C)</b> in the menu bar. 
+A dialog box appears where the user can select/define  the point charge options. In this example, the default option <i>Source 1</i> is displayed.
+So now we need to specify the point charges at <i>p<sub>1</sub></i> and <i>p<sub>2</sub></i>. To do that, the user must:</p>
+<OL type=a>
+<LI> <p>Click on <i>Source 1</i>. A dialog box is displayed below.</p>
+<LI> <p>Click on <b class="gris">X coordinates</b>, then on <b class="gris">Y coordinates</b> and, finally, on <b class="gris"> Z coordinates</b> 
+ to display the coordinates of the point source. 
+ In this example, the points <i>(-2,0,0)</i> and <i>(2,0,0)</i> are considered.</p>
+ <LI> <p>Click on <b class="gris">Values</b> to display/define the value of the charges. 
+ In this example, the values <i>-1e-10</i> and <i>1e-10</i> (in C) are considered at <i>(-2,0,0)</i> and <i>(2,0,0)</i>, respectively .</p>
+ </OL>
+
+<LI>  <p>Select the item <b>Run</b> (or <b>Run remote</b> depending on your preference) of the menu
+bar to proceed with the resolution of the problem.</p>
+<LI>  <p>Select the item <b>Visualization</b> of the menu bar to display the results.</p>
+
+<OL type=a>
+<LI> <p> Click on the option <b>Potential</b> to display the potential. A dialog box appears
+where the user can choose the field representation. </p>
+
+<LI> <p>Choose the option <b class="gris">Plot over line</b> and select <b class="gris"> iso view</b> in the graphic window to display the potential both in the domain and along a line.
+The user can modify the coordinates of the extreme points of the line in the <b class="gris"> Extreme points coordinates</b> box or manually at the graphic window. 
+In the next figure, the potential is plotted over the line from point <i>(-4,0,0)</i> to <i>(4,0,0)</i>. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image042.jpg"></p>
+<p> <b> Figure 2:</b> Plot over line representation of the potential.<p>
+</div>
+
+<LI> <p>Choose the option <b class="gris">Cut</b> and select <b class="gris"> iso view</b> in the graphic window to display the potential on the part of the domain determined by a given plane.
+The user can modify the origin and normal vector of the cutting plane in the <b class="gris"> Configuration</b> box or manually at the graphic window. </p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image043.jpg"></p>
+<p> <b> Figure 3:</b> Cut representation of the potential.<p>
+</div>
+
+<LI> <p> To display the electric field, choose the option <b>Visualization &#8594; Electric field</b> of the menu bar. 
+Select the option <b class="gris">Vectors</b> of the dialog box and then
+state the values for the scale and density of the arrows on the boxes below.
+For this picture, the scale is 0.1 and the density is 100.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image044.jpg"></p>
+<p> <b> Figure 4:</b> Electric field.<p>
+</div>
+
+<p> A detail of the electric field near <i>p<sub>1</sub></i> is shown in the next figure the scale is 0.2 and the density is 200.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image046.jpg"></p>
+<p> <b> Figure 5:</b> Electric field near <i>p<sub>1</sub></i>.<p>
+</div>
+
+
+<LI> <p>Select the option <b class="gris">Vector components</b> 
+to represent each of the components of the electric field or its modulus.
+The options  <b class="gris">Vector components &#8594; Modulus &#8594; Slice</b> were chosen for the next figure as well as <b class="gris"> iso view</b> and <b class="gris">Outline</b> in the graphic window.</p>
+
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="EL3D_Graph_images/image045.jpg"></p>
+<p> <b> Figure 6:</b> Modulus of the electric field.<p>
+</div>
+
+</OL>
+
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+&nbsp;
+
+<!--  FIN DE EJEMPLO 6 -->
+
+</div>
+
+</body></html>

@@ -1,0 +1,18 @@
+
+.
+../other/basicmod
+../other/common
+../other/fem
+../other/unv
+../other/xml
+../other/vtu
+../other/pvd
+
+object
+../../solvers/transient_magnetics_2d
+
+gfortran
+-ffree-line-length-0 -ffixed-line-length-0
+
+
+

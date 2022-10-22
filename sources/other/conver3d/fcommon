@@ -1,0 +1,39 @@
+*'parameters'
+      parameter(mnel=500000,mnver=150000,
+     &          mbm=5000000,mnnx=100,mnny=100,mnnz=100)
+      implicit double precision (a-h,o-z)
+*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+******************************************************************
+*
+*       nead -----> tablero con los elementos adyacentes
+*                   a cada tetraedro
+*       it -------> tablero con el tetraedro al que pertenece
+*                   cada vertice (se hace una determinada
+*                   asignacion)
+*       bx -------> tablero con las coordenadas baricentricas
+*                   de los vertices
+*
+******************************************************************
+*'common' de la malla:
+      common/malla/bx(4,mnver),z(3,mnver),det(mnel),
+     &             binv(3,3,mnel),xinteg(mnver),xx(mnnx),yy(mnny),
+     &             zz(mnnz),nel,nver,mm(4,mnel),nrc(4,mnel),
+     &             nra(6,mnel),nrv(4,mnel),nead(4,mnel),nx,ny,nz,
+     &             it(mnver),ipunt(mnnx,mnny,mnnz),ind(3,mnver),
+     &             nsd(mnel)
+*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+******************************************************************
+*
+*        mua ------> puntero para almacenamiento perfil
+*        ib -------> puntero para almacenamiento de filas
+*                    en morse
+*        jb -------> puntero para almacenamiento de columnas
+*                    en morse
+*        ivb ------> puntero para almacenamiento de vertices
+*                    vecinos
+*
+******************************************************************
+*'common' de punteros
+      common/puntero/mua(mnver+1),ib(mnver+1),jb(mbm),ivb(mnver),
+     &               nemm
+*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::

@@ -1,0 +1,180 @@
+<?xml version='1.0' encoding='iso-8859-15'?>
+<data>
+	<menu name="Materials file">
+		<submenu name="Open">
+			<leaf name="materialsDB" totalnum="1" type="file">
+				<elements>
+				materials.dat.xml
+				</elements>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Mesh">
+		<submenu name="Open">
+			<leaf name="Mesh file" subtype="mesh" totalnum="1" type="file">
+				<elements>
+				malla_ej3.mfm
+				</elements>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Properties">
+		<submenu name="Materials">
+			<struct name="Materials">
+				<leaf name="1" totalnum="1" type="charlist">
+					<elements>
+					Test Material 2
+					</elements>
+				</leaf>
+				<leaf name="2" totalnum="1" type="charlist">
+					<elements>
+					Test Material 3
+					</elements>
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Boundary conditions">
+		<submenu name="Dirichlet">
+			<struct name="Conditions">
+				<struct name="Condition 1">
+					<struct name="A constant">
+						<leaf name="Line references" totalnum="4" type="charlist">
+							<elements>
+							1
+							2
+							5
+							8
+							</elements>
+						</leaf>
+						<leaf name="Constant value" totalnum="1" type="float">
+							<elements>
+							0 
+							</elements>
+						</leaf>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Neumann">
+			<struct name="Conditions">
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Sources">
+		<submenu name="Volumetric">
+			<struct name="Volumetric sources">
+				<struct name="Source 1">
+					<leaf name="Volumetric references" totalnum="1" type="charlist">
+						<elements>
+						2
+						</elements>
+					</leaf>
+					<leaf name="Constant value" totalnum="1" type="float">
+						<elements>
+						1.e-10 
+						</elements>
+					</leaf>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Surface">
+			<struct name="Surface sources">
+			</struct>
+		</submenu>
+		<submenu name="Line">
+			<struct name="Line sources">
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Data">
+		<submenu name="Temperature">
+			<leaf name="Field" subtype="field" totalnum="0" type="file">
+				<elements>
+				</elements>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Solver">
+		<submenu name="Run">
+		</submenu>
+		<submenu name="Remote run">
+		</submenu>
+		<submenu name="Stop">
+		</submenu>
+	</menu>
+	<menu name="Visualization">
+		<submenu name="Mesh">
+			<struct name="Mesh">
+				<struct name="Triangulation">
+				</struct>
+				<leaf name="Surface references" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Line references" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Point references" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Element numbering" totalnum="0" type="float">
+					<elements>
+					</elements>
+				</leaf>
+				<leaf name="Vertex numbering" totalnum="0" type="float">
+					<elements>
+					</elements>
+				</leaf>
+				<struct name="Materials">
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Temperature">
+			<struct name="Temperature">
+				<struct name="Filled">
+				</struct>
+				<struct name="Threshold">
+				</struct>
+				<struct name="Isolines">
+				</struct>
+				<leaf name="3D plot" totalnum="0" type="float">
+					<elements>
+					</elements>
+				</leaf>
+				<struct name="Plot over line">
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Potential, V (V, scalar)">
+			<struct name="Potential">
+				<struct name="Filled">
+				</struct>
+				<struct name="Threshold">
+				</struct>
+				<struct name="Isolines">
+				</struct>
+				<leaf name="3D plot" totalnum="0" type="float">
+					<elements>
+					</elements>
+				</leaf>
+				<struct name="Plot over line">
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Electric field">
+			<struct name="Electric field">
+				<struct name="Vectors">
+				</struct>
+				<leaf name="Vector components" totalnum="0" type="charlist">
+					<elements>
+					</elements>
+				</leaf>
+			</struct>
+		</submenu>
+		<submenu name="Close all">
+		</submenu>
+	</menu>
+</data>

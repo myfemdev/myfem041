@@ -1,0 +1,32 @@
+
+all: lib solver
+
+solver:
+	${MAKE} -f Makefile.windows -C electrostatics2d
+	${MAKE} -f Makefile.windows -C electrostatics3d
+	${MAKE} -f Makefile.windows -C direct_current_2d
+	${MAKE} -f Makefile.windows -C direct_current_3d
+	${MAKE} -f Makefile.windows -C eddy_currents_2d
+	${MAKE} -f Makefile.windows -C eddy_currents_axi
+	${MAKE} -f Makefile.windows -C magnetostatics2d
+	${MAKE} -f Makefile.windows -C transient_magnetics2d
+	${MAKE} -f Makefile.windows -C eddy_currents_3d
+
+lib:
+	${MAKE} -f Makefile.windows -C libs/mumps-4.9.2
+
+clean: cleanlib cleansolver
+
+cleansolver:
+	${MAKE} -f Makefile.windows -C electrostatics2d clean
+	${MAKE} -f Makefile.windows -C electrostatics3d clean
+	${MAKE} -f Makefile.windows -C direct_current_2d clean
+	${MAKE} -f Makefile.windows -C direct_current_3d clean
+	${MAKE} -f Makefile.windows -C eddy_currents_2d clean
+	${MAKE} -f Makefile.windows -C eddy_currents_axi clean
+	${MAKE} -f Makefile.windows -C magnetostatics2d clean
+	${MAKE} -f Makefile.windows -C transient_magnetics2d clean
+	${MAKE} -f Makefile.windows -C eddy_currents_3d clean
+
+cleanlib:
+	${MAKE} -f Makefile.windows -C libs/mumps-4.9.2 clean

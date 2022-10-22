@@ -1,0 +1,137 @@
+<html>
+
+<head>
+	<!-- CHAMAMOS Ó CSS -->
+	<link rel="stylesheet" type="text/css" href="../../style.css" />
+	<!-------------------------------->
+	<title>Visualization window</title>
+</head>
+
+<body lang="EN-ES">
+
+<p>&nbsp;</p>
+
+<h3>
+	<a name="_Toc316292660"><span lang="EN-US">2.5. Visualization window</span></a></p>
+</h3>
+
+<a name="top"><strong>Table of contents</strong></a>
+<ul>
+  <li><a href="#components">Graphical components</a></li>
+  <li><a href="#scene">Scene interaction</a></li>
+  <li><a href="#bars">Visualization bars</a></li>
+</ul>
+
+<h4>
+	<a name="components">&#9633; Graphical components</a>
+</h4>
+
+<p>
+	The graphical interface shows the resulting fields in the Visualization Window. You can identify this window bay the MaxFEM logo in the background. When adding the different graphical results, they are organized into tabs, in such a way that only the selected tab is displayed at each moment. When there are several results opened, the arrows located in the bar ends allow the user to change between them. Graphics can be closed by clicking the cross beside it's name, and they can be all closed at once selecting <strong>Menu &#8594; Visualization &#8594; Close all</strong>.
+</p>
+<p>&nbsp;</p>
+	<p class="MsoNormal" align="center"><img width="650" height="480" id="Imagen 34" src="Visualization_images/image001.png"></p>
+	
+	<div align=center>
+	<table  border=0>
+		<tr>
+			<td style='text-align:left'>1. Visualization bar</td>
+			<td style='text-align:left'>&nbsp;&nbsp;2. Visualization menu</td>
+			<td style='text-align:left'>&nbsp;&nbsp;3. Graphic scene</td>
+			<td style='text-align:left'>&nbsp;&nbsp;4. Scale bar</td>
+		</tr>
+		<tr align=left>
+			<td style='text-align:left'>5. Time bar</td>
+			<td style='text-align:left'>&nbsp;&nbsp;6. Color bar</td>
+			<td style='text-align:left'>&nbsp;&nbsp;7. Save button</td>
+			<td style='text-align:left'>&nbsp;&nbsp;8. Camera combo</td>
+		</tr>
+		<tr align=left>
+			<td style='text-align:left'>9. Center button</td>
+			<td style='text-align:left'>&nbsp;&nbsp;10. Names button</td>
+			<td style='text-align:left'>&nbsp;&nbsp;11. Outline button</td>
+			<td style='text-align:left'>&nbsp;&nbsp;12. Color combo</td>
+		</tr>
+		<tr align=left>
+			<td style='text-align:left'>13. Time bar</td>
+			<td style='text-align:left'>&nbsp;&nbsp;14. Surface/edges button</td>
+			<td style='text-align:left'>&nbsp;&nbsp;15. Scale button</td>
+			<td style='text-align:left'>&nbsp;&nbsp;16. Time combo</td>
+		</tr>
+	</table>
+	</div>
+
+<p>&nbsp;</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<h4>
+	<a name="scene">&#9633; Scene interaction</a>
+</h4>
+
+<p>
+	The graphical interface allows the user to interact with the figure, either rotating, zooming or moving the visualized object: 
+</p>
+
+<UL>
+	<LI><p><b>Rotating an object:</b> click and hold the left mouse button while moving it in the rotation direction.</p>
+	<LI><p><b>Zoom:</b> click and hold the right mouse button while moving it upwards (zoom in) or downwards (zoom out). The same effect can be obtained using the scroll wheel.</p>
+	<LI><p><b>Moving an object: </b> click and hold the scroll wheel and moving the object in the desired direction. </p>
+</UL>
+
+<p>&nbsp;</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<h4>
+	<a name="bars">&#9633; Visualization bars</a>
+</h4>
+
+<p>There are three menu bars with graphical elements such as combos or buttons for controlling other aspects of the visualization:</p>
+<ul>
+  <li><p><strong>Visualization menu:</strong> is always visible and it's located in the upper part of the visualization window, between the visualization window and the different tabs. This bar controls the visibility of the other two bars, that are located in the visualization window. The buttons that include are:</p>
+    <ul>
+      <li><strong>Save...:</strong> permits to save the current view in a file.</li>
+      <li><strong>XY view:</strong> permits to change the perspective of the current view.</li>
+      <li><strong>Center:</strong> centers the whole domain in the Visualization window.</li>
+      <li><strong>Names:</strong> shows/hides on each sub-domain the name of the VTU file where the field is saved.</li>
+      <li><strong>Legend:</strong> shows/hides the legend with additional information about the field.</li>
+      <li><strong>Outline:</strong> shows/hides an outline with the coordinates range around the domain.</li>
+      <li><strong>Surface:</strong> permits to change the field representation between Surface and Wireframe.</li>
+      <li><strong>Scale bar:</strong> shows/hides the scale bar in the lower part of the Visualization window.</li>
+      <li><strong>Plane:</strong> shows/hides the cut plane (only available in Cut and Slice Visualizations).</li>
+      <li><strong>Time bar:</strong> shows/hides the time bar in the lower part of the Visualization window (only active for time-dependent fields).</li>
+    </ul>
+  <li><p><strong>Scale bar:</strong> this bar controls the aspects relating to the color legend and the color map (in particular, establishing the relation between colors and scalar values in the graphic). It includes the following buttons:
+</p>
+    <ul>
+      <li><strong>Scale:</strong> shows/hides the scale in the Visualization window.</li>
+      <li><strong>Adjust:</strong> permits to adjust the limits of the scale range; possible options are:</li>
+      <li><strong>Relative/absolute scale:</strong> changes the sub-domain on which the limits of the scale range are calculated; "absolute" refers to the whole mesh and "relative" refers only to the portion shown in the Visualization window (only available in Cut and Slice visualizations).</li>
+        <ul>
+          <li><strong>Adjust manually:</strong> user can change the limits manually.</li>
+          <li><strong>Adjust to every field:</strong> the limits will be the minimum and maximum values of the field. In the case of a time-dependent simulation, this limits will be recalculated for every time step.</li>
+          <li><strong>Adjust to the current field:</strong> the limits will be the minimum and maximum values of the current field. In the case of a time-dependent simulation, this limits will not be recalculated for every time step.</li>
+          <li><strong>Adjust to the time interval:</strong> In the case of a time-dependent simulation, the limits will be the minimum and maximum values of all time steps.</li>
+        </ul>
+      <li><strong>From/To:</strong> when the user wants to adjust manually the scale range, these buttons permit to introduce the range limits.</li>
+    </ul>
+  <li><p><strong>Time bar:</strong> controls some actions to change the visualization of time-dependent fields. It includes the following buttons:</p>
+    <ul>
+      <li><strong>First frame "|<":</strong> shows the first frame of the time series.</li>
+      <li><strong>Previous frame "<|":</strong> shows the previous frame of the time series.</li>
+      <li><strong>Play ">":</strong> plays the time series.</li>
+      <li><strong>Pause "||":</strong> pauses the animation.</li>
+      <li><strong>Next frame "|>":</strong> shows the next frame of the time series.</li>
+      <li><strong>First frame ">|":</strong> shows the last frame of the time series.</li>
+      <li><strong>Time:</strong> shows/edits the current time in the animation.</li>
+      <li><strong>Start time:</strong> shows/edits the start time in the animation.</li>
+      <li><strong>End time:</strong> shows/edits the end time in the animation.</li>
+      <li><strong>Duration:</strong> shows/edits the duration of the animation.</li>      
+    </ul>  
+</ul>
+
+<div class="back"><a href="#top">Back to top</a></div>
+<p>&nbsp;</p>
+
+</body></html>

@@ -1,0 +1,246 @@
+/* Headers (only to check that css is been used) */
+h1, h2, h3, h4, h5, h6 {color: #880000; }
+
+/* Horizontal rule */
+hr {background-color: gray; }
+
+/* Back to top */
+.back {text-align: right; }
+
+/* Caption figures */
+.caption {font-family: Times, FreeSerif, 'Century Schoolbook L', 'Times New Roman', serif; 
+          text-align: center; padding: 0% 15% 0% 15%; font-size: larger; }
+          
+/* Menu items */
+.menu {font-weight: bold; }
+
+/* Text to be revised */
+.rev { color: red; }
+
+/* Text already revised */
+.ok { color: black; }
+
+/* Horizontal array of images */
+img.hoz {vertical-align: middle; margin-right: 20px;}
+
+/* pre, code */
+pre, code {font-family: 'Courier New', FreeMono, Courier, monospace; } /* font-size:110%; */
+
+/* xml paragraph code */
+pre.xml	{margin-left: 20px; margin-right: 20px; padding: 10px; background-color: #eed; }
+
+/* table */
+table {margin-left: auto; margin-right: auto; /*margin: 45px; *width: 480px;*/ border-collapse: collapse;
+text-align: center; }
+th {font-weight: normal;padding: 9px 7px; border-bottom: 2px solid; }
+td {padding: 8px 7px 0px 7px; }
+tbody tr:hover td {background-color: #F0F0F0; }
+tbody.l {padding: 8px 7px 0px 7px; text-align: left;}
+
+/* alphanumeric lists */
+ol.alpha {list-style-type: lower-alpha; } 
+
+.gris{ font-weight: bold; font-style: italic;} /* color:#404040;} */ /*#6B6B6B;} */
+
+/* TABLAS */
+table { 
+	border=1;	
+	cellspacing=0;
+	cellpadding=0;
+	border-collapse:collapse;
+} 
+ 
+table, th, td{ 
+/*border: 1px solid black;*/
+}
+
+td { 
+   	font-family:verdana,arial; 
+	font-size:8pt;
+	text-align:center;
+ /*	background-color:ddeeff; 
+   	color:333333;    	
+   	font-size:10pt;
+	font-weight:bold; */
+	border=1; 
+ }
+ 
+.fila_lat{
+	border:1;
+	border-style:solid;
+	border-color:#000000;
+}
+
+.fila_superior{
+	background:#737373;
+	color:white;
+}
+
+.fila_superior1{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	text-align: left;
+	width:150pt;
+}
+
+.fila_superior122{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	text-align: center;
+	width:175pt;
+}
+
+.fila_superior12{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	text-align: center;
+	width:120pt;
+}
+
+.fila_superior13{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	text-align: center;
+	width:152pt;
+}
+
+.fila_superior11{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	text-align: left;
+	width:170;
+	border:1;
+	border-style:solid;
+	border-color:#000000;
+}
+
+.fila_superior33{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	text-align: left;
+	width:1100;
+	border:1;
+	border-style:solid;
+	border-color:#000000;
+}
+
+.fila_superior2{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	width:100pt;
+}
+.fila_superior20{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	width:140pt;
+	text-align:center;
+}
+
+.fila_superior22{
+    font-family:verdana;
+	font-size:80%;
+	background:#737373;
+	color:white;
+	width:160;
+	border:1;
+	border-style:solid;
+	border-color:#000000;
+}
+
+.fila_intermedia1{
+    font-family:verdana;
+	font-size:80%;
+	text-align: left;
+}
+
+.fila_intermedia2{
+    font-family:verdana;
+	font-size:80%;
+}
+
+.fila_intermedia3{
+    font-family:verdana;
+	font-size:80%;
+	text-align: left;
+	border:1;
+	border-style:solid;
+	border-color:#000000;
+}
+
+.fila_final1{
+    font-family:verdana;
+	font-size:80%;
+	text-align: left;
+	border-bottom:thin solid;
+	border-color:#737373;
+}
+
+.fila_final2{
+	font-family:verdana;
+	font-size:80%;
+    border-bottom:thin solid;
+	border-color:#737373;
+}
+
+.columna_primera{
+	font-family:verdana;
+	font-size:80%;
+	border:1;
+	border-style:solid;
+	border-color:#000000;
+}
+
+.columna_primera1{
+	font-family:verdana;
+	font-size:80%;
+	border:1;
+	border-style:solid;
+	border-color:#000000;
+	width:20%;
+}
+
+.columna_primera2{
+	font-family:verdana;
+	font-size:80%;
+	border:1;
+	border-style:solid;
+	border-color:#000000;
+	width:40%;
+}
+
+.estilotabla{ 
+   	background-color:ffffff; 
+   	border-style:solid; 
+   	border-color:666666; 
+   	border-width:1px; 
+}
+	
+.estilocelda{ 
+   	background-color:ddeeff; 
+   	color:333333; 
+   	font-weight:bold; 
+   	font-size:10pt; 
+}
+
+.indented {
+   padding-left: 50pt;
+   padding-right: 50pt;
+   }
+   
+

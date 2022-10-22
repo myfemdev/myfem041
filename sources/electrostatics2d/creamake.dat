@@ -1,0 +1,17 @@
+
+.
+../other/basicmod
+../other/common
+../other/fem
+../other/unv
+../other/xml
+../other/vtu
+
+object
+../../solvers/electrostatics2d
+
+gfortran
+-ffree-line-length-0 -ffixed-line-length-0
+
+
+

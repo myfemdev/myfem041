@@ -1,0 +1,755 @@
+<menus name="Eddy currents 2D">
+	<menu name="Mesh">
+		<submenu name="Open">
+			<leaf name="Mesh file" subtype="mesh:Modulef Formatted Meshes (*.mfm)|*.mfm" title="Choose mesh file:" tooltip="Select the 2D mesh file that will be used" type="file">
+				<element>malla2dtot.mfm</element>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Properties">
+		<submenu name="Materials">
+			<struct celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Materials" plot="references" plotted="true" showvalues="true" title="Choose domain references:" tooltip="Select a domain reference for assigning a material to it">
+				<leaf default="true" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				</leaf>
+				<leaf name="1" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Air</element>
+				</leaf>
+				<leaf name="2" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Graphite</element>
+				</leaf>
+				<leaf name="3" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Carbon paste</element>
+				</leaf>
+				<leaf name="4" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Graphite</element>
+				</leaf>
+				<leaf name="5" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Carbon paste</element>
+				</leaf>
+				<leaf name="6" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Graphite</element>
+				</leaf>
+				<leaf name="7" selected="true" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Carbon paste</element>
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Boundary conditions">
+		<submenu name="Dirichlet" title="Dirichlet: magnetic vector potential, Az (Wb⁄m)">
+			<struct customize="true" name="Condition" title="Magnetic vector potential:" tooltip="You can add, delete or edit the Dirichlet conditions">
+				<struct default="true" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+					<struct name="A function" title="Fill the following data:" tooltip="Select the line references of the boundaries associated to the condition">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Function name" selection="single" type="charlist">
+							<element>user</element>
+						</leaf>
+					</struct>
+					<struct name="A constant" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Constant value" title="Constant value (Wb⁄m):" type="float">
+						</leaf>
+					</struct>
+				</struct>
+				<struct name="Condition 1" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+					<struct name="A function" title="Fill the following data:" tooltip="Select the line references of the boundaries associated to the condition">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Function name" selection="single" type="charlist">
+							<element>user</element>
+						</leaf>
+					</struct>
+					<struct name="A constant" selected="true" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" plotted="true" selection="multiple" showvalues="true" type="charlist">
+							<element selected="true">8</element>
+						</leaf>
+						<leaf name="Constant value" title="Constant value (Wb⁄m):" type="float">
+							<element>0</element>
+						</leaf>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Neumann" title="Neumann: tangential component of magnetic field, H·τ (A⁄m)">
+			<struct customize="true" name="Condition" title="Tangential component of magnetic field:" tooltip="You can add, delete or edit the Neumann conditions">
+				<struct default="true" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+					<struct name="A function" title="Fill the following data:" tooltip="Select the line references of the boundaries associated to the condition">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Function name" selection="single" type="charlist">
+							<element>user</element>
+						</leaf>
+					</struct>
+					<struct name="A constant" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Constant value" title="Constant value (A⁄m):" type="float">
+						</leaf>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Volumetric sources">
+		<submenu name="Stranded" title="Stranded conductor">
+			<submenu name="Current density" title="Current density, Jz (A⁄m²)">
+				<struct customize="true" name="Sources" title="Connected component:" tooltip="You can add, delete or edit the volume sources">
+					<struct default="true" selection="single" title="The current density is given by:">
+						<struct name="A function" title="fill in the following data:">
+							<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" selection="multiple" showvalues="true" type="charlist">
+							</leaf>
+							<leaf name="Function name" selection="single" type="charlist">
+								<element>user</element>
+							</leaf>
+						</struct>
+						<struct name="A constant" title="fill in the following data:">
+							<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" selection="multiple" showvalues="true" type="charlist">
+							</leaf>
+							<leaf name="RMS value" title="RMS value (A⁄m²):" type="float">
+							</leaf>
+							<leaf name="Phase angle" title="Phase angle (Degrees):" type="float">
+							</leaf>
+						</struct>
+					</struct>
+				</struct>
+			</submenu>
+			<submenu name="Current intensity" title="Current intensity, I (A)">
+				<struct customize="true" name="Sources" title="Connected components:" tooltip="You can add, delete or edit the volume sources">
+					<struct default="true" title="Fill in the following data:">
+						<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="RMS value" title="RMS value (A):" type="float">
+						</leaf>
+						<leaf name="Phase angle" title="Phase angle (Degrees):" type="float">
+						</leaf>
+					</struct>
+				</struct>
+			</submenu>
+		</submenu>
+		<submenu name="Solid" title="Solid conductor">
+			<submenu name="Current intensity" title="Current intensity, I (A)">
+				<struct customize="true" name="Sources" title="Connected components:" tooltip="You can add, delete or edit the surface sources">
+					<struct default="true" title="Fill in the following data:">
+						<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="RMS value" title="RMS value (A):" type="float">
+						</leaf>
+						<leaf name="Phase angle" title="Phase angle (Degrees):" type="float">
+						</leaf>
+					</struct>
+					<struct name="Source 1" title="Fill in the following data:">
+						<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" plotted="true" selection="multiple" showvalues="true" type="charlist">
+							<element selected="true">2</element>
+							<element selected="true">3</element>
+						</leaf>
+						<leaf name="RMS value" title="RMS value (A):" type="float">
+							<element>70000</element>
+						</leaf>
+						<leaf name="Phase angle" title="Phase angle (Degrees):" type="float">
+							<element>0</element>
+						</leaf>
+					</struct>
+					<struct name="Source 2" title="Fill in the following data:">
+						<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" plotted="true" selection="multiple" showvalues="true" type="charlist">
+							<element selected="true">4</element>
+							<element selected="true">5</element>
+						</leaf>
+						<leaf name="RMS value" title="RMS value (A):" type="float">
+							<element>70000</element>
+						</leaf>
+						<leaf name="Phase angle" title="Phase angle (Degrees):" type="float">
+							<element>120</element>
+						</leaf>
+					</struct>
+					<struct name="Source 3" title="Fill in the following data:">
+						<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" plotted="true" selection="multiple" showvalues="true" type="charlist">
+							<element selected="true">6</element>
+							<element selected="true">7</element>
+						</leaf>
+						<leaf name="RMS value" title="RMS value (A):" type="float">
+							<element>70000</element>
+						</leaf>
+						<leaf name="Phase angle" title="Phase angle (Degrees):" type="float">
+							<element>240</element>
+						</leaf>
+					</struct>
+				</struct>
+			</submenu>
+			<submenu name="Potential drop" title="Potential drop, ΔV (V⁄m)">
+				<struct customize="true" name="Sources" title="Connected components:" tooltip="You can add, delete or edit the surface sources">
+					<struct default="true" title="Fill in the following data:">
+						<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="RMS value" title="RMS value (V⁄m):" type="float">
+						</leaf>
+						<leaf name="Phase angle" title="Phase angle (Degrees):" type="float">
+						</leaf>
+					</struct>
+				</struct>
+			</submenu>
+		</submenu>
+	</menu>
+	<menu name="Data">
+		<submenu name="Frequency" title="Frequency (Hz)">
+			<leaf name="Value" title="Frequency (Hz):" tooltip="Write the current frequency (Hz)" type="float">
+				<element>50</element>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Solver">
+		<submenu name="Run">
+			<action name="exec">
+				<param args="-xml">eddy_currents_2d</param>
+			</action>
+		</submenu>
+		<submenu name="Remote run">
+			<action name="exec_ssh">
+				<param args="-xml">eddy_currents_2d</param>
+			</action>
+		</submenu>
+		<submenu name="Stop">
+			<action name="kill_exec">
+			</action>
+		</submenu>
+	</menu>
+	<menu name="Outputs">
+		<submenu name="Current intensity" title="Current intensity, I (A)">
+			<struct celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Materials" plot="references" plotted="true" showvalues="true" title="Choose domain references:" tooltip="Select a domain reference for assigning a material to it">
+				<leaf default="true" showfile="file:intensity_current${../}" title="Current intensity (A):" type="charlist">
+				</leaf>
+			</struct>
+		</submenu>
+		<submenu name="Active power" title="Active power, P (W⁄m)">
+			<struct celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Materials" plot="references" plotted="true" showvalues="true" title="Choose domain references:" tooltip="Select a domain reference for assigning a material to it">
+				<leaf default="true" showfile="file:power_active${../}" title="Active power (W⁄m):" type="charlist">
+				</leaf>
+			</struct>
+		</submenu>
+		<submenu name="Solid conductor" title="Solid conductor">
+			<struct customize="true" name="Connected components" showvalues="true" source="menu:/Volumetric sources/Solid/${/Volumetric sources/Solid}/Sources" title="Choose solid connected component:" type="charlist">
+				<leaf default="true" showfile="file:${../}" title="Results:" type="charlist">
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Visualization">
+		<submenu name="Mesh">
+			<struct name="Mesh" title="Choose representation:">
+				<struct mesh="menu:/Mesh/Open/Mesh file" name="Triangulation" plot="mesh">
+				</struct>
+				<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Domain references" plot="references" selection="multiple" showvalues="true" title="Choose domain references:" type="charlist">
+				</leaf>
+				<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Edge references" plot="references" selection="multiple" showvalues="true" title="Choose edge references:" type="charlist">
+				</leaf>
+				<leaf mesh="menu:/Mesh/Open/Mesh file" name="Vertex references" plot="references" pointdata="data:vertex_ref" selection="multiple" showvalues="true" title="Choose vertex references:" type="charlist">
+				</leaf>
+				<leaf celldata="data:element_num" mesh="menu:/Mesh/Open/Mesh file" name="Element numbering" plot="numbering" title="Clicked element:" type="float">
+				</leaf>
+				<leaf mesh="menu:/Mesh/Open/Mesh file" name="Vertex numbering" plot="numbering" pointdata="data:vertex_num" title="Clicked point:" type="float">
+				</leaf>
+				<struct materials="menu:/Properties/Materials/Materials" mesh="menu:/Mesh/Open/Mesh file" name="Materials" plot="materials">
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Magnetic potential" title="Magnetic vector potential, Az (Wb⁄m, scalar)">
+			<struct name="Magnetic potential" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+				<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Subdomains to plot" selection="multiple" showvalues="true" title="Choose subdomain:" type="charlist">
+				</leaf>
+				<struct name="Real part">
+					<struct mesh="file:out_solution_r${../../Subdomains to plot}.vtu" name="Filled" plot="filled" pointdata="data:Magnetic vector potential (real part)">
+					</struct>
+					<struct mesh="file:out_solution_r${../../Subdomains to plot}.vtu" name="Threshold" plot="threshold" pointdata="data:Magnetic vector potential (real part)">
+					</struct>
+					<struct mesh="file:out_solution_r${../../Subdomains to plot}.vtu" name="Isolines" plot="contour" pointdata="data:Magnetic vector potential (real part)">
+					</struct>
+					<leaf mesh="file:out_solution_r${../../Subdomains to plot}.vtu" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic vector potential (real part)" type="float">
+					</leaf>
+					<struct mesh="file:out_solution_r${../../Subdomains to plot}.vtu" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic vector potential (real part)">
+					</struct>
+				</struct>
+				<struct name="Imaginary part">
+					<struct mesh="file:out_solution_i${../../Subdomains to plot}.vtu" name="Filled" plot="filled" pointdata="data:Magnetic vector potential (imaginary part)">
+					</struct>
+					<struct mesh="file:out_solution_i${../../Subdomains to plot}.vtu" name="Threshold" plot="threshold" pointdata="data:Magnetic vector potential (imaginary part)">
+					</struct>
+					<struct mesh="file:out_solution_i${../../Subdomains to plot}.vtu" name="Isolines" plot="contour" pointdata="data:Magnetic vector potential (imaginary part)">
+					</struct>
+					<leaf mesh="file:out_solution_i${../../Subdomains to plot}.vtu" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic vector potential (imaginary part)" type="float">
+					</leaf>
+					<struct mesh="file:out_solution_i${../../Subdomains to plot}.vtu" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic vector potential (imaginary part)">
+					</struct>
+				</struct>
+				<struct name="Modulus">
+					<struct mesh="file:out_solution_m${../../Subdomains to plot}.vtu" name="Filled" plot="filled" pointdata="data:Magnetic vector potential (modulus)">
+					</struct>
+					<struct mesh="file:out_solution_m${../../Subdomains to plot}.vtu" name="Threshold" plot="threshold" pointdata="data:Magnetic vector potential (modulus)">
+					</struct>
+					<struct mesh="file:out_solution_m${../../Subdomains to plot}.vtu" name="Isolines" plot="contour" pointdata="data:Magnetic vector potential (modulus)">
+					</struct>
+					<leaf mesh="file:out_solution_m${../../Subdomains to plot}.vtu" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic vector potential (modulus)" type="float">
+					</leaf>
+					<struct mesh="file:out_solution_m${../../Subdomains to plot}.vtu" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic vector potential (modulus)">
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Current density" title="Current density, Jz (A⁄m², scalar)">
+			<struct name="Current density" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+				<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Subdomains to plot" selection="multiple" showvalues="true" title="Choose subdomain:" type="charlist">
+				</leaf>
+				<struct name="Real part">
+					<struct mesh="file:out_density_r${../../Subdomains to plot}.vtu" name="Filled" plot="filled" pointdata="data:Current density (real part)">
+					</struct>
+					<struct mesh="file:out_density_r${../../Subdomains to plot}.vtu" name="Threshold" plot="threshold" pointdata="data:Current density (real part)">
+					</struct>
+					<struct mesh="file:out_density_r${../../Subdomains to plot}.vtu" name="Isolines" plot="contour" pointdata="data:Current density (real part)">
+					</struct>
+					<leaf mesh="file:out_density_r${../../Subdomains to plot}.vtu" name="3D Plot" plot="scalar_deformed" pointdata="data:Current density (real part)" type="float">
+					</leaf>
+					<struct mesh="file:out_density_r${../../Subdomains to plot}.vtu" name="Plot over line" plot="plot_over_line" pointdata="data:Current density (real part)">
+					</struct>
+				</struct>
+				<struct name="Imaginary part">
+					<struct mesh="file:out_density_i${../../Subdomains to plot}.vtu" name="Filled" plot="filled" pointdata="data:Current density (imaginary part)">
+					</struct>
+					<struct mesh="file:out_density_i${../../Subdomains to plot}.vtu" name="Threshold" plot="threshold" pointdata="data:Current density (imaginary part)">
+					</struct>
+					<struct mesh="file:out_density_i${../../Subdomains to plot}.vtu" name="Isolines" plot="contour" pointdata="data:Current density (imaginary part)">
+					</struct>
+					<leaf mesh="file:out_density_i${../../Subdomains to plot}.vtu" name="3D Plot" plot="scalar_deformed" pointdata="data:Current density (imaginary part)" type="float">
+					</leaf>
+					<struct mesh="file:out_density_i${../../Subdomains to plot}.vtu" name="Plot over line" plot="plot_over_line" pointdata="data:Current density (imaginary part)">
+					</struct>
+				</struct>
+				<struct name="RMS Value">
+					<struct mesh="file:out_density_m${../../Subdomains to plot}.vtu" name="Filled" plot="filled" pointdata="data:RMS Current density">
+					</struct>
+					<struct mesh="file:out_density_m${../../Subdomains to plot}.vtu" name="Threshold" plot="threshold" pointdata="data:RMS Current density">
+					</struct>
+					<struct mesh="file:out_density_m${../../Subdomains to plot}.vtu" name="Isolines" plot="contour" pointdata="data:RMS Current density">
+					</struct>
+					<leaf mesh="file:out_density_m${../../Subdomains to plot}.vtu" name="3D Plot" plot="scalar_deformed" pointdata="data:RMS Current density" type="float">
+					</leaf>
+					<struct mesh="file:out_density_m${../../Subdomains to plot}.vtu" name="Plot over line" plot="plot_over_line" pointdata="data:RMS Current density">
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Magnetic flux" title="Magnetic flux density, B (T, vector)">
+			<struct name="Magnetic flux density" title="Choose the complex vector field representation:" tooltip="Choose the way of representing the vector field">
+				<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Subdomains to plot" selection="multiple" showvalues="true" title="Choose subdomain:" type="charlist">
+				</leaf>
+				<struct name="Real part">
+					<struct mesh="file:out_induc_r${../../Subdomains to plot}.vtu" name="Vectors" plot="vector_field" pointdata="data:Magnetic induction (real part)" title="Choose options for arrows:" tooltip="Choose the scale and density for arrows">
+					</struct>
+					<struct name="Vector components" title="Choose component:">
+						<struct name="X component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[0];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (real part: X componetnt)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (real part: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (real part: X component)">
+							</struct>
+							<leaf formula="a[0];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (real part: X component)" type="float">
+							</leaf>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (real part: x component)">
+							</struct>
+						</struct>
+						<struct name="Y component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[1];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (real part: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (real part: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (real part: Y component)">
+							</struct>
+							<leaf formula="a[1];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (real part: Y component)" type="float">
+							</leaf>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (real part: Y component)">
+							</struct>
+						</struct>
+						<struct name="Z component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[2];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (real part: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (real part: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (real part: Z component)">
+							</struct>
+							<leaf formula="a[2];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (real part: Z component)" type="float">
+							</leaf>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (real part: Z component)">
+							</struct>
+						</struct>
+						<struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (real part: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (real part: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (real part: modulus)">
+							</struct>
+							<leaf formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (real part: modulus)" type="float">
+							</leaf>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (real part: modulus)">
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Imaginary part">
+					<struct mesh="file:out_induc_i${../../Subdomains to plot}.vtu" name="Vectors" plot="vector_field" pointdata="data:Magnetic induction (imaginary part)" title="Choose options for arrows:" tooltip="Choose the scale and density for arrows">
+					</struct>
+					<struct name="Vector components" title="Choose component:">
+						<struct name="X component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[0];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (imaginary part: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (imaginary part: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (imaginary part: X component)">
+							</struct>
+							<leaf formula="a[0];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (imaginary part: X component)" type="float">
+							</leaf>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (imaginary part: X component)">
+							</struct>
+						</struct>
+						<struct name="Y component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[1];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (imaginary part: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (imaginary part: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (imaginary part: Y component)">
+							</struct>
+							<leaf formula="a[1];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (imaginary part: Y component)" type="float">
+							</leaf>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (imaginary part: Y component)">
+							</struct>
+						</struct>
+						<struct name="Z component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[2];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (imaginary part: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (imaginary part: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (imaginary part: Z component)">
+							</struct>
+							<leaf formula="a[2];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (imaginary part: Z component)" type="float">
+							</leaf>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (imaginary part: Z component)">
+							</struct>
+						</struct>
+						<struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (imaginary part: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (imaginary part: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (imaginary part: modulus)">
+							</struct>
+							<leaf formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (imaginary part: modulus)" type="float">
+							</leaf>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (imaginary part: modulus)">
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Vector modulus">
+					<struct mesh="file:out_induc_m${../../Subdomains to plot}.vtu" name="Vectors" plot="vector_field" pointdata="data:Magnetic induction (modulus)">
+					</struct>
+					<struct name="Vector components" title="Choose component:">
+						<struct name="X component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[0];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (vector modulus: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (vector modulus: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (vector modulus: X component)">
+							</struct>
+							<leaf formula="a[0];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (vector modulus: X component)" type="float">
+							</leaf>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (vector modulus: X component)">
+							</struct>
+						</struct>
+						<struct name="Y component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[1];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (vector modulus: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (vector modulus: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (vector modulus: Y component)">
+							</struct>
+							<leaf formula="a[1];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (vector modulus: Y component)" type="float">
+							</leaf>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (vector modulus: Y component)">
+							</struct>
+						</struct>
+						<struct name="Z component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[2];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (vector modulus: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (vector modulus: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (vector modulus: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (vector modulus: Z component)">
+							</struct>
+							<leaf formula="a[2];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (vector modulus: Z component)" type="float">
+							</leaf>
+						</struct>
+						<struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic induction (vector modulus: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic induction (vector modulus: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic induction (vector modulus: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic induction (vector modulus: modulus)">
+							</struct>
+							<leaf formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic induction (vector modulus: modulus)" type="float">
+							</leaf>
+						</struct>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Magnetic field" title="Magnetic field, H (A⁄m, vector)">
+			<struct name="Magnetic field" title="Choose the complex vector field representation:" tooltip="Choose the way of representing the vector field">
+				<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Subdomains to plot" selection="multiple" showvalues="true" title="Choose subdomain:" type="charlist">
+				</leaf>
+				<struct name="Real part">
+					<struct mesh="file:out_magfield_r${../../Subdomains to plot}.vtu" name="Vectors" plot="vector_field" pointdata="data:Magnetic field (real part)" title="Choose options for arrows:" tooltip="Choose the scale and density for arrows">
+					</struct>
+					<struct name="Vector components" title="Choose component:">
+						<struct name="X component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[0];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (real part: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (real part: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (real part: X component)">
+							</struct>
+							<leaf formula="a[0];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (real part: X component)" type="float">
+							</leaf>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (real part: X component)">
+							</struct>
+						</struct>
+						<struct name="Y component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[1];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (real part: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (real part: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (real part: Y component)">
+							</struct>
+							<leaf formula="a[1];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (real part: Y component)" type="float">
+							</leaf>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (real part: Y component)">
+							</struct>
+						</struct>
+						<struct name="Z component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[2];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (real part: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (real part: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (real part: Z component)">
+							</struct>
+							<leaf formula="a[2];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (real part: Z component)" type="float">
+							</leaf>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (real part: Z component)">
+							</struct>
+						</struct>
+						<struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (real part: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (real part: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (real part: modulus)">
+							</struct>
+							<leaf formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (real part: modulus)" type="float">
+							</leaf>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (real part: modulus)">
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Imaginary part">
+					<struct mesh="file:out_magfield_i${../../Subdomains to plot}.vtu" name="Vectors" plot="vector_field" pointdata="data:Magnetic field (imaginary part)">
+					</struct>
+					<struct name="Vector components" title="Choose component:">
+						<struct name="X component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[0];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (imaginary part: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (imaginary part: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (imaginary part: X component)">
+							</struct>
+							<leaf formula="a[0];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (imaginary part: X component)" type="float">
+							</leaf>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (imaginary part: X component)">
+							</struct>
+						</struct>
+						<struct name="Y component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[1];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (imaginary part: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (imaginary part: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (imaginary part: Y component)">
+							</struct>
+							<leaf formula="a[1];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (imaginary part: Y component)" type="float">
+							</leaf>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (iamginary part: Y component)">
+							</struct>
+						</struct>
+						<struct name="Z component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[2];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (imaginary part: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (imaginary part: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (imaginary part: Z component)">
+							</struct>
+							<leaf formula="a[2];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (imaginary part: Z component)" type="float">
+							</leaf>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (imaginary part: Z component)">
+							</struct>
+						</struct>
+						<struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (imaginary part: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (imaginary part: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (imaginary part: modulus)">
+							</struct>
+							<leaf formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (imaginary part: modulus)" type="float">
+							</leaf>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (imaginary part: modulus)">
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Vector modulus">
+					<struct mesh="file:out_magfield_m${../../Subdomains to plot}.vtu" name="Vectors" plot="vector_field" pointdata="data:Magnetic field (modulus)">
+					</struct>
+					<struct name="Vector components" title="Choose component:">
+						<struct name="X component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[0];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (vector modulus: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (vector modulus: X component)">
+							</struct>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (vector modulus: X component)">
+							</struct>
+							<leaf formula="a[0];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (vector modulus: X component)" type="float">
+							</leaf>
+							<struct formula="a[0];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (vector modulus: X component)">
+							</struct>
+						</struct>
+						<struct name="Y component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[1];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (vector modulus: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (vector modulus: Y component)">
+							</struct>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (vector modulus: Y component)">
+							</struct>
+							<leaf formula="a[1];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (vector modulus: Y component)" type="float">
+							</leaf>
+							<struct formula="a[1];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (vector modulus: Y component)">
+							</struct>
+						</struct>
+						<struct name="Z component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="a[2];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (vector modulus: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (vector modulus: Z component)">
+							</struct>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (vector modulus: Z component)">
+							</struct>
+							<leaf formula="a[2];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (vector modulus: Z component)" type="float">
+							</leaf>
+							<struct formula="a[2];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (vector modulus: Z component)">
+							</struct>
+						</struct>
+						<struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Magnetic field (vector modulus: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Magnetic field (vector modulus: modulus)">
+							</struct>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Magnetic field (vector modulus: modulus)">
+							</struct>
+							<leaf formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Magnetic field (vector modulus: modulus)" type="float">
+							</leaf>
+							<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Magnetic field (vector modulus: modulus)">
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Power density" title="Active power density, Pd (W⁄m³, scalar)">
+			<struct name="Power density" title="Choose subdomain:">
+				<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Subdomains to plot" selection="multiple" showvalues="true" title="Choose subdomain:" type="charlist">
+				</leaf>
+				<struct mesh="file:out_joule${../Subdomains to plot}.vtu" name="Filled" plot="filled" pointdata="data:Active power">
+				</struct>
+				<struct mesh="file:out_joule${../Subdomains to plot}.vtu" name="Threshold" plot="threshold" pointdata="data:Active power">
+				</struct>
+				<struct mesh="file:out_joule${../Subdomains to plot}.vtu" name="Isolines" plot="contour" pointdata="data:Active power">
+				</struct>
+				<leaf mesh="file:out_joule${../Subdomains to plot}.vtu" name="3D Plot" plot="scalar_deformed" pointdata="data:Active power" type="float">
+				</leaf>
+				<struct mesh="file:out_joule${../Subdomains to plot}.vtu" name="Plot over line" plot="plot_over_line" pointdata="data:Active power">
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Lorentz force" title="Lorentz force density, JxB (N⁄m³, vector)">
+			<struct name="Lorentz force" title="Choose the complex vector field representation:" tooltip="Choose the way of representing the vector field">
+				<leaf celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Subdomains to plot" selection="multiple" showvalues="true" title="Choose subdomain:" type="charlist">
+				</leaf>
+				<struct mesh="file:out_lorentz${../Subdomains to plot}.vtu" name="Vectors" plot="vector_field" pointdata="data:Lorentz force">
+				</struct>
+				<struct name="Vector components" title="Choose component:">
+					<struct name="X component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+						<struct formula="a[0];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Lorentz force (X component)">
+						</struct>
+						<struct formula="a[0];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Lorentz force (X component)">
+						</struct>
+						<struct formula="a[0];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Lorentz force (X component)">
+						</struct>
+						<leaf formula="a[0];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Lorentz force (X component)" type="float">
+						</leaf>
+						<struct formula="a[0];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Lorentz force (X component)">
+						</struct>
+					</struct>
+					<struct name="Y component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+						<struct formula="a[1];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Lorentz force (Y component)">
+						</struct>
+						<struct formula="a[1];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Lorentz force (Y component)">
+						</struct>
+						<struct formula="a[1];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Lorentz force (Y component)">
+						</struct>
+						<leaf formula="a[1];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Lorentz force (Y component)" type="float">
+						</leaf>
+						<struct formula="a[1];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Lorentz force (Y component)">
+						</struct>
+					</struct>
+					<struct name="Z component" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+						<struct formula="a[2];a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Lorentz force (Z component)">
+						</struct>
+						<struct formula="a[2];a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Lorentz force (Z component)">
+						</struct>
+						<struct formula="a[2];a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Lorentz force (Z component)">
+						</struct>
+						<leaf formula="a[2];a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Lorentz force (Z component)" type="float">
+						</leaf>
+						<struct formula="a[2];a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Lorentz force (Z component)">
+						</struct>
+					</struct>
+					<struct name="Modulus" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+						<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Filled" plot="filled" pointdata="data:Lorentz force (modulus)">
+						</struct>
+						<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Threshold" plot="threshold" pointdata="data:Lorentz force (modulus)">
+						</struct>
+						<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Isolines" plot="contour" pointdata="data:Lorentz force (modulus)">
+						</struct>
+						<leaf formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="3D Plot" plot="scalar_deformed" pointdata="data:Lorentz force (modulus)" type="float">
+						</leaf>
+						<struct formula="sqrt(a[0]*a[0]+a[1]*a[1]+a[2]*a[2]);a=menu:../../../Vectors" name="Plot over line" plot="plot_over_line" pointdata="data:Lorentz force (modulus)">
+						</struct>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Close all">
+			<action name="close_plots">
+			</action>
+		</submenu>
+	</menu>
+</menus>

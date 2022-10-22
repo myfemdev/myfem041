@@ -1,0 +1,19 @@
+
+.
+../other/blas
+../other/basicmod
+../other/common
+../other/fem
+../other/unv
+../other/xml
+../other/vtu
+../other/conver3d
+
+object
+../../solvers/electrostatics3d
+
+gfortran
+-ffree-line-length-0 -ffixed-line-length-0
+
+
+

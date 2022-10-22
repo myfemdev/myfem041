@@ -1,0 +1,18 @@
+
+.
+../other/basicmod
+../other/common
+../other/fem
+../other/xml
+../other/vtu
+../other/blas
+
+object
+../../solvers/eddy_currents_3d
+
+gfortran
+-ffree-line-length-0 -ffixed-line-length-0 
+
+
+
+

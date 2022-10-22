@@ -1,0 +1,37 @@
+Create a shared version of the sequential library, MUST BE LAST IN SERIES
+
+--- mumps-4.9.2.dfsg.orig/libseq/Makefile
++++ mumps-4.9.2.dfsg/libseq/Makefile
+@@ -7,15 +7,18 @@
+ 
+ include ../Makefile.inc
+ 
+-libmpiseq: libmpiseq$(PLAT).a
++libmpiseq: libmpiseq$(PLAT).a libmpiseq$(PLAT).so
+ 
+ libmpiseq$(PLAT).a: mpi.o mpic.o elapse.o
+ 	$(AR) $@ mpi.o mpic.o elapse.o
+ 	$(RANLIB) $@
++libmpiseq$(PLAT).so: mpi.o mpic.o elapse.o
++	$(FC) -shared $^ -Wl,-soname,libmpiseq$(PLAT)-4.9.2.so -o libmpiseq$(PLAT)-4.9.2.so
++	ln -s libmpiseq$(PLAT)-4.9.2.so $@
+ .f.o:
+-	$(FC) $(OPTF) -c $*.f
++	$(FC) $(OPTF) -fPIC -c $*.f
+ .c.o:
+-	$(CC) $(OPTC) $(CDEFS) -I. -c $*.c
++	$(CC) $(OPTC) $(CDEFS) -I. -fPIC -c $*.c
+ 
+ clean:
+-	$(RM) *.o *.a
++	$(RM) *.o *.a *.so
+--- mumps-4.9.2.dfsg.orig/Makefile
++++ mumps-4.9.2.dfsg/Makefile
+@@ -57,6 +57,7 @@
+ 
+ libseqneeded:
+ 	(cd libseq; $(MAKE))
++	cp libseq/lib* $(libdir)
+ 
+ # Build the libpord.a library and copy it into $(topdir)/lib
+ $(libdir)/libpord$(PLAT).a:

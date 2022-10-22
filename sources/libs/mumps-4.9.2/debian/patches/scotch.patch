@@ -1,0 +1,118 @@
+Add scotch support with different library names to PORD and MUMPS libraries.
+
+Index: mumps-4.9.2.dfsg/Makefile
+===================================================================
+--- mumps-4.9.2.dfsg.orig/Makefile	2010-04-01 19:03:02.000000000 +0200
++++ mumps-4.9.2.dfsg/Makefile	2010-04-01 19:04:04.000000000 +0200
+@@ -47,7 +47,7 @@
+ zexamples:	z
+ 
+ 
+-requiredobj: Makefile.inc $(LIBSEQNEEDED) $(libdir)/libpord_seq$(PLAT).a $(libdir)/libpord_seq$(PLAT).so
++requiredobj: Makefile.inc $(LIBSEQNEEDED) $(libdir)/libpord_scotch$(PLAT).a $(libdir)/libpord_scotch$(PLAT).so
+ 
+ # dummy MPI library (sequential version)
+ 
+@@ -55,21 +55,21 @@
+ 	(cd libseq; $(MAKE))
+ 	cp libseq/lib* $(libdir)
+ 
+-# Build the libpord_seq.a library and copy it into $(topdir)/lib
+-$(libdir)/libpord_seq$(PLAT).a:
++# Build the libpord_scotch.a library and copy it into $(topdir)/lib
++$(libdir)/libpord_scotch$(PLAT).a:
+ 	if [ "$(LPORDDIR)" != "" ] ; then \
+ 	  cd $(LPORDDIR); \
+ 	  $(MAKE) CC="$(CC)" CFLAGS="$(OPTC)" AR="$(AR)" ARFUNCT= RANLIB="$(RANLIB)"; \
+ 	fi;
+ 	if [ "$(LPORDDIR)" != "" ] ; then \
+-	  cp $(LPORDDIR)/libpord_seq.a $@; \
++	  cp $(LPORDDIR)/libpord_scotch.a $@; \
+ 	fi;
+ 
+-$(libdir)/libpord_seq$(PLAT).so:
++$(libdir)/libpord_scotch$(PLAT).so:
+ 	if [ "$(LPORDDIR)" != "" ] ; then \
+-	cd $(LPORDDIR); make CC="$(CC)" CFLAGS="$(OPTC)" AR="$(AR)" ARFUNCT= RANLIB="$(RANLIB)" libpord_seq.so; fi;
++	cd $(LPORDDIR); make CC="$(CC)" CFLAGS="$(OPTC)" AR="$(AR)" ARFUNCT= RANLIB="$(RANLIB)" libpord_scotch.so; fi;
+ 	if [ "$(LPORDDIR)" != "" ] ; then \
+-	cp -a $(LPORDDIR)/libpord_seq*.so lib/; fi;
++	cp -a $(LPORDDIR)/libpord_scotch*.so lib/; fi;
+ 
+ clean:
+ 	(cd src; $(MAKE) clean)
+Index: mumps-4.9.2.dfsg/PORD/lib/Makefile
+===================================================================
+--- mumps-4.9.2.dfsg.orig/PORD/lib/Makefile	2010-04-01 19:03:02.000000000 +0200
++++ mumps-4.9.2.dfsg/PORD/lib/Makefile	2010-04-01 19:03:54.000000000 +0200
+@@ -21,16 +21,16 @@
+ .c.o:
+ 	$(CC) $(COPTIONS) -c $*.c
+ 
+-libpord_seq.a:	$(OBJS)
++libpord_scotch.a:	$(OBJS)
+ 	$(AR) $(ARFUNCT) $@ $(OBJS)
+ 	$(RANLIB) $@
+ 
+-libpord_seq.so: $(OBJS)
+-	$(CC) -shared $(OBJS) -Wl,-soname,libpord_seq-4.9.2.so -o libpord_seq-4.9.2.so
+-	ln -s libpord_seq-4.9.2.so $@
++libpord_scotch.so: $(OBJS)
++	$(CC) -shared $(OBJS) -Wl,-soname,libpord_scotch-4.9.2.so -o libpord_scotch-4.9.2.so
++	ln -s libpord_scotch-4.9.2.so $@
+ 
+ clean:
+ 	rm -f *.o
+ 
+ realclean:
+-	rm -f *.o libpord_seq.a *.so
++	rm -f *.o libpord_scotch.a *.so
+Index: mumps-4.9.2.dfsg/src/Makefile
+===================================================================
+--- mumps-4.9.2.dfsg.orig/src/Makefile	2010-04-01 19:03:02.000000000 +0200
++++ mumps-4.9.2.dfsg/src/Makefile	2010-04-01 19:03:42.000000000 +0200
+@@ -19,10 +19,10 @@
+ 
+ include $(topdir)/Makefile.inc
+ 
+-mumps_lib:    $(libdir)/libmumps_common_seq$(PLAT).a \
+-              $(libdir)/libmumps_common_seq$(PLAT).so \
+-              $(libdir)/lib$(ARITH)mumps_seq$(PLAT).a \
+-              $(libdir)/lib$(ARITH)mumps_seq$(PLAT).so
++mumps_lib:    $(libdir)/libmumps_common_scotch$(PLAT).a \
++              $(libdir)/libmumps_common_scotch$(PLAT).so \
++              $(libdir)/lib$(ARITH)mumps_scotch$(PLAT).a \
++              $(libdir)/lib$(ARITH)mumps_scotch$(PLAT).so
+ 
+ OBJS_COMMON = \
+         mumps_part9.o\
+@@ -53,21 +53,21 @@
+         $(ARITH)mumps_struc_def.o
+ 
+ 
+-$(libdir)/libmumps_common_seq$(PLAT).a:	$(OBJS_COMMON)
++$(libdir)/libmumps_common_scotch$(PLAT).a:	$(OBJS_COMMON)
+ 	$(AR) $@ $?
+ 	$(RANLIB) $@
+ 
+-$(libdir)/libmumps_common_seq$(PLAT).so:	$(OBJS_COMMON) $(topdir)/libseq/libmpiseq.so
+-	$(FC) -shared $^ -Wl,-soname,libmumps_common_seq$(PLAT)-4.9.2.so -L$(libdir) -lpord_seq -lpthread -lmpiseq -o $(libdir)/libmumps_common_seq$(PLAT)-4.9.2.so
+-	ln -s libmumps_common_seq$(PLAT)-4.9.2.so $@
++$(libdir)/libmumps_common_scotch$(PLAT).so:	$(OBJS_COMMON) $(topdir)/libseq/libmpiseq.so
++	$(FC) -shared $^ -Wl,-soname,libmumps_common_scotch$(PLAT)-4.9.2.so -L$(libdir) -lpord_scotch -lpthread -lmpiseq -o $(libdir)/libmumps_common_scotch$(PLAT)-4.9.2.so
++	ln -s libmumps_common_scotch$(PLAT)-4.9.2.so $@
+ 
+-$(libdir)/lib$(ARITH)mumps_seq$(PLAT).a:    $(OBJS)
++$(libdir)/lib$(ARITH)mumps_scotch$(PLAT).a:    $(OBJS)
+ 	$(AR) $@ $?
+ 	$(RANLIB) $@
+ 
+-$(libdir)/lib$(ARITH)mumps_seq$(PLAT).so:    $(OBJS)
+-	$(FC) -shared $^ -Wl,-soname,lib$(ARITH)mumps_seq$(PLAT)-4.9.2.so -L$(libdir) -lmumps_common_seq -lmpiseq -lblas -o $(libdir)/lib$(ARITH)mumps_seq$(PLAT)-4.9.2.so
+-	ln -s lib$(ARITH)mumps_seq$(PLAT)-4.9.2.so $@
++$(libdir)/lib$(ARITH)mumps_scotch$(PLAT).so:    $(OBJS)
++	$(FC) -shared $^ -Wl,-soname,lib$(ARITH)mumps_scotch$(PLAT)-4.9.2.so -L$(libdir) -lmumps_common_scotch -lmpiseq -lblas -o $(libdir)/lib$(ARITH)mumps_scotch$(PLAT)-4.9.2.so
++	ln -s lib$(ARITH)mumps_scotch$(PLAT)-4.9.2.so $@
+ 
+ $(ARITH)mumps_load.o:		$(ARITH)mumps_comm_buffer.o \
+ 				$(ARITH)mumps_struc_def.o
