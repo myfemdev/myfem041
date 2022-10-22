@@ -1,2 +1,4 @@
 소스코드 Git주소
 https://github.com/myfemdev/myfem041.git
+
+현 소스코드는 초기 버전 041 기준으로 작업시작하였음(기존 코드는 040 버전으로 작업)
