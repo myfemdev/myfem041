@@ -1,5 +1,0 @@
-libmumps_seq/libmumps_common_seq.* usr/lib
-libmumps_seq/lib?mumps_seq.* usr/lib
-libmumps_seq/libpord_seq.* usr/lib
-libmumps_seq/libmpiseq_seq.* usr/lib
-libseq/*.h usr/include/mumps_seq

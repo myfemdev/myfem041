@@ -1,4 +1,0 @@
-lib/libmumps_common.* usr/lib
-lib/lib?mumps.* usr/lib
-lib/libpord.* usr/lib
-include/*.h usr/include

@@ -1,7 +1,0 @@
-<?xml version="1.0"?>
-<VTKFile type="Collection" version="0.1" byte_order="LittleEndian">
-  <Collection>
-    <DataSet timestep="0.0" group="" part="0" file="out_induc_J1.vtu"/>
-    <DataSet timestep="0.0" group="" part="0" file="out_induc_J2.vtu"/>
-  </Collection>
-</VTKFile>
