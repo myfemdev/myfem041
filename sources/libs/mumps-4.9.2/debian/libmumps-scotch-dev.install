@@ -1,0 +1,4 @@
+libmumps_scotch/libmumps_common_scotch.* usr/lib
+libmumps_scotch/lib?mumps_scotch.* usr/lib
+libmumps_scotch/libpord_scotch.* usr/lib
+libmumps_scotch/libmpiseq_scotch.* usr/lib

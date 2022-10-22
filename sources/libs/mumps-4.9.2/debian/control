@@ -1,0 +1,125 @@
+Source: mumps
+Section: devel
+Priority: extra
+Maintainer: Adam C. Powell, IV <hazelsct@debian.org>
+Standards-Version: 3.9.1
+Build-Depends: debhelper (>= 5), quilt, gfortran, libscalapack-mpi-dev,
+ libblacs-mpi-dev, libblas-dev | libblas-3gf.so, liblapack-dev | liblapack-3gf.so,
+ libscotch-dev, libptscotch-dev (>= 5.1.7.dfsg-4), mpi-default-dev
+Build-Conflicts: libatlas3gf-base, libatlas-base-dev
+Vcs-Git: git://git.debian.org/git/debian-science/packages/mumps.git
+Vcs-Browser: http://git.debian.org/?p=debian-science/packages/mumps.git
+Homepage: http://mumps.enseeiht.fr/
+
+Package: libmumps-dev
+Architecture: any
+Section: libdevel
+Depends: libmumps-4.9.2 (= ${binary:Version}), libscalapack-mpi-dev,
+ mpi-default-dev, ${misc:Depends}
+Description: Direct linear systems solver - parallel development files
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.
+
+Package: libmumps-seq-dev
+Architecture: any
+Section: libdevel
+Depends: libmumps-seq-4.9.2 (= ${binary:Version}), libmumps-dev, ${misc:Depends}
+Description: Direct linear systems solver - non-parallel development files
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.
+ .
+ This package is built the MUMPS libseq dummy sequential MPI library.
+ Unless you know that you specifically need this, then you almost
+ certainly want the libmumps-dev package.
+
+Package: libmumps-4.9.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: mpi-default-bin
+Description: Direct linear systems solver - parallel shared libraries
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.
+
+Package: libmumps-seq-4.9.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Direct linear systems solver - non-parallel shared libraries
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.
+ .
+ This package is built the MUMPS libseq dummy sequential MPI library.
+ Unless you know that you specifically need this, then you almost
+ certainly want the libmumps-4.9.2 package.
+
+Package: libmumps-scotch-4.9.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Direct linear systems solver - Scotch-version shared libraries
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.
+ .
+ This package is built the MUMPS libseq dummy sequential MPI library
+ with scotch support. Unless you know that you specifically need this, 
+ then you almost certainly want the libmumps-4.9.2 package.
+
+Package: libmumps-scotch-dev
+Architecture: any
+Section: libdevel
+Depends: libmumps-scotch-4.9.2 (= ${binary:Version}), libmumps-dev, ${misc:Depends}
+Description: Direct linear systems solver - Scotch-version development files
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.
+ .
+ This package is built the MUMPS libseq dummy sequential MPI library
+ with scotch support. Unless you know that you specifically need this, 
+ then you almost certainly want the libmumps-4.9.2 package.
+
+Package: libmumps-ptscotch-4.9.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Direct linear systems solver - PTScotch-version shared libraries
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.
+ .
+ This package is built with ptscotch support.
+
+Package: libmumps-ptscotch-dev
+Architecture: any
+Section: libdevel
+Depends: libmumps-ptscotch-4.9.2 (= ${binary:Version}), libmumps-dev, ${misc:Depends}
+Description: Direct linear systems solver - PTScotch-version development files
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.
+ .
+ This package is built with ptscotch support.
+
+Package: mumps-test
+Architecture: any
+Section: math
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Suggests: mpi-default-bin
+Description: Example/test binaries using MUMPS
+ MUMPS implements a direct solver for large sparse linear systems, with a
+ particular focus on symmetric positive definite matrices.  It can
+ operate on distributed matrices e.g. over a cluster.  It has Fortran and
+ C interfaces, and can interface with ordering tools such as Scotch.

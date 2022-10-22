@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Introduction</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css" />
+</head>
+<body id="top">
+
+<h3>2.1. Introduction</h3>
+<a name="top"><strong>Table of contents</strong></a>
+<ul>
+  <li><a href="#graphical">Starting the graphical interface</a></li>
+  <li><a href="#interface">Interface window. Role of zones</a></li>
+  <li><a href="#directory">Selecting the working directory</a></li>
+  <li><a href="#application">Selecting the application</a></li>
+  <li><a href="#principles">General operation principles</a></li>
+</ul>
+<!-- <hr> -->
+
+<h4><a name="graphical">&#9633; Starting the graphical interface</a></h4>
+<p>This section describes most of the components in the MaxFEM environment. Throughout this manual we will assume that the program has been installed in the folder <em>INSTALLDIR</em>.</p> 
+<p>In order to start working with the interface three steps must be performed:</p>
+
+<OL>
+	<LI><p>Open the interface.</p>
+	<LI><p>Choose a working directory.</p>
+	<LI><p>Select an application.</p>
+</OL>
+
+<p>
+	The application can be executed either by clicking on a menu, clicking on an icon or by typing the name of the executable in the command line, depending on the chosen installation mode. In the latter case, the user runs the file <i>INSTALLDIR/code/&lt;name&gt;.py</i>, where <i>name</i> corresponds to the package. The graphical interface is then displayed; the first time that interface is open the menu bar consists of three dropdown menus: <strong> Project </strong>, <strong>Help</strong> and <strong>Materials database</strong>.
+</p>
+<div class="back"><a href="#top">Back to top</a></div>
+<!-- <hr> -->
+
+<h4><a name="interface">&#9633; Interface window</a></h4>
+		
+	<p>MaxFEM desktop is automatically configured taking into account: </p>
+	<UL>
+		<LI><p>The space dimension of the application (2D or 3D).</p> 
+		<LI><p>The physical application defined (magnetostatics, electrostatics, etc).</p>
+		<LI><p>The context: <b>Project, Mesh, Properties, etc.</b></p>
+	</UL>
+
+	<p>MaxFEM graphical interface consists of several graphical components, such as:</p>
+	<UL>
+		<LI><p>Windows</p>
+		<LI><p>Buttons</p>
+		<LI><p>Menus</p>
+		<LI><p>Text fields</p>
+	</UL>
+	
+	<p>The user interacts with the application by: </p>
+	<UL>
+		<LI><p>Clicking on a button to choose a program option.</p>
+		<LI><p>Making a choice from a menu.</p>
+		<LI><p>Entering text in a text field.</p>
+		<LI><p>Dragging a scroll bar.</p>
+		<LI><p>Clicking on a window's close button.</p>
+	</UL>
+	<p>When expanding the folders in MaxFEM menu, icons and labels representing different actions are displayed. The graphical interface of MaxFem allows, trough reconfigurable menus, collecting data, performing calculations and displaying code results The general MaxFEM window consists of several zones, which have been sketched in the figure below.
+	</p>
+	<p class="MsoNormal" align="center"><img width="704" height="501" id="Imagen 34" src="Introduction_images/image001.png"></p>
+	
+	<div align=center>
+	<table  border=0>
+		<tr>
+			<td style='text-align:left'>1. Title bar</td>
+			<td style='text-align:left'>&nbsp;&nbsp;2. Menu bar</td>
+			<td style='text-align:left'>&nbsp;&nbsp;3. Data window</td>
+			<td style='text-align:left'>&nbsp;&nbsp;4. Visualization bar  </td>
+		</tr>
+		<tr align=left>
+			<td style='text-align:left'>5. Visualization menu</td>
+			<td style='text-align:left'>&nbsp;&nbsp;6. Scale</td>
+			<td style='text-align:left'>&nbsp;&nbsp;7. Visualization window</td>
+			<td style='text-align:left'>&nbsp;&nbsp;8. Scale bar</td>
+		</tr>
+		<tr align=left>
+			<td style='text-align:left'>9. Time bar</td>
+			<td style='text-align:left'>&nbsp;&nbsp;10. Message window </td>
+			<td style='text-align:left'>&nbsp;&nbsp;11. Status bar</td>
+			<td></td>
+		</tr>		
+	</table>
+	</div>
+<ul>
+  <li><p>Title bar: displays general information (software name, version number, selected application, project name and location).</p></li>
+  <li><p>Menu bar: access to the menus corresponding to the  different contexts.</p></li>
+  <li><p>Data window: displays dialog boxes where the user can choose options and type or modify data.</p></li>
+  <li><p>Visualization bar: shows the current visualizations.</p></li>
+  <li><p>Visualization menu: holds buttons that perform actions on the visualization.</p></li>
+  <li><p>Scale: shows the scale range and colors.</p></li>
+  <li><p>Visualization window: shows the graphical results corresponding to the problem being modelled.</p></li>
+  <li><p>Scale bar: holds buttons that perform actions on the scale.</p></li>  
+  <li><p>Time bar: holds buttons that perform actions on the time-dependent visualizations.</p></li>  
+  <li><p>Message window: shows the output of the computational solvers.</p></li>
+  <li><p>Status bar: Information concerning different current action.</p></li>
+</ul>
+<div class="back"><a href="#top">Back to top</a></div>
+<!-- <hr> -->
+
+<h4><a name="directory">&#9633; Selecting the working directory</a></h4>
+<p>
+	Before starting to work with a particular application, the user has to choose a working directory via the menu bar <strong>Project &#8594; Select Folder &#8594; Open</strong>. This folder will contain the files associated with the application. If the directory had already been used as a working directory for an application, the interface will automatically load the menu bar associated with that application, which had been saved in the file <code>local.mnu.xml</code>. However, the application can be changed on the menu <strong>Application</strong> at any moment.
+</p>
+<div class="back"><a href="#top">Back to top</a></div>
+<!-- <hr> -->
+
+<h4><a name="application">&#9633; Selecting the application</a></h4>
+<p>The graphical interface allows working with one or more scientific applications. A <i>scientific application</i> is a software that needs certain input data and, after running one or more codes, produces some result files for post-processing or visualization.</p>
+<p>
+Each application has a particular menu bar to request the input data, running the corresponding internal codes and displaying the results.
+</p>
+<div class="back"><a href="#top">Back to top</a></div>
+<!-- <hr> -->
+
+<h4><a name="principles">&#9633; General operation principles</a></h4>
+	<p> 
+		The submenu <strong>Project &#8594; Application </strong> allows the user to select one of the available applications, whose data will be first copied into the working directory and then loaded to show the specific menus bars. At this time, the available applications are:
+	</p>
+	<UL>
+		<LI><p>Electrostatics 2D and 3D.</p></li>		
+		<LI><p>Direct current 2D and 3D.</p></li>
+		<LI><p>Magnetostatics 2D.</p></li>
+		<LI><p>Transient Magnetics 2D.</p></li>
+		<LI><p>Eddy currents 2D, 3D and axisymmetrics.</p></li>
+	</UL>
+	<p>
+		Note that if the working directory has been previously associated with an application the files stored in the directory may	be overwritten.
+	</p>
+<p>Selecting <strong>Sample Data</strong> brings up a menu with a list of some examples for the selected application. The user can modify the
+predefined input data in order to obtain different results. A blank template is included among these examples, called <strong>New</strong>.</p>
+
+<p>The usual procedure in a numerical simulation begins with the definition of the data; then the numerical solver is executed and the results can be visualize (See Figure 1). All this actions are performed in MaxFEM through the menu items. The recommended visiting order of the MaxFEM menu items is their natural order of appearance.</p>
+
+<p align="center"> <img src="Introduction_images/dependencias-maxfem.png" width=60%>
+  <br clear="all" />
+  <span class="caption"> <strong>Figure 1:</strong> Usual procedure in a MaxFEM simulation.</span>
+</p>
+<div class="back"><a href="#top">Back to top</a></div>
+<!-- <hr> -->
+
+<p>&nbsp;</p>
+
+</body></html>

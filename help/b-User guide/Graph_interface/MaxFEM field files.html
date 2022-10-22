@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>MaxFEM field files</title>
+  <link rel="stylesheet" href="../../style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="highlight.css"   type="text/css" media="screen" />  
+</head>
+<body id="top">
+ 
+<h3 id="field_files"><a name="top">2.4. MaxFEM field files</a></h3>
+<p>All the MaxFEM solvers write the resulting fields in the working folder using the VTK XML format, developed by 
+<a href="http://www.kitware.com/">Kitware Inc</a>. The file type is serial and the mesh is considered an unstructured grid. Thus, 
+the corresponding extension for the result files is VTU. The VTK format is described <a href="http://www.vtk.org/VTK/img/file-formats.pdf">here</a>.
+
+<p>MaxFEM solvers use a <a href="http://sites.google.com/site/stefanozaghi/lib_vtk_io">Fortran 90 module</a> to write VTK XML. 
+The main portion of this code has been programmed by Stefano Zaghi (Dept. of Computational Hydrodynamics at INSEAN).</p>
+ 
+<p>MaxFEM automatically loads the result files. If the user wants to manage and/or visualize the results by its own, a wide range of 
+graphic applications support VTK XML files, like <a href="http://www.paraview.org/">Paraview</a>, <a href="http://mayavi.sourceforge.net/">MayaVi</a>, 
+<a href="http://www.ensight.com/">EnSight</a>,... For each result field, the name of the VTU file can be seen by clicking <strong class="gris">Names</strong> button in the <a href="Introduction.html#interface">Visualization menu</a>.</p>
+
+<h4>Data fields</h4>
+<p>In some applications, a data field must be provided by the user. That is the case, for example, when a temperature field is necessary 
+to work with materials with properties that depend on temperature. In such case, VTK XML is a valid format for those
+data files.</p>
+
+<p>Alternatively, the user can provide a file in MFF format. The files written in this simple format are ASCII files composed
+of a single record. This record contains an integer <var>nver</var> and a double precision array <var>v</var>, with all the 
+elements separated by blank spaces:
+<ul>
+  <li><p><var>nver</var> is the number of nodes of the mesh multiplied by the dimension of the field (a scalar field has dimension 1).</p></li>
+  <li><p><var>v</var> is the array formed by the field values on the nodes. In the case of a vector field, all the coordinates
+  of the field in each node appear consecutive in <var>v</var>.</p></li>
+</ul>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+</body>
+</html>

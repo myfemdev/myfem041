@@ -1,0 +1,541 @@
+<?xml version='1.0' encoding='iso-8859-15'?>
+<data>
+	<menu name="Materials database">
+		<submenu name="Open">
+			<struct name="Materials">
+				<struct name="Air">
+					<struct name="Relative permittivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1.000589 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								0 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Bath">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1e3 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Carbon paste">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								10000 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Cast iron">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								9382600 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Cathodic block">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								27000 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Collector bar">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1670000 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Copper">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								58e6 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Graphite">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								240000 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Liquid aluminium">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								76900000 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Magnesium alloy">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								11e6 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Rammed paste">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								17800 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Silicon">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1234568 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Vacuum">
+					<struct name="Relative permittivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								0 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Test Material 1">
+					<struct name="Relative permittivity">
+						<struct name="A temperature dependant table">
+							<struct name="Isotropic">
+								<leaf name="Temperatures" totalnum="4" type="float">
+									<elements>
+									20 40 60 80 
+									</elements>
+								</leaf>
+								<leaf name="Values" totalnum="4" type="float">
+									<elements>
+									1 1 1 1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A temperature dependant table">
+							<struct name="Isotropic">
+								<leaf name="Temperatures" totalnum="2" type="float">
+									<elements>
+									10 20 
+									</elements>
+								</leaf>
+								<leaf name="Values" totalnum="2" type="float">
+									<elements>
+									20 40 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Test Material 2">
+					<struct name="Relative permittivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								37.8d6 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1.000022 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Test Material 3">
+					<struct name="Relative permittivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								59.6d6 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									0.999994 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Test Material 4">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<struct name="Orthotropic">
+								<leaf name="X value" totalnum="1" type="float">
+									<elements>
+									2 
+									</elements>
+								</leaf>
+								<leaf name="Y value" totalnum="1" type="float">
+									<elements>
+									6 
+									</elements>
+								</leaf>
+								<leaf name="Z value" totalnum="1" type="float">
+									<elements>
+									0 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Test Material 5">
+					<struct name="Relative permittivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								1 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Test Material 6">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="H-B Table">
+							<struct name="Build table">
+								<leaf name="H values" totalnum="501" type="float">
+									<elements>
+									0.0 4.00080016003 8.00160032006 12.0024004801 16.0032006401 20.0040008002 24.0048009602 28.0056011202 32.0064012803 36.0072014403 40.0080016003 44.0088017604 48.0096019204 52.0104020804 56.0112022404 60.0120024005 64.0128025605 68.0136027205 72.0144028806 76.0152030406 80.0160032006 84.0168033607 88.0176035207 92.0184036807 96.0192038408 100.020004001 104.020804161 108.021604321 112.022404481 116.023204641 120.024004801 124.024804961 128.025605121 132.026405281 136.027205441 140.028005601 144.028805761 148.029605921 152.030406081 156.031206241 160.032006401 164.032806561 168.033606721 172.034406881 176.035207041 180.036007201 184.036807361 188.037607522 192.038407682 196.039207842 200.040008002 204.040808162 208.041608322 212.042408482 216.043208642 220.044008802 224.044808962 228.045609122 232.046409282 236.047209442 240.048009602 244.048809762 248.049609922 252.050410082 256.051210242 260.052010402 264.052810562 268.053610722 272.054410882 276.055211042 280.056011202 284.056811362 288.057611522 292.058411682 296.059211842 300.060012002 304.060812162 308.061612322 312.062412482 316.063212643 320.064012803 324.064812963 328.065613123 332.066413283 336.067213443 340.068013603 344.068813763 348.069613923 352.070414083 356.071214243 360.072014403 364.072814563 368.073614723 372.074414883 376.075215043 380.076015203 384.076815363 388.077615523 392.078415683 396.079215843 400.080016003 404.080816163 408.081616323 412.082416483 416.083216643 420.084016803 424.084816963 428.085617123 432.086417283 436.087217443 440.088017604 444.088817764 448.089617924 452.090418084 456.091218244 460.092018404 464.092818564 468.093618724 472.094418884 476.095219044 480.096019204 484.096819364 488.097619524 492.098419684 496.099219844 500.100020004 504.100820164 508.101620324 512.102420484 516.103220644 520.104020804 524.104820964 528.105621124 532.106421284 536.107221444 540.108021604 544.108821764 548.109621924 552.110422084 556.111222244 560.112022404 564.112822565 568.113622725 572.114422885 576.115223045 580.116023205 584.116823365 588.117623525 592.118423685 596.119223845 600.120024005 604.120824165 608.121624325 612.122424485 616.123224645 620.124024805 624.124824965 628.125625125 632.126425285 636.127225445 640.128025605 644.128825765 648.129625925 652.130426085 656.131226245 660.132026405 664.132826565 668.133626725 672.134426885 676.135227045 680.136027205 684.136827365 688.137627526 692.138427686 696.139227846 700.140028006 704.140828166 708.141628326 712.142428486 716.143228646 720.144028806 724.144828966 728.145629126 732.146429286 736.147229446 740.148029606 744.148829766 748.149629926 752.150430086 756.151230246 760.152030406 764.152830566 768.153630726 772.154430886 776.155231046 780.156031206 784.156831366 788.157631526 792.158431686 796.159231846 800.160032006 804.160832166 808.161632326 812.162432486 816.163232647 820.164032807 824.164832967 828.165633127 832.166433287 836.167233447 840.168033607 844.168833767 848.169633927 852.170434087 856.171234247 860.172034407 864.172834567 868.173634727 872.174434887 876.175235047 880.176035207 884.176835367 888.177635527 892.178435687 896.179235847 900.180036007 904.180836167 908.181636327 912.182436487 916.183236647 920.184036807 924.184836967 928.185637127 932.186437287 936.187237447 940.188037608 944.188837768 948.189637928 952.190438088 956.191238248 960.192038408 964.192838568 968.193638728 972.194438888 976.195239048 980.196039208 984.196839368 988.197639528 992.198439688 996.199239848 1000.20004001 1004.20084017 1008.20164033 1012.20244049 1016.20324065 1020.20404081 1024.20484097 1028.20564113 1032.20644129 1036.20724145 1040.20804161 1044.20884177 1048.20964193 1052.21044209 1056.21124225 1060.21204241 1064.21284257 1068.21364273 1072.21444289 1076.21524305 1080.21604321 1084.21684337 1088.21764353 1092.21844369 1096.21924385 1100.22004401 1104.22084417 1108.22164433 1112.22244449 1116.22324465 1120.22404481 1124.22484497 1128.22564513 1132.22644529 1136.22724545 1140.22804561 1144.22884577 1148.22964593 1152.23044609 1156.23124625 1160.23204641 1164.23284657 1168.23364673 1172.23444689 1176.23524705 1180.23604721 1184.23684737 1188.23764753 1192.23844769 1196.23924785 1200.24004801 1204.24084817 1208.24164833 1212.24244849 1216.24324865 1220.24404881 1224.24484897 1228.24564913 1232.24644929 1236.24724945 1240.24804961 1244.24884977 1248.24964993 1252.25045009 1256.25125025 1260.25205041 1264.25285057 1268.25365073 1272.25445089 1276.25525105 1280.25605121 1284.25685137 1288.25765153 1292.25845169 1296.25925185 1300.26005201 1304.26085217 1308.26165233 1312.26245249 1316.26325265 1320.26405281 1324.26485297 1328.26565313 1332.26645329 1336.26725345 1340.26805361 1344.26885377 1348.26965393 1352.27045409 1356.27125425 1360.27205441 1364.27285457 1368.27365473 1372.27445489 1376.27525505 1380.27605521 1384.27685537 1388.27765553 1392.27845569 1396.27925585 1400.28005601 1404.28085617 1408.28165633 1412.28245649 1416.28325665 1420.28405681 1424.28485697 1428.28565713 1432.28645729 1436.28725745 1440.28805761 1444.28885777 1448.28965793 1452.29045809 1456.29125825 1460.29205841 1464.29285857 1468.29365873 1472.29445889 1476.29525905 1480.29605921 1484.29685937 1488.29765953 1492.29845969 1496.29925985 1500.30006001 1504.30086017 1508.30166033 1512.30246049 1516.30326065 1520.30406081 1524.30486097 1528.30566113 1532.30646129 1536.30726145 1540.30806161 1544.30886177 1548.30966193 1552.31046209 1556.31126225 1560.31206241 1564.31286257 1568.31366273 1572.31446289 1576.31526305 1580.31606321 1584.31686337 1588.31766353 1592.31846369 1596.31926385 1600.32006401 1604.32086417 1608.32166433 1612.32246449 1616.32326465 1620.32406481 1624.32486497 1628.32566513 1632.32646529 1636.32726545 1640.32806561 1644.32886577 1648.32966593 1652.33046609 1656.33126625 1660.33206641 1664.33286657 1668.33366673 1672.33446689 1676.33526705 1680.33606721 1684.33686737 1688.33766753 1692.33846769 1696.33926785 1700.34006801 1704.34086817 1708.34166833 1712.34246849 1716.34326865 1720.34406881 1724.34486897 1728.34566913 1732.34646929 1736.34726945 1740.34806961 1744.34886977 1748.34966993 1752.35047009 1756.35127025 1760.35207041 1764.35287057 1768.35367073 1772.35447089 1776.35527105 1780.35607121 1784.35687137 1788.35767153 1792.35847169 1796.35927185 1800.36007201 1804.36087217 1808.36167233 1812.36247249 1816.36327265 1820.36407281 1824.36487297 1828.36567313 1832.36647329 1836.36727345 1840.36807361 1844.36887377 1848.36967393 1852.37047409 1856.37127425 1860.37207441 1864.37287457 1868.37367473 1872.37447489 1876.37527506 1880.37607522 1884.37687538 1888.37767554 1892.3784757 1896.37927586 1900.38007602 1904.38087618 1908.38167634 1912.3824765 1916.38327666 1920.38407682 1924.38487698 1928.38567714 1932.3864773 1936.38727746 1940.38807762 1944.38887778 1948.38967794 1952.3904781 1956.39127826 1960.39207842 1964.39287858 1968.39367874 1972.3944789 1976.39527906 1980.39607922 1984.39687938 1988.39767954 1992.3984797 1996.39927986 2000.00000000 
+									</elements>
+								</leaf>
+								<leaf name="B values" totalnum="501" type="float">
+									<elements>
+									0.0 0.0251279661307 0.0502304073857 0.0752819541472 0.100257544959 0.125132574793 0.149883036509 0.174485653562 0.198918002189 0.223158621651 0.247187111354 0.270984214019 0.294531884401 0.317813343342 0.340813117284 0.363517063602 0.385912382387 0.407987615494 0.42973263385 0.451138614127 0.47219800597 0.49290449104 0.513252935104 0.533239334429 0.552860757666 0.572115284352 0.591001941102 0.609520636429 0.627672095075 0.645457792608 0.662879890956 0.67994117542 0.69664499366 0.712995197004 0.728996084394 0.744652349169 0.759969028853 0.774951458027 0.789605224333 0.8039361276 0.817950142054 0.831653381546 0.845052067698 0.858152500852 0.870961033704 0.883484047469 0.895727930455 0.907699058877 0.919403779778 0.930848395903 0.942039152384 0.952982225091 0.963683710527 0.974149617121 0.984385857812 0.994398243796 1.00419247933 1.01377415752 1.02314875692 1.03232163897 1.04129804606 1.05008310028 1.05868180269 1.06709903305 1.07533955001 1.0834079917 1.0913088766 1.09904660471 1.10662545898 1.11404960695 1.12132310254 1.12844988806 1.13543379622 1.14227855238 1.14898777681 1.15556498697 1.16201359997 1.16833693489 1.17453821527 1.18062057153 1.1865870434 1.19244058232 1.19818405389 1.20382024024 1.20935184237 1.21478148247 1.22011170622 1.22534498503 1.23048371821 1.23553023515 1.24048679742 1.24535560083 1.2501387774 1.25483839739 1.25945647111 1.26399495085 1.26845573267 1.2728406581 1.27715151591 1.28139004373 1.28555792966 1.28965681382 1.29368828986 1.29765390644 1.30155516861 1.30539353922 1.30917044022 1.31288725399 1.31654532451 1.32014595863 1.32369042723 1.3271799663 1.33061577808 1.33399903211 1.3373308662 1.3406123875 1.34384467337 1.34702877235 1.35016570506 1.35325646501 1.35630201949 1.35930331033 1.36226125472 1.36517674592 1.36805065403 1.37088382664 1.37367708957 1.37643124748 1.37914708453 1.38182536498 1.3844668338 1.38707221721 1.38964222328 1.39217754245 1.39467884802 1.39714679669 1.39958202904 1.40198516996 1.40435682917 1.40669760159 1.40900806783 1.41128879454 1.41354033486 1.41576322877 1.41795800348 1.42012517379 1.42226524241 1.42437870034 1.4264660272 1.42852769148 1.43056415093 1.4325758528 1.43456323416 1.43652672215 1.43846673428 1.44038367867 1.44227795431 1.44414995132 1.44600005115 1.44782862686 1.44963604329 1.45142265733 1.45318881809 1.45493486712 1.45666113863 1.45836795962 1.46005565013 1.46172452339 1.46337488599 1.46500703807 1.46662127346 1.46821787986 1.46979713901 1.47135932678 1.47290471339 1.47443356349 1.47594613635 1.47744268595 1.47892346113 1.48038870574 1.48183865871 1.48327355421 1.48469362175 1.4860990863 1.48749016839 1.48886708422 1.49023004577 1.4915792609 1.49291493343 1.49423726327 1.49554644645 1.4968426753 1.49812613846 1.49939702098 1.50065550445 1.50190176702 1.50313598352 1.5043583255 1.50556896134 1.50676805631 1.50795577264 1.50913226955 1.51029770341 1.51145222769 1.51259599312 1.51372914769 1.51485183676 1.51596420304 1.51706638675 1.51815852559 1.51924075483 1.52031320738 1.5213760138 1.52242930237 1.52347319915 1.52450782801 1.52553331068 1.52654976681 1.52755731399 1.52855606782 1.52954614191 1.53052764798 1.53150069585 1.5324653935 1.5334218471 1.53437016105 1.53531043804 1.53624277904 1.53716728337 1.5380840487 1.53899317114 1.5398947452 1.54078886388 1.54167561867 1.54255509959 1.54342739522 1.54429259271 1.54515077784 1.54600203503 1.54684644734 1.54768409656 1.54851506318 1.54933942642 1.55015726429 1.55096865358 1.55177366989 1.55257238766 1.55336488019 1.55415121966 1.55493147713 1.55570572262 1.55647402506 1.55723645235 1.55799307137 1.55874394801 1.55948914716 1.56022873277 1.56096276781 1.56169131434 1.56241443352 1.56313218558 1.56384462991 1.56455182501 1.56525382854 1.56595069732 1.56664248736 1.56732925387 1.56801105125 1.56868793314 1.56935995242 1.57002716122 1.57068961093 1.57134735221 1.57200043503 1.57264890864 1.57329282162 1.57393222188 1.57456715664 1.57519767249 1.57582381539 1.57644563064 1.57706316295 1.5776764564 1.57828555449 1.57889050012 1.57949133562 1.58008810274 1.58068084269 1.5812695961 1.58185440309 1.58243530324 1.58301233559 1.58358553868 1.58415495055 1.58472060872 1.58528255024 1.58584081168 1.58639542911 1.58694643816 1.58749387398 1.5880377713 1.58857816436 1.58911508701 1.58964857262 1.59017865418 1.59070536424 1.59122873494 1.59174879802 1.59226558482 1.5927791263 1.593289453 1.59379659512 1.59430058247 1.59480144448 1.59529921023 1.59579390845 1.59628556751 1.59677421542 1.59725987986 1.59774258819 1.59822236741 1.59869924422 1.59917324499 1.59964439575 1.60011272226 1.60057824994 1.60104100392 1.60150100905 1.60195828984 1.60241287055 1.60286477515 1.60331402732 1.60376065045 1.6042046677 1.60464610191 1.60508497568 1.60552131136 1.60595513102 1.60638645649 1.60681530934 1.60724171091 1.60766568227 1.60808724428 1.60850641754 1.60892322242 1.60933767909 1.60974980745 1.61015962719 1.61056715781 1.61097241856 1.61137542847 1.61177620639 1.61217477094 1.61257114054 1.6129653334 1.61335736754 1.61374726079 1.61413503076 1.61452069489 1.61490427042 1.61528577442 1.61566522374 1.61604263509 1.61641802497 1.61679140972 1.6171628055 1.61753222829 1.61789969391 1.61826521802 1.6186288161 1.61899050346 1.61935029526 1.61970820651 1.62006425206 1.62041844657 1.62077080461 1.62112134053 1.62147006859 1.62181700286 1.6221621573 1.62250554569 1.6228471817 1.62318707884 1.6235252505 1.62386170991 1.62419647018 1.6245295443 1.6248609451 1.62519068529 1.62551877747 1.6258452341 1.62617006751 1.62649328992 1.62681491341 1.62713494995 1.62745341141 1.6277703095 1.62808565586 1.62839946198 1.62871173927 1.62902249899 1.62933175232 1.62963951032 1.62994578394 1.63025058402 1.63055392133 1.63085580648 1.63115625001 1.63145526237 1.63175285388 1.63204903478 1.6323438152 1.6326372052 1.63292921472 1.6332198536 1.6335091316 1.6337970584 1.63408364356 1.63436889658 1.63465282685 1.63493544368 1.63521675629 1.63549677381 1.63577550531 1.63605295974 1.63632914599 1.63660407286 1.63687774908 1.63715018329 1.63742138404 1.63769135984 1.63796011907 1.63822767007 1.6384940211 1.63875918034 1.63902315589 1.63928595578 1.63954758798 1.63980806038 1.64006738079 1.64032555697 1.64058259659 1.64083850726 1.64109329654 1.64134697188 1.64159954072 1.64185101038 1.64210138816 1.64235068127 1.64259889686 1.64284604203 1.64309212379 1.64333714913 1.64358112495 1.6438240581 1.64406595535 1.64430682346 1.64454666907 1.64478549882 1.64502331926 1.64526013688 1.64549595814 1.64573078943 1.64596463708 1.64619750737 1.64642940654 1.64666034076 1.64689031615 1.6471193388 1.64734741471 1.64757454987 1.6478007502 1.64802602156 1.64825036978 1.64847380064 1.64869631986 1.64891793312 1.64913864605 1.64935846425 1.64957739325 1.64979543854 1.65001260557 1.65022889976 1.65044432646 1.65065889098 1.65087259861 1.65108545456 1.65129746404 1.65150863219 1.65171896411 1.65192846487 1.65213713949 1.65234499296 1.65255203021 1.65275825615 1.65296367565 1.65316829354 1.65337211459 1.65357514356 1.65377738516 1.653958733263 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Test Material 7">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								100000 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									3000 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Test Material 8">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A function">
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+					</struct>
+				</struct>
+				<struct name="Test Material 9">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+						<struct name="A constant">
+							<leaf name="Isotropic" totalnum="1" type="float">
+								<elements>
+								5.69e7 
+								</elements>
+							</leaf>
+						</struct>
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="Relative magnetic permeability">
+							<struct name="A constant">
+								<leaf name="Isotropic" totalnum="1" type="float">
+									<elements>
+									1 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+				<struct name="Test Material 10">
+					<struct name="Relative permittivity">
+					</struct>
+					<struct name="Electrical conductivity">
+					</struct>
+					<struct name="Magnetic properties">
+						<struct name="H-B Table">
+							<struct name="Build table">
+								<leaf name="H values" totalnum="27" type="float">
+									<elements>
+									0.0 61.2508 79.0855 90.5255 101.2513 111.8278 121.7675 132.1524 141.409 153.3806 169.2126 196.132 238.8507 314.9601 470.928 854.721 1879.024 4071.388 5755.238 7784.65 9024.47 10000.0 20000.0 30000.0 50000.0 100000.0 200000.0 
+									</elements>
+								</leaf>
+								<leaf name="B values" totalnum="27" type="float">
+									<elements>
+									0.0 0.099965 0.199719 0.299294 0.399654 0.499029 0.599419 0.69946 0.798561 0.898264 0.998844 1.098922 1.199442 1.299146 1.399786 1.496587 1.597992 1.696593 1.746644 1.795649 1.821708 1.842 1.976 2.042 2.114 2.215 2.361 
+									</elements>
+								</leaf>
+							</struct>
+						</struct>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Reset">
+		</submenu>
+	</menu>
+</data>

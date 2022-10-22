@@ -1,0 +1,101 @@
+#!/usr/bin/make -f
+
+MUMPS_MPI=$(shell dpkg -s mpi-default-dev | grep Depends | sed "s/Depends: lib//" | sed "s/Depends: //" | sed "s/-dev//" | sed "s/lam4/lam/")
+ifeq ($(MUMPS_MPI),openmpi)
+MUMPS_LIBF77=-L/usr/lib/openmpi/lib -lmpi_f77 -lmpi
+else
+ifeq ($(MUMPS_MPI),lam)
+MUMPS_LIBF77=-L/usr/lib/lam/lib -llamf77mpi
+else
+ifeq ($(MUMPS_MPI),mpich)
+MUMPS_LIBF77=-L/usr/lib/mpich/lib -lfmpich -lmpich
+else
+ifeq ($(MUMPS_MPI),mpich2)
+MUMPS_LIBF77=-lfmpich -lmpich
+endif
+endif
+endif
+endif
+
+clean:
+	dh_testdir
+	dh_clean
+	cp -f debian/Makefile.seq.inc Makefile.inc
+	$(MAKE) clean
+	rm -rf Makefile.inc libmumps_seq libmumps_scotch libmumps_ptscotch
+	rm -f patch build*
+	find . -name \*.so| xargs -r rm
+	if [ -d .pc ]; then \
+	  QUILT_PATCHES=debian/patches quilt pop -a && rm -rf .pc; \
+	fi
+
+patch:
+	if [ ! -d .pc ]; then \
+	  QUILT_PATCHES=debian/patches quilt push -a; \
+	fi
+	touch $@
+
+build-arch: patch
+	cp -f debian/Makefile.ptscotch.inc Makefile.inc
+	$(MAKE) MUMPS_MPI=$(MUMPS_MPI) MUMPS_LIBF77="$(MUMPS_LIBF77)" \
+	  PLAT="_ptscotch" all
+	cp -a lib libmumps_ptscotch
+	$(MAKE) clean
+	rm -f Makefile.inc
+	cp -f debian/Makefile.scotch.inc Makefile.inc
+	$(MAKE) MUMPS_MPI=$(MUMPS_MPI) MUMPS_LIBF77="-lmpiseq_scotch" \
+	  PLAT="_scotch" all
+	cp -a lib libmumps_scotch
+	cp -af libseq/lib* libmumps_scotch
+	$(MAKE) clean
+	rm -f Makefile.inc
+	cp -f debian/Makefile.seq.inc Makefile.inc
+	$(MAKE) MUMPS_MPI=$(MUMPS_MPI) MUMPS_LIBF77="-lmpiseq_seq" \
+	  PLAT="_seq" all
+	cp -a lib libmumps_seq
+	cp -af libseq/lib* libmumps_seq
+	$(MAKE) clean
+	rm -f Makefile.inc
+	cp -f debian/Makefile.par.inc Makefile.inc
+	$(MAKE) MUMPS_MPI=$(MUMPS_MPI) MUMPS_LIBF77="$(MUMPS_LIBF77)" all
+	touch $@
+
+build: build-arch #build-indep
+	touch $@
+
+binary-indep:
+#	dh_testdir -i
+#	dh_testroot -i
+#	dh_installdirs -i
+#	dh_install -i
+#	dh_installdocs -i
+#	dh_installchangelogs -i
+#	dh_compress -i
+#	dh_fixperms -i
+#	dh_installdeb -i
+#	dh_gencontrol -i
+#	dh_md5sums -i
+#	dh_builddeb -i
+
+binary-arch:
+	dh_testdir -a
+	dh_testroot -a
+	dh_installdirs -a
+	dh_install -a
+	dh_installdocs -a
+	dh_installchangelogs -a
+	dh_strip -a
+	dh_makeshlibs -a
+	dh_compress -a
+	dh_fixperms -a
+	dh_installdeb -a
+	dh_shlibdeps -a
+	dh_gencontrol -a
+	dh_md5sums -a
+	dh_builddeb -a
+
+# Below here is fairly generic really
+
+binary:		binary-indep binary-arch
+
+.PHONY: binary binary-arch binary-indep clean checkroot

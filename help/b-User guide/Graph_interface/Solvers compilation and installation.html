@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>Solvers compilation</title>
+  <link rel="stylesheet" type="text/css" href="../../style.css" />
+</head>
+<body id="top">
+
+<h3>2.8. Solvers compilation</h3>
+<p><strong>Table of contents</strong></p>
+<ul>
+  <li><a href="#location">Folder location</a></li>
+  <li><a href="#compilation">Compilation</a></li>
+</ul>
+<!-- <hr> -->
+ 
+<h4 id="location">Folder location</h4>
+<p>If MaxFEM is installed in the folder <code><em>INSTALLDIR</em></code>, the source code is in <code><em>INSTALLDIR</em>/sources</code>.</p>
+
+<p> MaxFEM searches for the executable solvers in a folder named <em>MaxFEM</em> located in the user's home directory. If the executable file does not exist in that folder, or the folder does not exists, MaxFEM searches in the folder <code><em>INSTALLDIR</em>/solvers</code>. This behaviour is important when the user wants to:
+<ul>
+ <li>compile the solvers by itself (see <a href="#compilation">Compilation</a>) or</li>
+ <li>execute the solvers remotely (see <a href="run_remote.html">Run remote</a>)</li>
+</ul>
+<p>In any other case, i.e. when MaxFEM is installed through a binary file and solvers are executed locally, the behaviour described above is not relevant.</p>
+
+<p> These are the usual locations of the <code>MaxFEM</code> folder in the user's home directory, depending on the operating system:</p>
+<ul>
+  <li><p><strong>GNU/Linux:</strong> <code>/home/<em>&lt;user&gt;</em>/.MaxFEM</code>.</p></li>
+  <li><p><strong>Windows XP:</strong> <code>C:\Documents and Settings\<em>&lt;user&gt;</em>\Application Data\MaxFEM</code>.</p></li>
+  <li><p><strong>Windows 7:</strong> <code>C:\Users\<em>&lt;user&gt;</em>\AppData\Roaming\MaxFEM</code>.</p></li>
+  <li><p><strong>Mac OS X:</strong> <code>/Users/<em>&lt;user&gt;</em>/Library/Application Support/MaxFEM</code>.</p></li>
+</ul>
+
+Here <code><em>&lt;user&gt;</em></code> stands for the username. 
+
+<div class="back"><a href="#top">Back to top</a></div>
+<!-- <hr> -->
+
+<h4 id="compilation">Compilation</h4>
+<p>MaxFEM solvers can be compiled by the user. The software required to compile is indicated in <a href="../Introduction.html#requirement">Software requirements</a> and the instructions to compile them in <a href="../Introduction.html#install-source">Building from source</a>.</p>
+
+<p>A user would like to compile the solvers for two reasons:</p>
+<ul>
+  <li><p>When MaxFEM installation is made from source, executable files do not exist.</p></li>
+  <li><p>When the user defines a boundary condition, source, etc. via precompiled functions, changes take effect when the solvers are recompiled.</p></li>
+</ul>
+
+<p>If you do not have write privileges in the folder <code><em>INSTALLDIR</em></code>, you still can save the execuatble solvers in your home directory. In such a case, you must:
+<ol>
+  <li><p>Copy folders <code><em>INSTALLDIR</em>/solvers</code> and <code><em>INSTALLDIR</em>/sources</code> in the mentioned <a href="#location">Folder location</a>.</p></li>
+  <li><p>Enter in folder <code>sources</code>, copied in the mentioned <a href="#location">Folder location</a>, and compile the solvers following the instructions indicated in <a href="../Introduction.html#install-source">Building from source</a>.</li>
+</ol>
+<div class="back"><a href="#top">Back to top</a></div>
+<!-- <hr> -->
+<p>&nbsp;</p>
+</body>
+
+</html>

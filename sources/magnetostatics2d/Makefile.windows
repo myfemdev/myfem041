@@ -1,0 +1,169 @@
+#################################################################
+# Makefile created using the tool 'Creamake'
+# 
+# Creamake is distributed under the GNU GPL license
+# Author: Francisco Pena, fran.pena@usc.es
+# Download page: http://sourceforge.net/projects/creamake/
+#################################################################
+ 
+#################################################################
+# User-modifiable options
+#################################################################
+ 
+# SOURCE AND COMMONS FOLDERS (separated by spaces)
+dir_fuentes = . ..\other\basicmod ..\other\common ..\other\fem ..\other\unv \
+..\other\xml ..\other\vtu ..\other\pvd
+ 
+# OBJECT AND .MOD FOLDER
+dir_objetos = object
+ 
+# MAIN SOURCE FILE (include relative path from folder where Makefile is)
+condir_principal = .\principal.f90
+ 
+# EXECUTABLE NAME 
+ejecutable = ..\..\solvers\magnetostatics2d.exe
+ 
+# NEEDED TO convert ejecutable THE DEFAULT RULE: 
+$(ejecutable): $(condir_principal) 
+ 
+# MODULES
+modulos = comprobaciones.f90 modulos_magnetos.f90 module_ALLOC_char_r1.f90 \
+module_ALLOC.f90 module_ALLOC_int_alloc_r2.f90 module_ALLOC_int_r1.f90 \
+module_ALLOC_int_r2.f90 module_ALLOC_log_r2.f90 module_ALLOC_real_alloc_r2.f90 \
+module_ALLOC_real_DOUBLE_r1.f90 module_ALLOC_real_DOUBLE_r2.f90 \
+module_ALLOC_real_r1.f90 module_ALLOC_real_r2.f90 module_COMPILER_DEPENDANT.f90 \
+module_CONVERS.f90 module_FILES.f90 module_REPORT.f90 module_SO_DEPENDANT.f90 \
+defines.f90 mesh.f90 subdomains.f90 vector.f90 module_fem_extract_complex.f90 \
+module_fem_extract.f90 module_fem_extract_real.f90 module_bsearch.f90 \
+module_cells.f90 module_dataset_2411.f90 module_dataset_2412.f90 \
+module_dataset_2467.f90 module_dataset.f90 module_FE_DB.f90 module_groups.f90 \
+module_mesh.f90 module_readUNV.f90 module_unv.f90 module_xml_parser.f90 \
+LIB_VTK_IO.f90 LIB_VTK_IO_READ.f90 module_writeVTU.f90 module_readPVD.f90 \
+module_writePVD.f90
+ 
+# DEPENDENCIAS ENTRE MODULOS
+# si pru1 depende de pru2... pru1.o: pru2.o
+comprobaciones.obj: modulos_magnetos.obj modulos_magnetos.obj
+modulos_magnetos.obj:
+module_ALLOC_char_r1.obj: module_REPORT.obj
+module_ALLOC.obj: module_ALLOC_int_r1.obj module_ALLOC_int_r2.obj \
+module_ALLOC_int_alloc_r2.obj module_ALLOC_real_r1.obj module_ALLOC_real_r2.obj \
+module_ALLOC_real_alloc_r2.obj module_ALLOC_real_DOUBLE_r1.obj \
+module_ALLOC_real_DOUBLE_r2.obj module_ALLOC_char_r1.obj module_ALLOC_log_r2.obj
+module_ALLOC_int_alloc_r2.obj: module_ALLOC_int_r1.obj
+module_ALLOC_int_r1.obj: module_REPORT.obj
+module_ALLOC_int_r2.obj: module_REPORT.obj
+module_ALLOC_log_r2.obj: module_REPORT.obj
+module_ALLOC_real_alloc_r2.obj: module_ALLOC_real_r1.obj
+module_ALLOC_real_DOUBLE_r1.obj: module_COMPILER_DEPENDANT.obj module_REPORT.obj
+module_ALLOC_real_DOUBLE_r2.obj: module_COMPILER_DEPENDANT.obj module_REPORT.obj
+module_ALLOC_real_r1.obj: module_REPORT.obj
+module_ALLOC_real_r2.obj: module_REPORT.obj
+module_CONVERS.obj: module_COMPILER_DEPENDANT.obj module_REPORT.obj
+module_FILES.obj: module_REPORT.obj module_CONVERS.obj
+module_REPORT.obj: module_COMPILER_DEPENDANT.obj module_SO_DEPENDANT.obj
+module_SO_DEPENDANT.obj: module_COMPILER_DEPENDANT.obj
+defines.obj: module_COMPILER_DEPENDANT.obj
+mesh.obj: defines.obj
+subdomains.obj: defines.obj
+vector.obj: defines.obj
+module_fem_extract.obj: module_fem_extract_real.obj \
+module_fem_extract_complex.obj
+module_dataset_2411.obj: module_COMPILER_DEPENDANT.obj module_ALLOC.obj \
+module_dataset.obj module_mesh.obj
+module_dataset_2412.obj: module_ALLOC.obj module_dataset.obj module_mesh.obj \
+module_FE_DB.obj module_cells.obj
+module_dataset_2467.obj: module_dataset.obj module_mesh.obj module_cells.obj \
+module_groups.obj
+module_dataset.obj: module_REPORT.obj module_CONVERS.obj
+module_FE_DB.obj: module_COMPILER_DEPENDANT.obj
+module_groups.obj: module_ALLOC.obj
+module_mesh.obj: module_COMPILER_DEPENDANT.obj module_ALLOC.obj module_FILES.obj
+module_readUNV.obj: module_COMPILER_DEPENDANT.obj module_SO_DEPENDANT.obj \
+module_CONVERS.obj module_unv.obj module_mesh.obj
+module_unv.obj: module_ALLOC.obj module_FILES.obj module_mesh.obj \
+module_dataset_2411.obj module_dataset_2412.obj module_dataset_2467.obj \
+module_bsearch.obj
+module_xml_parser.obj: module_ALLOC.obj module_CONVERS.obj module_REPORT.obj \
+module_FILES.obj
+LIB_VTK_IO_READ.obj: LIB_VTK_IO.obj
+module_writeVTU.obj: LIB_VTK_IO.obj
+module_readPVD.obj: module_COMPILER_DEPENDANT.obj module_FILES.obj
+module_writePVD.obj: module_FILES.obj
+ 
+# INCLUDES
+includes = 
+ 
+# COMPILER
+FC = gfortran
+ 
+# COMPILER OPTIONS
+FFLAGS = -J$(dir_objetos) -ffree-line-length-0 -ffixed-line-length-0
+ 
+# LINKER OPTIONS
+LDFLAGS = -static
+ 
+#################################################################
+# Non-modifiable part
+#################################################################
+ 
+# CARPETAS DE BUSQUEDA
+VPATH =   $(subst ,:,$(strip $(dir_fuentes)))
+vpath %.obj $(dir_objetos)
+ 
+# FUENTES
+fuentes_       = $(filter %.f %.F %.for %.FOR %.f90 %.F90 %.f95 %.F95 %.f03 %.F03,$(shell dir /b $(dir_fuentes)))
+fuentes        = $(filter-out $(notdir $(condir_principal)) $(modulos),$(fuentes_))
+ 
+# OBJETOS
+modulos_obj    = $(addsuffix .obj,$(basename $(modulos)))
+fuentes_obj    = $(addsuffix .obj,$(basename $(fuentes)))
+ 
+# OBJETOS EN SU CARPETA
+condir_modulos_obj    = $(addprefix $(dir_objetos)/,$(modulos_obj))
+condir_fuentes_obj    = $(addprefix $(dir_objetos)/,$(fuentes_obj))
+ 
+# OPCIONES DE COMPILACION
+FFLAGS += $(patsubst %,-I%,$(dir_fuentes))
+FFLAGS += -I$(dir_objetos)
+ 
+# REGLA PRINCIPAL
+all: $(ejecutable)
+ 
+$(ejecutable): $(includes) $(modulos_obj) $(fuentes_obj)
+	$(FC) -o $(ejecutable) $(FFLAGS) $(condir_principal) $(condir_modulos_obj) $(condir_fuentes_obj) $(LDFLAGS)
+ 
+# REGLA PARA LAS FUENTES
+$(fuentes_obj): $(includes) $(modulos_obj)
+ 
+# PATRONES DE REGLAS
+%.obj:%.f
+	$(FC) -c -o $@ $(FFLAGS) $<
+	@copy $@ $(dir_objetos) 
+	@del $@ 
+%.obj:%.F
+	$(FC) -c -o $@ $(FFLAGS) $< 
+	@copy $@ $(dir_objetos) 
+	@del $@ 
+%.obj:%.for
+	$(FC) -c -o $@ $(FFLAGS) $< 
+	@copy $@ $(dir_objetos) 
+	@del $@ 
+%.obj:%.FOR
+	$(FC) -c -o $@ $(FFLAGS) $< 
+	@copy $@ $(dir_objetos) 
+	@del $@ 
+%.obj:%.f90
+	$(FC) -c -o $@ $(FFLAGS) $< 
+	@copy $@ $(dir_objetos) 
+	@del $@ 
+%.obj:%.F90
+	$(FC) -c -o $@ $(FFLAGS) $< 
+	@copy $@ $(dir_objetos) 
+	@del $@ 
+ 
+.PHONY: clean
+clean:
+	del $(dir_objetos)\*.obj      
+	del $(dir_objetos)\*.mod    
+	del $(ejecutable)

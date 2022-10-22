@@ -1,0 +1,101 @@
+<html>
+<head>
+  <!-- CHAMAMOS Ó CSS -->
+  <link rel="stylesheet" type="text/css" href="../../style.css" />
+  <!-------------------------------->
+  <title>Run remote</title>
+</head>
+<body id="top" lang="EN">
+
+<h3>2.7. Run remote</h3>
+<p><strong>Table of contents</strong></p>
+<ul>
+  <li><a href="#requirements">Requirements</a></li>
+  <li><a href="#location">Solvers location</a></li>
+  <li><a href="#remote">Run remote mode</a></li>
+  <li><a href="#authentication"> Authentication</a></li>
+  <li><a href="#steps">Steps in the batch mode</a></li>
+</ul>
+<p>This section describes how to run the MaxFEM solvers in a remote machine by using the <strong>Solver &#8594; Run remote</strong> option of the main menu.</p>
+
+<h4><a name="requirements">&#9633; Requirements</a></h4>
+<p>To be able to perform a remote execution is necessary to have a user account on the remote server with SSH access. Optionally, the server may have a SGE queuing system (specifically, the tool used by default is <em>qrsh</em>).</p>
+<p>You also need to copy the executable files of the solvers to the remote machine. If you don't have the executable files, you must create them by compiling the sources on the remote machine according to its features. For more information about how to build MaxFEM from source see <a href="../Introduction.html#install-source">Building from source</a>.</p>
+<p>In the local side (i.e. your computer) you need to install Paramiko, a SSH2 protocol for Python. For more information about how to install Paramiko see <a href="../Introduction.html#requirement">Software requirements</a>.</p>
+<div class="back"><a href="#top">Back to top</a></div>
+
+<h4><a name="location">&#9633; Solvers location</a></h4>
+<p>In order to use the <strong>Run remote</strong> option in MaxFEM, you must have the following files in the remote machine (e.g. Linux server):</p>
+<ul>
+  <p>~/.MaxFEM/solvers/direct_current_2d<br>
+  ~/.MaxFEM/solvers/direct_current_3d<br>
+  ~/.MaxFEM/solvers/eddy_currents_2d<br>
+  ~/.MaxFEM/solvers/eddy_currents_2d_axi<br>
+  ~/.MaxFEM/solvers/eddy_currents_3d<br>
+  ~/.MaxFEM/solvers/electrostatics2d<br>
+  ~/.MaxFEM/solvers/electrostatics3d<br>
+  ~/.MaxFEM/solvers/magnetostatics2d<br>
+  ~/.MaxFEM/solvers/transient_magnetics_2d</p>
+</ul>
+<p>Note that you should compile the sources according to the remote server features to obtain the executable files.</p>
+<p>If you don't use the default path, i.e. <em>~/.MaxFEM/solvers/</em>, to locate the executable files, you must also change the following reference (where <em>EXEFILENAME</em> is direct_current_2d, direct_current_3d,...) in all the files named <em>local.mnu.xml</em> that you can find in the different subfolders of the <em>INSTALLDIR/apps</em> folder:</p>
+<ul>
+  <pre>&lt;submenu name="Run remote"&gt;<br>  &lt;action name="exec_ssh"&gt;<br>    &lt;param args="-xml"&gt;<em>EXEFILENAME</em>&lt;/param&gt;<br>  &lt;/action&gt;<br>&lt;/submenu&gt;</pre>
+</ul>
+You must do this before creating the working directory using the <strong>Project &#8594; Select folder...</strong> option in the MaxFEM main menu.</p>
+<p>Depending on how you compile the solvers you may need a <em>.bash_profile</em> file like this:</p>
+<ul>
+  <pre>if [ -f ~/.bashrc ]; then<br>  source ~/.bashrc<br>fi</pre>
+</ul>
+<p>and a <em>.bashrc</em> file with some commands like this:</p>
+<ul>
+  <p>export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib64/openmpi/lib<br>
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/share/apps/gcc-4.8/lib64/</p>
+</ul>
+<p>or any other alternative to suit your configuration.</p>
+<div class="back"><a href="#top">Back to top</a></div>
+
+<h4><a name="remote">&#9633; Run remote mode</a></h4>
+</p>In the <strong>Solver</strong> menu, you can find the <strong>Run remote</strong> submenu. When you click on it, a window appears with some fields to fill:</p>
+
+<ul>
+  <li><b>Host:</b> name or IP address of the server to connect to. <i>Required</i></li>
+  <li><b>User:</b> username to authenticate as on the server. <i>Required</i></li>
+  <li><b>Password:</b> password to use for authentication or for unlocking a private key. <i>Optional</i></li>
+  <li><b>Key file:</b> filename of private key(s) to try for authentication. <i>Optional</i></li>
+  <li><b>Queuing command:</b> command used to send a job to a queue. <i>Optional</i></li>
+</ul>
+<p>In <b>Queuing command</b> the default command is: <em>qrsh -q general -j y -V -cwd</em>, which requires a SGE queuing system.</p>
+<p>For more information about the authentication process and how to use the <b>Password</b> and <b>Key file</b> fields see <a href="#authentication"> Authentication</a>.</p>
+<p>Clicking the <b>OK</b> button, the remote execution starts in a separate thread and the specified settings, except the password, are stored in a file to be used in subsequent executions. However, clicking the <b>Cancel</b> button neither the execution starts nor the settings are saved.</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+
+<h4><a name="authentication">&#9633; Authentication</a></h4>
+<p>Authentication is attempted in the following order of priority:</p>
+<ul>
+  <li>The key file passed in (if any).</li>
+  <li>Any key we can find through an SSH agent.</li>
+  <li>Any &#8220;id_rsa&#8221;, &#8220;id_dsa&#8221; or &#8220;id_ecdsa&#8221; key discoverable in <em>~/.ssh/</em>.</li>
+  <li>Plain username/password auth, if a password was given.</li>
+</ul>
+<p>If a private key requires a password to unlock it, and a password is passed in, that password will be used to attempt to unlock the key.</p>
+<div class="back"><a href="#top">Back to top</a></div>
+
+<h4><a name="steps">&#9633; Steps in the batch mode</a></h4>
+<p>In order to get a better understanding of how the <b>Run remote</b> option works, the process is described below:</p>
+<ul>
+  <li>A modified copy of some files, for example <em>local.dat.xml</em>, are saved as <em>&lt;original filename&gt;.temp-remote.&lt;original extension&gt;</em>, where the internal references to the files are changed to point to the correct ones on the server. To avoid problems with the filenames, some of them (e.g. mesh files) are changed according to a numeric sequence.</li>
+  <li>An SSH/SFTP connection to the server is opened with the data specified in the Run remote dialog.</li>
+  <li>A temporary folder is created in the home directory of the server according to the pattern <em>MaxFEM.XXXXXXXXXX</em>, where <em>XXXXXXXXXX</em> is replaced by a pseudorandom string.</li>
+  <li>Two subfolders are created in the temporary folder: <em>input</em> and <em>output</em>. <em>input</em> will be used to store the input data needed for the solver and <em>output</em> will store the execution results.</li>
+  <li>Some files are copied from the local working directory to the <em>input</em> folder of the server, using the SFTP protocol, in order to rebuild there the working folder only with the required data.</li>
+  <li>The command to run the solver is executed on the server. This command is the result of concatenating the queuing command with the name of the executable file and its arguments. If there are multiple executables, they are executed sequentially in order of appearance.</li>
+  <li>When the execution of all solvers ends, the output files created in the <em>output</em> folder are copied back to the working folder on the local computer, using again SFTP.</li>
+  <li>The temporary folder previously created on the server, i.e. <em>MaxFEM.XXXXXXXXXX</em>, is deleted.</li>
+  <li>The <i>SSH/SFTP</i> connection is closed.</li>
+</ul>
+<div class="back"><a href="#top">Back to top</a></div>
+
+</body></html>

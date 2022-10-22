@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <title>MaxFEM mesh files</title>
+  <link rel="stylesheet" href="../../style.css" type="text/css" media="screen" />
+  <link rel="stylesheet" href="highlight.css"   type="text/css" media="screen" />  
+</head>
+<body id="top">
+
+<h3 id="mesh_files"><a name="top">2.3. MaxFEM mesh files</a></h3>
+<p>All the MaxFEM applications, except Eddy currents 3D, accept two formats for a finite element mesh: <a href="#mfm">MFM</a> and <a href="#unv">UNV</a>.</p>
+
+<h4 id="mfm"> MFM Format</a></h4>
+<p> The MFM format is a simplification of the NOPO format used in <a href="https://www.rocq.inria.fr/modulef/">Modulef</a> (in fact,
+MFM means "Modulef formatted mesh"). MFM is also the filename extension for the files written in MFM format. </p>
+
+<p>This format has strict rules to describe nodes, elements and references of a mesh. The file must be written in ASCII and 
+be composed of the following records:</p>
+<ol>
+  <li>A first record containing six integers separated by commas;
+  <ul>
+    <li><p><var>nel</var>: total number of elements,</p></li>
+    <li><p><var>nnod</var>: total number of nodes,</p></li>
+    <li><p><var>nver</var>: total number of vertices,</p></li>
+    <li><p><var>dim</var>: space dimension,</p></li>
+    <li><p><var>lnn</var>: local number of nodes per element,</p></li>
+    <li><p><var>lnv</var>: local number of vertices per element,</p></li>
+    <li><p><var>lne</var>: local number of edges per element and</p></li>
+    <li><p><var>lnf</var>: local number of faces per element.</p></li>
+  </ul>
+  <p> Note that, since <var>lnn</var>, <var>lnv</var>,... are constants, this format does not support an hybrid mesh.</p>
+  </li>
+  <li><p>A second record containing the matrices <var>nn</var>, <var>mm</var>, <var>nra</var>, <var>nrc</var>, <var>nrv</var>
+  and <var>z</var> written by column, with their elements separated by commas. If <var>nnod</var> &#8800; <var>nver</var>, <var>nn</var> is not written; if <var>dim</var> < 3 <var>nrc</var> is not written; if <var>dim</var> < 2 <var>nra</var> is not written.</p>
+  </li>
+  <li><p>A third record containing the vector <var>nsd</var> with their elements separated by commas.</p>
+  </li>
+</ul>
+
+<p>The meaning of the previous arrays is:</p>
+<ul>
+  <li><p><var>nn</var>: integer matrix (<var>lnn</var> x <var>nel</var>) where <var>nn(i,k)</var> is the global
+  index of the <var>i</var>-th node of the <var>k</var>-th element of the mesh.</p></li>
+  <li><p><var>mm</var>: integer matrix (<var>lnv</var> x <var>nel</var>) where <var>mm(i,k)</var> is the global
+  index of the <var>i</var>-th vertex of the <var>k</var>-th element of the mesh.</p></li>
+  <li><p><var>nrc</var>: integer matrix (<var>lnf</var> x <var>nel</var>) where <var>nrc(i,k)</var> is a reference number 
+  associated to the <var>i</var>-th face of the <var>k</var>-th element of the mesh.</p></li>
+  <li><p><var>nra</var>: integer matrix (<var>lne</var> x <var>nel</var>) where <var>nra(i,k)</var> is a reference number 
+  associated to the <var>i</var>-th edga of the <var>k</var>-th element of the mesh.</p></li>
+  <li><p><var>nrv</var>: integer matrix (<var>lnv</var> x <var>nel</var>) where <var>nrv(i,k)</var> is a reference number 
+  associated to the <var>i</var>-th vertex of the <var>k</var>-th element of the mesh.</p></li>
+  <li><p><var>z</var>: double precision matrix (<var>dim</var> x <var>nver</var>) where <var>z(i,j)</var> is the 
+  <var>i</var>-th coordinate of the <var>j</var>-th vertex of the mesh.</p></li>
+  <li><p><var>nsd</var>: integer vector (<var>nel</var>) where <var>nsd(k)</var> is a reference number 
+  associated to the <var>k</var>-th element of the mesh.</p></li>
+</ul>    
+
+<p>The MFM format only considers coordinates for the vertices. Node coordinates must be constructed by the solvers.</p>
+<p>The global indexing of nodes, vertices and elements must start in one and be consecutive.</p>
+
+<h5>Finite element types used by MaxFEM</h5>    
+
+<p>The finite elements types used by the applications included in MaxFEM are the following:</p>
+
+<div align="center">
+<table class="tb">
+  <tr>
+    <th class="tbh">FE type </th> 
+    <th class="tbh"><var>dim</var></th> 
+    <th class="tbh"><var>lnn</var></th> 
+    <th class="tbh"><var>lnv</var></th> 
+    <th class="tbh"><var>lne</var></th> 
+    <th class="tbh"><var>lnf</var></th> 
+    <th class="tbh"><var>nnod</var> = <var>nver</var>?</th>     
+  </tr>
+  <tr>
+    <td class="tbb-l">Lagrange P1 (triangle)</td> 
+    <td class="tbb"><var>2</var></td> 
+    <td class="tbb"><var>3</var></td> 
+    <td class="tbb"><var>3</var></td> 
+    <td class="tbb"><var>3</var></td> 
+    <td class="tbb"><var>0</var></td> 
+    <td class="tbb">Yes</td>     
+  </tr>
+  <tr>
+    <td class="tbb-l">Lagrange P1 (tetrahedra)</td> 
+    <td class="tbb"><var>3</var></td> 
+    <td class="tbb"><var>4</var></td> 
+    <td class="tbb"><var>4</var></td> 
+    <td class="tbb"><var>6</var></td> 
+    <td class="tbb"><var>4</var></td> 
+    <td class="tbb">Yes</td>     
+  </tr>
+  <tr>
+    <td class="tbb-l">Nédeléc P1 (tetrahedra)</td> 
+    <td class="tbb"><var>3</var></td> 
+    <td class="tbb"><var>6</var></td> 
+    <td class="tbb"><var>4</var></td> 
+    <td class="tbb"><var>6</var></td> 
+    <td class="tbb"><var>4</var></td> 
+    <td class="tbb">No</td>     
+  </tr>
+  <tr>
+    <td class="tbf-l">Cruzeix-Raviart P1 (tetrahedra)</td> 
+    <td class="tbf"><var>3</var></td> 
+    <td class="tbf"><var>4</var></td> 
+    <td class="tbf"><var>4</var></td> 
+    <td class="tbf"><var>6</var></td> 
+    <td class="tbf"><var>4</var></td> 
+    <td class="tbf">No</td>     
+  </tr>
+</table>
+</div>
+
+<h5>Local order of vertices, edges and faces</h5>    
+<p>The local order of vertices in each element must respect the following rules (see Figure 1):</p>
+<ul>
+  <li><p> The local order of the three vertices of each triangle is choosen such that det (<var>v<sub>2</sub></var>-<var>v<sub>1</sub></var> | <var>v<sub>3</sub></var>-<var>v<sub>1</sub></var>) &gt; 0.</p></li>
+  <li><p> The local order of the four vertices of each tetrahedra is choosen such that det (<var>v<sub>2</sub></var>-<var>v<sub>1</sub></var> | <var>v<sub>3</sub></var>-<var>v<sub>1</sub></var> | <var>v<sub>4</sub></var>-<var>v<sub>1</sub></var>) &gt; 0.</p></li>
+</ul>  
+
+<p>The local order for edges and faces is determined from the vertex order (see Figure 1).</p>
+
+<p align="center"> <img src="mesh_images/mfm_format_order.png">
+  <br clear="all" />
+  <span class="caption"> <strong>Figure 1:</strong> Local order of vertices, edges and faces.</span>
+</p>
+
+<p> The next table shows the local order of edges in triangles:</p>
+
+<div align="center">
+<table class="tb">
+  <tr>
+    <th class="tbh">Edge </th> 
+    <th class="tbh"> goes from </th> 
+    <th class="tbh"> to</th>  
+  </tr>
+  <tr>
+    <td class="tbb"><var>e<sub>1</sub></var></td> 
+    <td class="tbb"><var>v<sub>1</sub></var></td>
+    <td class="tbb"><var>v<sub>2</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbb"><var>e<sub>2</sub></var></td>
+    <td class="tbb"><var>v<sub>2</sub></var></td>
+    <td class="tbb"><var>v<sub>3</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbf"><var>e<sub>3</sub></var></td>
+    <td class="tbf"><var>v<sub>3</sub></var></td>
+    <td class="tbf"><var>v<sub>1</sub></var></td>
+  </tr>
+</table>
+</div>
+
+<p> The next table shows the local order of edges in tetrahedra:</p>
+
+<div align="center">
+<table class="tb">
+  <tr>
+    <th class="tbh">Edge </th> 
+    <th class="tbh"> goes from </th> 
+    <th class="tbh"> to</th>  
+  </tr>
+  <tr>
+    <td class="tbb"><var>e<sub>1</sub></var></td> 
+    <td class="tbb"><var>v<sub>1</sub></var></td>
+    <td class="tbb"><var>v<sub>2</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbb"><var>e<sub>2</sub></var></td>
+    <td class="tbb"><var>v<sub>2</sub></var></td>
+    <td class="tbb"><var>v<sub>3</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbb"><var>e<sub>3</sub></var></td> 
+    <td class="tbb"><var>v<sub>3</sub></var></td>
+    <td class="tbb"><var>v<sub>1</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbb"><var>e<sub>4</sub></var></td>
+    <td class="tbb"><var>v<sub>1</sub></var></td>
+    <td class="tbb"><var>v<sub>4</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbb"><var>e<sub>5</sub></var></td> 
+    <td class="tbb"><var>v<sub>2</sub></var></td>
+    <td class="tbb"><var>v<sub>4</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbf"><var>e<sub>6</sub></var></td>
+    <td class="tbf"><var>v<sub>3</sub></var></td>
+    <td class="tbf"><var>v<sub>4</sub></var></td>
+  </tr>
+</table>
+</div>
+
+<p> Finally, the next table shows the local order of faces in tetrahedra:</p>
+
+<div align="center">
+<table class="tb">
+  <tr>
+    <th class="tbh">Face </th> 
+    <th class="tbh" colspan="3"> is formed by</th>
+  </tr>
+  <tr>
+    <td class="tbb"><var>f<sub>1</sub></var></td> 
+    <td class="tbb"><var>v<sub>1</sub></var></td>
+    <td class="tbb"><var>v<sub>3</sub></var></td>
+    <td class="tbb"><var>v<sub>2</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbb"><var>f<sub>2</sub></var></td> 
+    <td class="tbb"><var>v<sub>1</sub></var></td>
+    <td class="tbb"><var>v<sub>4</sub></var></td>
+    <td class="tbb"><var>v<sub>3</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbb"><var>f<sub>3</sub></var></td> 
+    <td class="tbb"><var>v<sub>1</sub></var></td>
+    <td class="tbb"><var>v<sub>2</sub></var></td>
+    <td class="tbb"><var>v<sub>4</sub></var></td>
+  </tr>
+  <tr>
+    <td class="tbf"><var>f<sub>4</sub></var></td> 
+    <td class="tbf"><var>v<sub>2</sub></var></td>
+    <td class="tbf"><var>v<sub>3</sub></var></td>
+    <td class="tbf"><var>v<sub>4</sub></var></td>
+  </tr>
+</table>
+</div>
+
+<h5>Local order of nodes</h5>    
+
+<p>The local order of nodes depends on the finite element type:</p>
+
+<div align="center">
+<table class="tb">
+  <tr>
+    <th class="tbh">FE type</th> 
+    <th class="tbh">has nodes</th> 
+  </tr>
+  <tr>
+    <td class="tbb-l">Lagrange P1 (triangle)</td> 
+    <td class="tbb-l">
+      <var>v<sub>1</sub></var>, <var>v<sub>2</sub></var>, <var>v<sub>3</sub></var> 
+    </td> 
+  </tr>
+  <tr>
+    <td class="tbb-l">Lagrange P1 (tetrahedra)</td> 
+    <td class="tbb-l">
+      <var>v<sub>1</sub></var>, <var>v<sub>2</sub></var>, <var>v<sub>3</sub></var>, <var>v<sub>4</sub></var>
+    </td> 
+  </tr>
+  <tr>
+    <td class="tbb-l">Nédeléc P1 (tetrahedra)</td> 
+    <td class="tbb-l">
+      <var>e<sub>1</sub></var>, <var>e<sub>2</sub></var>, <var>e<sub>3</sub></var>, <var>e<sub>4</sub></var>, <var>e<sub>5</sub></var>, <var>e<sub>6</sub></var>
+    </td> 
+  </tr>
+  <tr>
+    <td class="tbf-l">Cruzeix-Raviart P1 (tetrahedra)</td> 
+    <td class="tbf-l">
+      <var>f<sub>1</sub></var>, <var>f<sub>2</sub></var>, <var>f<sub>3</sub></var>, <var>f<sub>4</sub></var>
+    </td> 
+  </tr>
+</table>
+</div>
+
+<h5 id="modulef-1">Example: Fortran 90 subroutine to save a mesh in MFM format</h5>
+
+<div class="highlight">
+<pre class="highlight">
+<span class="hl kwa">subroutine save</span><span class="hl sym">(</span>filename<span class="hl sym">,</span> iu<span class="hl sym">,</span> nel<span class="hl sym">,</span> nnod<span class="hl sym">,</span> nver<span class="hl sym">,</span> lnn<span class="hl sym">,</span> dim<span class="hl sym">,</span> lnv<span class="hl sym">,</span> lne<span class="hl sym">,</span> lnf<span class="hl sym">,</span> nn<span class="hl sym">,</span> mm<span class="hl sym">,</span> nrc<span class="hl sym">,</span> nra<span class="hl sym">,</span> nrv<span class="hl sym">,</span> z<span class="hl sym">,</span> nsd<span class="hl sym">)</span>
+
+<span class="hl kwb">character</span><span class="hl sym">(</span>len<span class="hl sym">=*),</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)::</span> filename <span class="hl slc">! mesh filename</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> iu       <span class="hl slc">!file unit</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> nel      <span class="hl slc">!global number of elements</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> nnod     <span class="hl slc">!global number of nodes</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> nver     <span class="hl slc">!global number of vertices</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> dim      <span class="hl slc">!space dimension</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> lnv      <span class="hl slc">!local number of vertices</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> lne      <span class="hl slc">!local number of edges</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> lnf      <span class="hl slc">!local number of faces</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwd">intent</span><span class="hl sym">(</span>in<span class="hl sym">)     ::</span> lnn      <span class="hl slc">!local number of nodes</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwa">dimension</span><span class="hl sym">(:,:) ::</span> nn       <span class="hl slc">!nodes index array</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwa">dimension</span><span class="hl sym">(:,:) ::</span> mm       <span class="hl slc">!vertices index array</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwa">dimension</span><span class="hl sym">(:,:) ::</span> nrv      <span class="hl slc">!vertices reference array</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwa">dimension</span><span class="hl sym">(:,:) ::</span> nra      <span class="hl slc">!edge reference array</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwa">dimension</span><span class="hl sym">(:,:) ::</span> nrc      <span class="hl slc">!face reference array</span>
+<span class="hl kwb">real</span><span class="hl sym">(</span><span class="hl kwd">selected_real_kind</span><span class="hl sym">(</span><span class="hl num">15</span><span class="hl sym">,</span> <span class="hl num">307</span><span class="hl sym">)),</span> <span class="hl kwa">dimension</span><span class="hl sym">(:,:) ::</span> z        <span class="hl slc">!vertices coordinates array</span>
+<span class="hl kwb">integer</span><span class="hl sym">,</span> <span class="hl kwa">dimension</span><span class="hl sym">(:)   ::</span> nsd      <span class="hl slc">!subdomain index array</span>
+<span class="hl kwb">integer</span> <span class="hl sym">::</span> i<span class="hl sym">,</span> j<span class="hl sym">,</span> k<span class="hl sym">,</span> ln2<span class="hl sym">,</span> lf2<span class="hl sym">,</span> le2<span class="hl sym">,</span> ios
+
+<span class="hl kwa">open</span>  <span class="hl sym">(</span>unit<span class="hl sym">=</span>iu<span class="hl sym">,</span> file<span class="hl sym">=</span>filename<span class="hl sym">,</span> form<span class="hl sym">=</span><span class="hl str">'formatted'</span><span class="hl sym">,</span> position<span class="hl sym">=</span><span class="hl str">'rewind'</span><span class="hl sym">,</span> iostat<span class="hl sym">=</span>ios<span class="hl sym">)</span>
+<span class="hl kwa">write</span> <span class="hl sym">(</span>unit<span class="hl sym">=</span>iu<span class="hl sym">,</span> fmt<span class="hl sym">=*,</span> iostat<span class="hl sym">=</span>ios<span class="hl sym">)</span> nel<span class="hl sym">,</span> nnod<span class="hl sym">,</span> nver<span class="hl sym">,</span> dim<span class="hl sym">,</span> lnn<span class="hl sym">,</span> lnv<span class="hl sym">,</span> lne<span class="hl sym">,</span> lnf
+
+<span class="hl slc">!save ([nn,if nnod/=nver], mm, [nrc,if dim==3], [nra,if dim&gt;=2], nrv, z, nsd)</span>
+ln2 <span class="hl sym">=</span> lnn<span class="hl sym">;</span> <span class="hl kwa">if</span> <span class="hl sym">(</span>nnod <span class="hl sym">==</span> nver<span class="hl sym">)</span> ln2 <span class="hl sym">=</span> <span class="hl num">0</span>
+le2 <span class="hl sym">=</span> lne<span class="hl sym">;</span> <span class="hl kwa">if</span> <span class="hl sym">(</span>dim <span class="hl sym">&lt;</span> <span class="hl num">2</span><span class="hl sym">)</span>      le2 <span class="hl sym">=</span> <span class="hl num">0</span>
+lf2 <span class="hl sym">=</span> lnf<span class="hl sym">;</span> <span class="hl kwa">if</span> <span class="hl sym">(</span>dim <span class="hl sym">&lt;</span> <span class="hl num">3</span><span class="hl sym">)</span>      lf2 <span class="hl sym">=</span> <span class="hl num">0</span>
+
+<span class="hl kwa">write</span> <span class="hl sym">(</span>unit<span class="hl sym">=</span>iu<span class="hl sym">,</span> fmt<span class="hl sym">=*,</span> iostat<span class="hl sym">=</span>ios<span class="hl sym">) ((</span><span class="hl kwd">nn</span><span class="hl sym">(</span>i<span class="hl sym">,</span>k<span class="hl sym">),</span>  i<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>ln2<span class="hl sym">),</span> k<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>nel<span class="hl sym">), &amp;</span>
+                                   <span class="hl sym">((</span><span class="hl kwd">mm</span><span class="hl sym">(</span>i<span class="hl sym">,</span>k<span class="hl sym">),</span>  i<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>lnv<span class="hl sym">),</span> k<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>nel<span class="hl sym">), &amp;</span>
+                                   <span class="hl sym">((</span><span class="hl kwd">nrc</span><span class="hl sym">(</span>i<span class="hl sym">,</span>k<span class="hl sym">),</span> i<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>lf2<span class="hl sym">),</span> k<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>nel<span class="hl sym">), &amp;</span>
+                                   <span class="hl sym">((</span><span class="hl kwd">nra</span><span class="hl sym">(</span>i<span class="hl sym">,</span>k<span class="hl sym">),</span> i<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>le2<span class="hl sym">),</span> k<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>nel<span class="hl sym">), &amp;</span>
+                                   <span class="hl sym">((</span><span class="hl kwd">nrv</span><span class="hl sym">(</span>i<span class="hl sym">,</span>k<span class="hl sym">),</span> i<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>lnv<span class="hl sym">),</span> k<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>nel<span class="hl sym">), &amp;</span>
+                                   <span class="hl sym">((</span><span class="hl kwd">z</span><span class="hl sym">(</span>i<span class="hl sym">,</span>j<span class="hl sym">),</span>   i<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>dim<span class="hl sym">),</span> j<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>nver<span class="hl sym">)</span>
+<span class="hl kwa">write</span> <span class="hl sym">(</span>unit<span class="hl sym">=</span>iu<span class="hl sym">,</span> fmt<span class="hl sym">=*,</span> iostat<span class="hl sym">=</span>ios<span class="hl sym">) (</span><span class="hl kwd">nsd</span><span class="hl sym">(</span>k<span class="hl sym">),</span> k<span class="hl sym">=</span><span class="hl num">1</span><span class="hl sym">,</span>nel<span class="hl sym">)</span>
+<span class="hl kwa">close</span><span class="hl sym">(</span>iu<span class="hl sym">)</span>
+
+<span class="hl kwa">end subroutine</span>
+</pre>
+</div>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<h4 id="unv"> UNV Format</a></h4>
+<p> The UNV format is included in the I-Deas Universal File specifications. The files written in UNV format are ASCII files and their extension is UNV. This format is described in the <a href="http://www.sdrl.uc.edu/sdrl/referenceinfo/universalfileformats/file-format-storehouse">web page of the Structural Dynamics Research Lab at the University of Cincinnati (UC-SDRL)</a>.</p>
+
+<p> IN the UNV format, meshes are composed by <em>datasets</em>. Each dataset describe a part of the mesh. The relevant datasets for MaxFEM are:
+<ul>
+  <li><a href="http://www.sdrl.uc.edu/sdrl/referenceinfo/universalfileformats/file-format-storehouse/universal-dataset-number-2411/">dataset 2411:</a> describe the node coordinates;</li>
+  <li><a href="http://www.sdrl.uc.edu/sdrl/referenceinfo/universalfileformats/file-format-storehouse/universal-dataset-number-2412/">dataset 2412:</a> describe global indexing of the nodes;</li>
+  <li><a href="http://www.sdrl.uc.edu/sdrl/referenceinfo/universalfileformats/file-format-storehouse/universal-dataset-number-2467/">dataset 2467:</a> describe the groups of nodes, edges and faces. The number of each group, not the name, is shown by MaxFEM.</li>
+</ul>  
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+</body>
+</html>

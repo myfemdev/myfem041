@@ -1,0 +1,98 @@
+mumps (4.9.2.dfsg-7build1) oneiric; urgency=low
+
+  * gfortran-4.6 rebuild.
+
+ -- Matthias Klose <doko@ubuntu.com>  Sun, 11 Sep 2011 11:21:38 +0000
+
+mumps (4.9.2.dfsg-7) unstable; urgency=low
+
+  * Build-Conflict with ATLAS packages (closes: #620291).
+  * Added VCS to control file.
+
+ -- "Adam C. Powell, IV" <hazelsct@debian.org>  Thu, 31 Mar 2011 17:37:23 -0400
+
+mumps (4.9.2.dfsg-6) unstable; urgency=low
+
+  * Changed to a better MUMPS_MPI variable setting.
+  * Added MPI and Scotch libraries to link with binutils-gold (closes: #604950).
+
+ -- "Adam C. Powell, IV" <hazelsct@debian.org>  Sun, 28 Nov 2010 13:07:54 -0500
+
+mumps (4.9.2.dfsg-5) unstable; urgency=low
+
+  * Moved libmumps-seq-dev headers to their own directory (closes: #585960).
+  * Added patch target and unpatch command to clean target.
+  * Bumped Standards-Version.
+
+ -- "Adam C. Powell, IV" <hazelsct@debian.org>  Sun, 21 Nov 2010 21:42:26 -0500
+
+mumps (4.9.2.dfsg-4) unstable; urgency=low
+
+  * Added liblapack-dev to Build-Depends and changed "-lblas-3gf -llapackgf-3"
+    to "-lblas -llapack" in debian/Makefile*.inc (closes: #577003)
+  * Changed from patch-based approach to library renaming to using $(PLAT), so
+    libmpiseq is not shared between seq and scotch versions (closes: #577046)
+
+ -- Adam C. Powell, IV <hazelsct@debian.org>  Sun, 11 Apr 2010 22:25:49 -0400
+
+mumps (4.9.2.dfsg-3) unstable; urgency=low
+
+  [ Christophe Trophime ]
+  * Add scotch support (closes: #576291)
+  * Add ptscotch support 
+  * Add -llapackgf-3 to LIBLAS
+
+  [ Adam C. Powell, IV ]
+  * Versioned dependency on libptscotch-dev to make sure to get headers
+  * Changed to source format 3.0 (quilt) and removed *patch rules targets
+  * Clarified short descriptions of packages (closes: #576264)
+  * Bumped Standards-Version
+
+ -- Adam C. Powell, IV <hazelsct@debian.org>  Sun, 04 Apr 2010 23:54:36 -0400
+
+mumps (4.9.2.dfsg-2) unstable; urgency=low
+
+  * Fixed bad parentheses in rules ifeq lam/mpich lines (closes: #535276).
+  * Added mpich2 build mechanism.
+
+ -- Adam C. Powell, IV <hazelsct@debian.org>  Mon, 04 Jan 2010 13:22:40 -0500
+
+mumps (4.9.2.dfsg-1) unstable; urgency=low
+
+  * New upstream release (closes: #554159).
+  * Changed -lblas to -lblas-3gf in Makefile.*.inc (closes: #557699).
+  * Linking tests to shared instead of static libs (closes: #555759).
+
+ -- Adam C. Powell, IV <hazelsct@debian.org>  Mon, 07 Dec 2009 17:56:51 -0500
+
+mumps (4.8.4.dfsg-3) unstable; urgency=low
+
+  [ Roberto C. Sanchez ]
+  * Build against dummy MPI sequential library in addition to building
+    against the standard MPI implementations (OpenMPI and LAM MPI).
+    + Introduce new package: libmumps-seq-4.8.4
+    + Introduce new package: libmumps-seq-dev
+  * Add README.source noting that quilt is used to manage patches
+
+  [ Adam C. Powell, IV ]
+  * Changed -lmpi_f77 to a variable depending on MPI implementation
+    (closes: #544752).
+  * Bumped Standards-Version.
+
+ -- Adam C. Powell, IV <hazelsct@debian.org>  Sun, 01 Nov 2009 23:56:58 -0500
+
+mumps (4.8.4.dfsg-2) unstable; urgency=low
+
+  * Removed backslash in Build-Depends list (closes: #536917).
+  * Updated debhelper Build-Depends version.
+  * Updated Standards-Version.
+
+ -- Adam C. Powell, IV <hazelsct@debian.org>  Mon, 20 Jul 2009 09:13:11 -0400
+
+mumps (4.8.4.dfsg-1) unstable; urgency=low
+
+  * First package (closes: #491024).
+  * Removed doc directory because there's no source for the user's guide.
+
+ -- Adam C. Powell, IV <hazelsct@debian.org>  Fri, 29 May 2009 12:49:55 -0400
+

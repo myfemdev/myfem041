@@ -1,0 +1,235 @@
+<menus name="Direct current 2D">
+	<menu name="Mesh">
+		<submenu name="Open">
+			<leaf name="Mesh file" subtype="mesh:All supported (*.mfm;*.unv)|*.mfm;*.unv| Modulef Formatted Meshes (*.mfm)|*.mfm| Universal files (*.unv)|*.unv" title="Choose mesh file:" tooltip="Select the 2D mesh file that will be used" type="file">
+				<element>malla3.mfm</element>
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Properties">
+		<submenu name="Materials">
+			<struct celldata="data:element_ref" mesh="menu:/Mesh/Open/Mesh file" name="Materials" plot="references" plotted="true" showvalues="true" title="Choose domain references:" tooltip="Select a domain reference for assigning a material to it">
+				<leaf default="true" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+				</leaf>
+				<leaf name="1" selected="true" selection="single" source="menu:/Materials database/Open/Materials" title="Choose material:" tooltip="Choose a material for the selected domain reference" type="charlist">
+					<element selected="true">Test Material 4</element>
+				</leaf>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Boundary conditions">
+		<submenu name="Dirichlet: electric scalar potential, V (V)">
+			<struct customize="true" name="Electric scalar potential" title="Electric scalar potential conditions:" tooltip="You can add, delete or edit the electric scalar potential conditions">
+				<struct default="true" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+					<struct name="A function" title="Fill the following data:" tooltip="Select the line references of the boundaries associated to the condition and which function to apply">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Function name" selection="single" type="charlist">
+							<element>Example_1</element>
+							<element>Example_2</element>
+							<element>Example_3</element>
+							<element>User_Defined</element>
+						</leaf>
+					</struct>
+					<struct name="A constant" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Constant value" title="Constant value (V):" type="float">
+						</leaf>
+					</struct>
+				</struct>
+				<struct name="Condition 1" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+					<struct name="A function" selected="true" title="Fill the following data:" tooltip="Select the line references of the boundaries associated to the condition and which function to apply">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" plotted="true" selection="multiple" showvalues="true" type="charlist">
+							<element selected="true">1</element>
+							<element selected="true">2</element>
+						</leaf>
+						<leaf name="Function name" selection="single" type="charlist">
+							<element selected="true">Example_1</element>
+							<element>Example_2</element>
+							<element>Example_3</element>
+							<element>User_Defined</element>
+						</leaf>
+					</struct>
+					<struct name="A constant" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Constant value" title="Constant value (V):" type="float">
+						</leaf>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Neumann" title="Neumann: inward current flow, -J·n (A⁄m²)">
+			<struct customize="true" name="Normal current density" title="Normal current density conditions:" tooltip="You can add, delete or edit the normal current density conditions">
+				<struct default="true" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+					<struct name="A function" title="Fill the following data:" tooltip="Select the line references of the boundaries associated to the condition and which function to apply">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Function name" selection="single" type="charlist">
+							<element>Example_1</element>
+							<element>Example_2</element>
+							<element>User_Defined</element>
+						</leaf>
+					</struct>
+					<struct name="A constant" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Constant value" title="Constant value (A⁄m²):" type="float">
+						</leaf>
+					</struct>
+				</struct>
+				<struct name="Condition 2" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+					<struct name="A function" title="Fill the following data:" tooltip="Select the line references of the boundaries associated to the condition and which function to apply">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Function name" selection="single" type="charlist">
+							<element>Example_1</element>
+							<element>Example_2</element>
+							<element>User_Defined</element>
+						</leaf>
+					</struct>
+					<struct name="A constant" selected="true" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" plotted="true" selection="multiple" showvalues="true" type="charlist">
+							<element selected="true">3</element>
+						</leaf>
+						<leaf name="Constant value" title="Constant value (A⁄m²):" type="float">
+							<element>6</element>
+						</leaf>
+					</struct>
+				</struct>
+				<struct name="Condition 3" selection="single" title="The condition is given by:" tooltip="Choose whether the condition is given as a function or as a constant value">
+					<struct name="A function" title="Fill the following data:" tooltip="Select the line references of the boundaries associated to the condition and which function to apply">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+						</leaf>
+						<leaf name="Function name" selection="single" type="charlist">
+							<element>Example_1</element>
+							<element>Example_2</element>
+							<element>User_Defined</element>
+						</leaf>
+					</struct>
+					<struct name="A constant" selected="true" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+						<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" plotted="true" selection="multiple" showvalues="true" type="charlist">
+							<element selected="true">4</element>
+						</leaf>
+						<leaf name="Constant value" title="Constant value (A⁄m²):" type="float">
+							<element>0</element>
+						</leaf>
+					</struct>
+				</struct>
+			</struct>
+		</submenu>
+		<submenu name="Neumann: current intensity, I (A)" title="Neumann: inward current intensity, I (A)">
+			<struct customize="true" name="Current intensity" title="Current intensity conditions:" tooltip="You can add, delete or edit the current intensity conditions">
+				<struct default="true" name="A constant" title="Fill in the following data:" tooltip="Select the line references of the boundaries associated to the condition and a constant value">
+					<leaf celldata="data:edge_ref" mesh="menu:/Mesh/Open/Mesh file" name="Line references" plot="references" selection="multiple" showvalues="true" type="charlist">
+					</leaf>
+					<leaf name="Constant value" title="Constant value (A):" type="float">
+					</leaf>
+					<leaf name="Thickness" title="Thickness (m):" type="float">
+					</leaf>
+				</struct>
+			</struct>
+		</submenu>
+	</menu>
+	<menu name="Data">
+		<submenu name="Temperature" title="Temperature field for materials, T (°C)">
+			<leaf name="Field" subtype="field:Visualization Toolkit (VTU) (*.vtu)|*.vtu" title="Choose temperature field:" tooltip="Select the temperature field for temperature dependant materials" type="file">
+			</leaf>
+		</submenu>
+	</menu>
+	<menu name="Solver">
+		<submenu name="Run">
+			<action name="exec">
+				<param args="-xml">direct_current_2d</param>
+			</action>
+		</submenu>
+		<submenu name="Remote run">
+			<action name="exec_ssh">
+				<param args="-xml">direct_current_2d</param>
+			</action>
+		</submenu>
+		<submenu name="Stop">
+			<action name="kill_exec">
+			</action>
+		</submenu>
+	</menu>
+ 	<menu name="Visualization">
+		<submenu name="Mesh">
+		    <struct name="Mesh" title="Choose representation:">
+		    
+		        <struct name="Triangulation" mesh="menu:/Mesh/Open/Mesh file" plot="mesh"></struct>
+		        
+		        <leaf name="Domain references" title="Choose domain references:" type="charlist" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:element_ref" showvalues="true" plot="references"></leaf>
+		        
+		        <leaf name="Line references" title="Choose line references:" type="charlist" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" celldata="data:edge_ref" showvalues="true" plot="references"></leaf>
+		        
+		        <leaf name="Point references" title="Choose point references:" type="charlist" selection="multiple" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_ref" showvalues="true" plot="references"></leaf>
+		        
+		        <leaf name="Element numbering" type="float"  plot="numbering" title="Clicked element:" mesh="menu:/Mesh/Open/Mesh file" celldata="data:element_num"></leaf>
+		        
+		        <leaf name="Vertex numbering" type="float"  plot="numbering" title="Clicked point:" mesh="menu:/Mesh/Open/Mesh file" pointdata="data:vertex_num"></leaf>
+		        
+		        <struct name="Materials" mesh="menu:/Mesh/Open/Mesh file" materials="menu:/Properties/Materials/Materials" plot="materials"></struct>
+		    </struct>
+		</submenu>
+
+		<submenu name="Temperature field" title="Temperature field, T (&#176;C, scalar)">
+			<struct name="Temperature (C)" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+				<struct mesh="menu:/Data/Temperature/Field" name="Filled" plot="filled" plotted="true" pointdata="data:Temperature">
+				</struct>
+				<struct mesh="menu:/Data/Temperature/Field" name="Threshold" plot="threshold" pointdata="data:Temperature">
+				</struct>
+				<leaf mesh="menu:/Data/Temperature/Field" name="3D plot" plot="scalar_deformed" pointdata="data:Temperature">
+				</leaf>
+				<struct mesh="menu:/Data/Temperature/Field" name="Isolines" plot="contour" pointdata="data:Temperature">
+				</struct>
+				<struct mesh="menu:/Data/Temperature/Field" name="Plot over line" plot="plot_over_line" pointdata="data:Temperature">
+				</struct>
+			</struct>
+		</submenu>
+
+		<submenu name="Potential, V (V, scalar)">
+			<struct name="Potential (V)" title="Choose the field representation:" tooltip="Choose the way of representing the field">
+				<struct mesh="file:fichsol.vtu" name="Filled" plot="filled" pointdata="data:Potential (V)">
+				</struct>
+				<struct mesh="file:fichsol.vtu" name="Threshold" plot="threshold" pointdata="data:Potential (V)">
+				</struct>
+				<leaf mesh="file:fichsol.vtu" name="3D plot" plot="scalar_deformed" pointdata="data:Potential (V)">
+				</leaf>
+				<struct mesh="file:fichsol.vtu" name="Isolines" plot="contour" pointdata="data:Potential (V)">
+				</struct>
+				<struct mesh="file:fichsol.vtu" name="Plot over line" plot="plot_over_line" pointdata="data:Potential (V)">
+				</struct>
+			</struct>
+		</submenu>
+
+		<submenu name="Electric field" title="Electric field, E (N&#8260;C, vector)">
+			<struct name="Electric field" title="Choose the vector field representation:" tooltip="Choose the way of representing the vector field">
+				<struct mesh="file:En.vtu" name="Vectors" plot="vector_field" pointdata="data:Electric field (N/C)">
+				</struct>
+				<leaf mesh="file:En.vtu" name="Vector components" plot="vector_components" pointdata="data:Electric field (N/C)" selection="single" type="charlist">
+				</leaf>
+			</struct>
+		</submenu>
+
+        	<submenu name="Current density" title="Current density (A&#8260;m&#178;)">
+            		<struct name="Current density" title="Choose subdomains to represent:">
+                		<leaf mesh="menu:/Mesh/Open/Mesh file" name="Subdomains to plot" selection="multiple" pointdata="data:element_ref" showvalues="true" title="Choose subdomain:" type="charlist">
+                		</leaf>
+                		<struct name="Current density" title="Choose the vector field representation:" tooltip="Choose the way of representing the vector field">
+                    			<struct mesh="file:Jcn${../../Subdomains to plot}.vtu" name="Vectors" plot="vector_field" pointdata="data:Current density (A/m^2)">
+                    			</struct>
+                    			<leaf mesh="file:Jcn${../../Subdomains to plot}.vtu" name="Vector components" plot="vector_components" pointdata="data:Current density (A/m^2)" selection="single" type="charlist">
+                    			</leaf>
+                		</struct>
+            		</struct>
+        	</submenu>
+
+		<submenu name="Close all">
+			<action name="close_plots">
+			</action>
+		</submenu>
+	</menu>
+
+</menus>

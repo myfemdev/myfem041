@@ -1,0 +1,809 @@
+<html>
+
+<head>
+	<title>Eddy currents axisymmetric</title>
+	<!-- CHAMAMOS CSS -->
+	<link rel="stylesheet" type="text/css" href="../../style.css" />
+	<!-------------------------------->
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+
+<body lang="EN" id="top">
+
+<h3> <a href="#_Toc316292826">3.8. Eddy currents axisymmetric</a></P></h3>
+
+<a name="top"><strong>Table of contents</strong></a>
+<ul>
+<li><a href="#what"> What MaxFEM Solves</a></li>
+<li><a href="#mesh"> The Mesh</a></li>
+<li><a href="#properties"> The Properties</a></li>
+<li><a href="#boundary"> The Boundary Conditions</a></li>
+<ul>
+<li><a href="#dirichlet"> Dirichlet boundary conditions</a></li>
+<li><a href="#neumann"> Neumann boundary conditions</a></li>
+</ul>
+<li><a href="#sources"> The Volumetric Sources</a></li>
+<ul>
+<li><a href="#current_density"> Current density</a></li>
+<li><a href="#currentintensity"> Current intensity</a></li>
+<li><a href="#potential_drop"> Potential drop</a></li>
+</ul>
+<li><a href="#data"> Data</a></li>
+<li><a href="#post"> Post-Processing Quantities Available</a></li>
+<li><a href="#outputs"> Outputs</a></li>
+<li><a href="#visualization"> Visualization</a></li>
+<li><a href="#examples"> Tutorial Examples</a></li>
+<ul>
+<li><a href="#example1"> Example 1: Induction cylindrical furnace</a></li>
+</ul>
+</ul>
+<p>&nbsp;</p>
+
+<h3><a name="_Toc316292826">3.8. Eddy currents axisymmetric</a></h3>
+
+	<h4><a name="what">&#9633; What MaxFEM Solves</a></h4>
+	
+<p>
+The <b>MaxFEM Eddy Currents Axisymmetric</b> application numerically solves eddy currents three-dimensional problems with axial symmetry in Cylindrical coordinates. You can find extensive information about the <!-- <a href="../../c-Math models/Electrostatics.html">-->eddy currents mathematical model in the<a href="../../c-Math models/index.html"> MaxFEM Models</font></a> user guide.	
+</p>
+	
+<p>
+MaxFEM only considers linear and isotropic materials in this application. Concerning the sources of the problem, the application allows to consider stranded conductors, where the current density is uniformly distributed, and solid conductors, where the current density is computed. In these conductors, the admissible sources are the following: 
+</p>
+
+<div align=center>
+<table style="border:none;">
+	<tr>
+		<td class="fila_superior1"><b>Admisible sources</b></td>
+		<td class="fila_superior13"><b>Stranded conductor</b></td>
+		<td class="fila_superior13"><b>Solid conductor</b></td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia1">Current density</td>
+		<td class="fila_intermedia2">Yes</td>
+		<td class="fila_intermedia2">---</td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia1">Current intensity</td>
+		<td class="fila_intermedia2">Yes</td>
+		<td class="fila_intermedia2">Yes</td>
+	</tr>
+	<tr>
+		<td class="fila_final1">Potential drop</td>
+		<td class="fila_final2">---</td>
+		<td class="fila_final2">Yes</td>
+	</tr>	
+</table>
+</div>
+
+<p>We refer the reader to the mathematical model to see the detailed definition of the voltage drops.</p>
+	
+<p>
+For the numerical approximation of eddy currents problems with axial symmetry, MaxFEM uses Lagrange <!--<a href="../../c-Math models/Appendix A.html">-->finite elements of order one to compute the &#952;-component A<sub>&#952;</sub> of the magnetic vector potential <b>A</b>. Thus the magnetic vector potential field is approximated by piecewise functions in each element of the mesh.	
+</p>
+	
+<p>
+To use the eddy currents application the user needs:
+</p>
+<ol>
+<li><p>To provide a finite element <a href="#mesh">mesh</a> of the domain: menu <b>Mesh</b>.</p>
+<li><p>To impose the <a href="#boundary">boundary conditions</a> on the boundaries: menu <b>Boundary Conditions</b>.</p>
+<li><p>To assign materials to the different components of the domain: menu <b>Properties</b>. Materials must be previously selected and/or defined in the <b>Materials database</b>.</p>
+<li><p>To assign source properties: menu <a href="#sources">Volumetric Sources</a>.</p>
+<li><p>To assign the physical parameters: menu <a href="#data">Data</a>.</p>
+<li><p>To solve the problem in direct or <a href="../Graph_interface/run_remote.html">remote mode</a>: menu <b>Solver/Run</b> or <b>Solver/Run remote</b>, respectively. The user can stop the computation before it is completed in the label <b>Solver/Stop</b>.</p>
+<li><p>Once the problem has been solved, various quantities (menu <a href="#outputs">Outputs</a>) and fields based on the potential can be computed. It is also possible to create displays of the results: menu <a href="#visualization">Visualization</a>.</p>
+</ol>
+	
+<p>
+All the previous steps are described in the items below.
+</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+	
+	<h4><a name="mesh">&#9633; The Mesh</a></h4>
+ 
+<p>
+MaxFEM does not include a mesh generator tool so the user must provide its own meshes. In the eddy currents applications, mesh files can be in <a href="../Graph_interface/MaxFEM mesh files.html#unv">unv</a> or <a href="../Graph_interface/MaxFEM mesh files.html#mfm">mfm</a> format (see section <a href="../Graph_interface/MaxFEM mesh files.html">MaxFEM mesh files</a> for a complete description of the mesh formats). For eddy currents axisymmetric problems, MaxFEM allows P1 Lagrange triangular finite elements. <b>Mesh</b> may be loaded from the Mesh menu by choosing
+</p>
+<p align="center">
+<b>Mesh  &rarr;	Open &rarr;</b> <b class="gris">Choose mesh file &rarr;</b>	<i>meshfile</i>
+</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+	
+	<h4><a name="properties">&#9633; The Properties</a></h4>
+	
+<p>
+In the menu <b>Properties</b> the user can assign a material to the different parts of the computational domain.
+</p>
+<ol type=a>	
+<li><p>First, you must select the number assigned to the domain reference in the mesh (1, for instance)</p>
+    <p><b>Properties &rarr; Materials &rarr;</b><b class="gris"> Choose domain references &rarr;</b> <i>1</i> </p>
+<li><p>Then, you select the material (copper, for instance) </p>
+    <p><b>Properties &rarr; Materials &rarr;</b><b class="gris"> Choose material &rarr;</b> <i>copper</i> </p>
+</ol>
+
+<div class="back"><a href="#top">Back to top</a></div>
+	
+	<h4><a name="boundary">&#9633; The Boundary Conditions</a></h4>
+	
+<p>
+<b>Boundary conditions</b> is a menu entry to define boundary or interface conditions and attach them to boundaries. Eddy currents 2D and axisymmetric applications consider two types of boundary conditions.	
+</p>
+
+<p style="COLOR:#8000ff;">
+<b><a name="dirichlet"><i>Dirichlet boundary conditions</i></a></b>
+</p>
+
+<p>
+In this case, the value (A<sub>&#952;</sub>)<sub>D</sub> of the magnetic vector potential on boundary &part;&Omega;<sub>D</sub> must be given. To do that, you need:	
+</p>
+<ol type=a>
+<li><p>Define the boundary condition (for instance, Dirichlet 1) </p>
+    <p><b>Boundary conditions &rarr; Dirichlet: magnetic vector potential, A<sub>&#952;</sub> (Wb/m) &rarr;</b> <i>Dirichlet 1</i> <b class="gris">&rarr; Add</b> </p>
+<li><p>Define the boundary condition via a constant or a precompiled function </p>
+    <p><b class="gris">Dirichlet conditions:</b> <i>Dirichlet 1</i> </p>
+	<p><b class="gris">The condition is given by:</b> A constant or a function </p>
+<li><p>Assign the boundary condition to the corresponding boundary reference(s). For instance: </p>
+    <p><b class="gris">The condition is given by &rarr; A constant &rarr; Line references &rarr;</b> <i>8 9 10 11</i> </p>
+<li><p>If (A<sub>&#952;</sub>)<sub>D</sub>  takes a constant value, define this value: </p>
+    <p><b class="gris">The condition is given by: A constant &rarr; Constant value &rarr;</b> <i>0</i> </p>
+<li><p>If (A<sub>&#952;</sub>)<sub>D</sub> is a precompiled function, select  "<i>Function defined by user</i>": </p>
+    <p><b class="gris">The condition is given by: A function &rarr; Function name &rarr; user  </b></p>
+	<p>In this case, the user must edit the file <b>funciones.f</b> of the folder $INSTALLDIR/sources/eddy_currents_axi/ of the installing directory and define its own function in the line 57 of the function h, just after the sentences </p>
+	<code>
+	if(modo.eq.1)then
+    <br>
+    &nbsp; &nbsp; if(trim(etiqueta).eq.'user') h=0.d0
+	</code>
+<li><p>Then, you must <a href="../Graph_interface/Solvers compilation and installation.html">recompilate the solver</a> before running it.  </p>
+</ol>	
+
+<p style="COLOR:#8000ff;">
+<b><a name="neumann"><i>Neumann boundary conditions</i></a></b>
+</p>
+
+<p>
+In this case, the value <b>H</b>&#183;<b>&#x003C4;</b> of the tangential component of the magnetic field on the boundary &part;&Omega;<sub>N</sub> must be given. To do that, you need to follow the same steps as for the Dirichlet conditions but selecting	
+</p>
+
+<p style="text-align:center;">
+<b>Boundary conditions &rarr; Neumann: tangential component of magnetic field <b>H</b>&#183;<b>&#x003C4;</b> (A/m)  </b>
+</p>
+
+<p>
+In this case, the user must edit the file <b>funciones.f</b> of the folder $INSTALLDIR/sources/eddy_currents_axi/ of the installing directory and define its own function after line 79, just after the sentences
+</p>
+<code>
+if(modo.eq.1)then
+<br>
+&nbsp; &nbsp; if(trim(etiqueta).eq.'user') g=0.d0
+</code>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+	<h4><a name="sources">&#9633; The Volumetric Sources</a></h4>
+
+<p>
+In the eddy currents axisymmetric application, sources can be defined in stranded conductors or in solid conductors. In the former, the current density is uniformly distributed and the user may specify the current density or the total current intensity, while in the latter the distribution of the current is computed by the model.
+</p>
+
+<ul>
+<li>Stranded conductor
+	<ul>
+		<li>Current density, J<sub>&#952;</sub> (A/m<sup>2</sup>)
+		<li>Current intensity, I (A)
+	</ul>
+<li>Solid conductor
+	<ul>
+		<li>Current intensity, I (A)
+		<li>Potential drop, &#x00394;V (V)
+	</ul>
+</ul>
+
+<p>
+To impose each of them, you must perform the following steps depending on the type of source.
+</p>
+
+<p style="COLOR:#8000ff;">
+<b><a name="current_density"><i>Current density</i></a></b>
+</p>
+
+<ol type=a>
+<li><p>Choose the type of source in the <b>Volumetric Sources</b> item of the application. </p>
+    <p style="text-align:center"><b>Volumetric sources &rarr; Stranded conductor &rarr; Current density, J<sub>&#952;</sub> </b></p>
+<li><p>Then, define a current density and press the button <font color=#6B6B6B><b>Add</b></font> of the dialog box. </p>
+    <p style="text-align:center"><font color=#6B6B6B><b>Connected components:</b></font> <i>source _1</i> <b>&rarr; <font color=#6B6B6B>Add</font></b></p>
+<li><p>Define the current density via a constant or a precompiled function. For instance </p>
+    <p><b class="gris">Connected components:</b> <i>source _1</i> </p>
+	<p><b class="gris">The condition is given by:</b> A constant or a function </p>
+<li><p>Assign the current density to the corresponding domain reference(s). For instance: </p>
+    <p><b class="gris">The condition is given by &rarr; A constant &rarr; Domain references &rarr;</b> <i>3</i> </p>
+<li><p>If J<sub>&#952;</sub>  takes a constant value, define this value: </p>
+    <p><b class="gris">The condition is given by: A constant &rarr; RMS value (A/m<sup>2</sup>) &rarr;</b> <i>300</i> </p>
+	<p><b class="gris">The condition is given by: A constant &rarr; Phase angle (Degrees) &rarr;</b> <i>0</i> </p>
+<li><p>If J<sub>&#952;</sub> is a precompiled function, select  "<i>Function defined by user</i>": </p>
+    <p><b class="gris">The condition is given by: A function &rarr; Function name &rarr; user  </b></p>
+	<p>In this case, the user must edit the file <b>funciones.f</b> of the folder $INSTALLDIR/sources/eddy_currents_axi/ of the installing directory and define its own function in the line 23, just after the sentences </p>
+	<code>
+	if(modo.eq.1)then<br>
+	&nbsp;&nbsp; if(trim(etiqueta).eq.'user') <br>
+	&nbsp;&nbsp;&nbsp;&nbsp; if(itipo.eq.1) then 
+	</code>
+<li><p>Then, you must <a href="../Graph_interface/Solvers compilation and installation.html">recompilate the solver</a> before running it.  </p>
+</ol>
+
+<p style="COLOR:#8000ff;">
+<b><a name="currentintensity"><i>Current intensity</i></a></b>
+</p>	
+
+<ol type=a>
+<li><p>Choose the type of source in the <b>Volumetric Sources</b> item of the application. </p>
+    <p style="text-align:center"><b>Volumetric sources &rarr; Stranded/Solid conductor &rarr; Current intensity, I (A)</b></p>
+<li><p>Then, define a new current intensity and press the button <b class="gris">Add</b> of the dialog box. </p>
+    <p style="text-align:center"><b class="gris">Connected components:</b> <i>source _1</i> &rarr; <b class="gris">Add</b> </p>
+<li><p>Assign the current intensity to the corresponding domain reference(s). For instance: </p>
+    <p><b class="gris">Domain references &rarr;</b> <i>3</i> </p>
+<li><p>Then, define the values for the intensity and phase angle: </p>
+    <p><b class="gris">RMS value (A) &rarr;</b> <i>1000</i> </p>
+	<p><b class="gris">Phase angle (Degrees) &rarr;</b> <i>0</i> </p>
+</ol>
+
+<p style="COLOR:#8000ff;">
+<b><a name="potential_drop"><i>Potential drop</i></a></b>
+</p>
+
+<ol type=a>
+<li><p>Choose the type of source in the <b>Volumetric Sources</b> item of the application. </p>
+    <p style="text-align:center"><b>Volumetric sources &rarr; Solid conductor &rarr; Potential drop, &#x00394;V (V)</b></p>
+<li><p>Then, define a potential drop and press the button <b class="gris">Add</b> of the dialog box. </p>
+    <p style="text-align:center"><b class="gris">Connected components</b>: <i>source _1</i> &rarr; <b class="gris">Add</b> </p>
+<li><p>Assign the potential drop to the corresponding domain reference(s). For instance: </p>
+    <p><b class="gris">Domain references &rarr;</b> <i>3</i> </p>
+<li><p>Define the constant value for the potential drop and the phase angle: </p>
+    <p><b class="gris"> RMS value (V) &rarr;</b> <i>1000</i> </p>	
+	<p><b class="gris">Phase angle (Degrees) &rarr;</b> <i>0</i> </p>	
+</ol>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+	<h4><a name="data">&#9633; Data</a></h4>
+
+<p>The user has to choose a frequency for the resolution. By clicking on
+</p>
+
+<p style="text-align:center;">
+<b>Data &rarr; Frequency (Hz)</b>
+</p>
+
+<p>
+a dialog box appears, in which the user must specify the current frequency.
+</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+	<h4><a name="post">&#9633; Post-Processing Quantities Available</a></h4>
+
+<p>
+From the resolution of the eddy currents problem, appropriate derived quantities can be computed. The post-processing quantities available in the MaxFEM eddy currents applications are summarized in the table below.
+</p>
+
+<div align=center>
+<table style="border:none;">
+	<tr>
+		<td class="fila_superior2"><b>Symbol</b></td>
+		<td class="fila_superior20"><b>Magnitude</b></td>
+		<td class="fila_superior2"><b>Type</b></td>
+		<td class="fila_superior2"><b>Unit</b></td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia2">A<sub>&#952;</sub></td>
+		<td class="fila_intermedia2">&#952;-component of the magnetic vector potential</td>
+		<td class="fila_intermedia2">S</td>
+		<td class="fila_intermedia2">Wb/m</td>
+	</tr>
+		<tr>
+		<td class="fila_intermedia2">J<sub>&#952;</sub></td>
+		<td class="fila_intermedia2">&#952;-component of the current density</td>
+		<td class="fila_intermedia2">S</td>
+		<td class="fila_intermedia2">A/m<sup>2</sup></td>
+	</tr>
+		<tr>
+		<td class="fila_intermedia2"><b>B</b></td>
+		<td class="fila_intermedia2">Magnetic flux density</td>
+		<td class="fila_intermedia2">V</td>
+		<td class="fila_intermedia2">T</td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia2"><b>H</b></td>
+		<td class="fila_intermedia2">Magnetic field</td>
+		<td class="fila_intermedia2">V</td>
+		<td class="fila_intermedia2">A/m</td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia2">P<sub>d</sub></td>
+		<td class="fila_intermedia2">Active power density</td>
+		<td class="fila_intermedia2">S</td>
+		<td class="fila_intermedia2">W/m<sup>3</sup></td>
+	</tr>
+	<tr>
+		<td class="fila_final2"><b>J&#10799;B</b></td>
+		<td class="fila_final2">Lorentz force density</td>
+		<td class="fila_final2">V</td>
+		<td class="fila_final2">N/m<sup>3</sup></td>
+	</tr>	
+</table>
+</div>
+
+<p style="text-align:center;">
+Eddy currents application postprocessing quantities<br>S: Scalar quantity, V: vectorial quantity
+</p>
+
+<p>
+As in the eddy currents application the post-processed vectorial quantities are complex (except for the Lorentz force), the user is only allowed to plot the vector fields of real parts, imaginary parts or complex modulus. Furthermore, for each one of these vectorial fields, it is possible to visualize the scalar fields corresponding to the x, y and z components, as well as its euclidean norm.
+</p>
+
+<p>
+For instance, by choosing
+</p>
+<p style="text-align:center;">
+<b>Visualization &rarr; Magnetic flux density B</b> &rarr; <b class="gris"> Real part &rarr; Vector components &rarr; Modulus</b>
+</p>
+<p>
+the application plots the scalar field  
+</p>
+<p style="text-align:center;"><img src="ECAX_Graph_images/image001.png"></p>
+<p>
+By choosing
+</p>
+<p style="text-align:center;">
+<b>Visualization &rarr; Magnetic flux density B</b> &rarr; <b class="gris"> Vector modulus &rarr; Vectors</b>
+</p>
+<p>
+the application plots the vector field 
+</p>
+<p style="text-align:center;"><img src="ECAX_Graph_images/image003.png"></p>
+
+<p>Similarly, the scalar fields corresponding to the &#952;-components of the magnetic vector potential and current density are complex, so the user is only allowed to plot their real part, imaginary part or modulus in the same graphical visualization. For the current density, the modulus graphical representation corresponds to its RMS value.</p>
+
+<p> Note that the Lorentz Force and the power density are real because they are averaged in a cycle (see <a href="../../c-Math models/index.html">mathematical models</a>).
+</p>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+	<h4><a name="outputs">&#9633; Outputs</a></h4>
+
+<p>	
+The menu <b>Outputs</b> allows to compute the values of the current intensities and active power in each subdomain of the mesh. Moreover, this menu shows, in each solid conductor, the values of the RMS current intensity and the RMS voltage drop; one of them has been provided by the user, while the other is a postprocessing quantity.
+</p>
+
+<p>
+By choosing <b>Outputs &rarr; Current intensity, I (A)</b> and selecting a subdomain number (for instance, <b class="gris">Choose domain references:</b> &rarr; <i>9</i>) a dialog box appears showing the RMS value, phase, real and imaginary part of the current intensity traversing the selected subdomain.
+</p>
+
+<p>
+Similarly, choosing <b>Outputs &rarr; Active power, P (W/m)</b> and selecting a subdomain number (for instance, <b class="gris">Choose domain references:</b> &rarr; <i>1</i>) a dialog box appears showing the value of the active power in the selected domain.
+</p>
+
+<p>
+Finally, by clicking on <b>Outputs &rarr; Solid conductor</b> and choosing a conductor, a dialog box appears showing the values of the current intensity and potential drop. For instance
+</p>
+
+
+<p align="center">
+<b class="gris">Choose solid connected component:</b> &rarr; <i>Source 1</i>
+</p>
+	
+<div class="back"><a href="#top">Back to top</a></div>
+
+	<h4><a name="visualization">&#9633; Visualization</a></h4>
+
+<p>
+MaxFEM provides a set tools for post-processing and visualization the quantities specified in the <a href="#post">Post-Processing Quantities Available</a> section, which are available through the item <b>Visualization</b> of the menu bar. The options and their characteristics are summarized in the table below.
+</p>
+
+<table border="1" bordercolor=#000000; style="border-style:solid">
+	<tr>
+		<td class="fila_superior22">	<b>Item</b> </td>
+		<td class="fila_superior11">	<b>Visualization options</b> </td>
+		<td class="fila_superior33">	<b>Description</b> </td>  
+	</tr>
+	<tr>  
+		<td class="columna_primera" rowspan="7"><p><b>Mesh</b></p></td>
+		<td class="fila_intermedia3">Triangulation</td>
+		<td class="fila_intermedia3">Represents the mesh of the domain</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Domain references</td>
+		<td class="fila_intermedia3">Displays subdomains reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Line references</td>
+		<td class="fila_intermedia3">Displays lines reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Point references</td>
+		<td class="fila_intermedia3">Displays points reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Element numbering</td>
+		<td class="fila_intermedia3">Displays elements reference number</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Vertex numbering</td>
+		<td class="fila_intermedia3">Displays the number of a vertex previously chosen with the mouse.</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Materials</td>
+		<td class="fila_intermedia3">Displays the name of the material assigned to a subdomain</td>
+	</tr>
+
+	<tr>  
+		<td class="columna_primera" rowspan="6"><p><b>Scalar field</b></p></td>
+		<td class="fila_intermedia3">Subdomains to plot</td>
+		<td class="fila_intermedia3">Allows to choose the domain where results will be displayed</td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia3">Filled</td>
+		<td class="fila_intermedia3">Displays the field  distribution on the domain</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Threshold</td>
+		<td class="fila_intermedia3">Extracts the cells that fall between a given lower and upper thresholds of the field.</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Isolines</td>
+		<td class="fila_intermedia3">Displays the curves along which the field has a constant value. A set of scalar values can be specified to extract more than one isoline at a time.</td>
+	</tr>
+	
+	<tr><td class="fila_intermedia3">3D plot</td>
+		<td class="fila_intermedia3">Displays a three-dimensional plot of the field over the domain.</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Plot over line</td>
+		<td class="fila_intermedia3">Cuts a 3D data object with a plane. An interactive widget can be used for placing the plane in the appropriated place. 
+        </td>
+	</tr>
+ 
+	<tr>  
+		<td class="columna_primera" rowspan="3"><p><b>Vectorial field</b></p></td>
+		<td class="fila_intermedia3">Subdomains to plot</td>
+		<td class="fila_intermedia3">Allows to choose the domain where results will be displayed</td>
+	</tr>
+	<tr>
+		<td class="fila_intermedia3">Vectors</td>
+		<td class="fila_intermedia3">Displays the vector field</td>
+	</tr>
+	<tr><td class="fila_intermedia3">Vectors components</td>
+		<td class="fila_intermedia3">Displays each of the components of the vector field</td>
+	</tr>
+	
+	<tr><td class="columna_primera"><b>Close all</b></td>
+		<td class="fila_intermedia3">--- </td>	
+		<td class="fila_intermedia3">Closes all the windows containing the visualization results </td>
+	</tr>
+</table>
+
+<p>
+The user can modify the size of the arrows by using the parameter <font color=#6B6B6B><b>Scale</b></font> in the dialog box, for instance at 0.07
+</p>
+
+<p style="text-align:center;">
+<b>Visualization &rarr; Magnetic flux density B</b> &rarr; <b class="gris"> Vector modulus &rarr; Vectors &rarr; Choose options for arrows &rarr; Scale &rarr; Select the scale for arrows &rarr;</b> <i>0.07</i>
+</p>
+
+<p>
+It is also possible to modify the number of vectors in the plot by using the parameter <font color=#6B6B6B><b>Density</b></font> in the dialog box, for instance at 50%:
+</p>
+
+<p style="text-align:center;">
+<b>Visualization &rarr; Magnetic flux density B</b> &rarr; <b class="gris"> Vector modulus &rarr; Vectors &rarr; Choose options for arrows &rarr; Density &rarr; Select the density for arrows (%) &rarr;</b> <i>50</i>
+</p>
+
+<div align=center>
+<table>
+	<tr><td>Scale: 0.07 &nbsp;&nbsp;&nbsp;&nbsp; Density: 50%</td>
+		<td>Scale: 0.07 &nbsp;&nbsp;&nbsp;&nbsp; Density: 100%</td>
+	</tr>	
+	<tr><td><img border=0 width=222 height=610 src="ECAX_Graph_images/image002.png"></td>
+		<td><img border=0 width=222 height=610 src="ECAX_Graph_images/image004.png"></td>	
+	</tr>
+	<tr><td>Scale: 0.03 &nbsp;&nbsp;&nbsp;&nbsp; Density: 50%</td>
+		<td>Scale: 0.03 &nbsp;&nbsp;&nbsp;&nbsp; Density: 100%</td>
+	</tr>	
+	<tr><td><img border=0 width=222 height=610 src="ECAX_Graph_images/image006.png"></td>
+		<td><img border=0 width=222 height=610 src="ECAX_Graph_images/image008.png"></td>	
+	</tr>	
+</table>
+</div>
+
+<br>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<h4><a name="examples">&#9633; Tutorial Examples</a></h4>
+
+<p>
+The goal of this section is to familiarize the user with the MaxFEM eddy currents axisymmetric application by means of a simple example. This example contains the general steps and all the data needed to describe the physics and to solve the given cases.
+</p>
+
+<p>
+To reproduce exactly the example, keep all the options in the different menus at the default settings. It is important to note that in the cases where the analytical solution is provided, this solution corresponding with the default settings; the one corresponding with other options the user may have changed is not necessarily the same.
+</p>
+
+<p>
+Remember that before start to work with a particular application, the user must choose a working directory. This directory will be used to store the files associated with the application. In particular, when a sample data is selected, the interface will automatically make a copy of the files associated with that sample in the working directory.
+</p>
+
+<p>
+For the eddy currents axisymmetric application, the following examples are available:
+</p>
+
+<UL><font COLOR="blue">
+	<LI><p><a href="#example1">Example 1: Induction cylindrical furnace</a></p>
+</LI></font>
+</ul>
+
+<p><a href="#e1_introduction"><i><font color="blueviolet"><b>References</b></font></i></a></p>
+
+<ol>
+<li><p>Bermúdez, A.; Gómez, D.; Muñiz, M. C.; Salgado, P., Vázquez, R. Numerical modelling of industrial induction, <i>Advances in Induction and Microwave Heating of Mineral and Organic Materials</i>, S. Grundas, ed., Intech, 2011.</p>
+</ol>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<p>&nbsp;</p>
+<h4 style="background-color:#E6E6E6;"><a name="example1"><font COLOR="black"> Example 1: Induction cylindrical furnace </font></a></h4>
+
+<!--  EJEMPLO1  -->
+
+<p><b><i><font color="blueviolet">Statement of the problem</font></i></b></p>
+
+<p>
+Induction  heating is one of the main applications of eddy currents in metallurgical industry for processes involving heat treatment. An induction heating setup consists of one or several inductors (coils) surrounding a workpiece which is a crucible containing the material to melt, as illustrated in figure below. 
+</p>
+
+<div align=center>
+<p><img border=0 src="ECAX_Graph_images/image023.png"></p>
+</div>
+
+<p>
+A low frequency alternating current passes through the inductor producing a rapidly oscillating magnetic field which generates eddy currents in the workpiece. Then it is heated due to the active power increasing the temperature of the system and melting the material inside the crucible. In this example we will not deal the thermal problem but only with the electromagnetic one. 
+</p>
+
+<p>
+In this example will consider an induction furnace consisting on a helical copper coil, a crucible of graphite and silicon as the metal inside. The electromagnetic properties of these materials have been defined in the <b>material database</b>.
+</p>
+
+<p>
+In order to state the problem in an axisymmetric setting, the helical coil is replaced by 4 rings (4 being the total number of windings of the coil). Thus, the computational domain reduces to a radial section of the furnace, which must be enclosed with an artificial boundary in order to solve the problem by using a <!--<a href="../../c-Math models/Appendix A.html">-->finite element method. This artificial boundary is supposed to be far enough as to assume a homogeneous Dirichlet boundary condition there.  
+</p>
+
+<p>
+The goal is to compute the distribution of the current density and active power in the conductors (coil and workpiece) as well as the active power and the Lorenzt force in the crucible.
+</p>
+
+<p>
+The geometrical data are summarized in the table below.
+</p>
+
+<div align=center>
+<p><img border=0 src="ECAX_Graph_images/image024.png"></p>
+</div>
+
+<p>
+For more details about both numerical and mathematical aspects of this problem we refer the reader to the references above.
+</p>
+
+<p>&nbsp;</p>
+
+<p><i><b><font color="blueviolet">Resolution procedure</font></b></i></a></p>
+
+<OL>
+	<LI><p>Once MaxFEM is open, the user must select the application <b>Eddy Currents Axisymmetric</b> from the <b>Project</b> of the menu bar.</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Applications</b> &#8594;  <b>Eddy Currents Axisymmetric</b></p>
+<p>Remember that before start to work with a particular application, the user must
+choose a working directory.</p>
+<p>Then, from the item <b>Project</b> of the Menu bar, select</p>
+<p style='text-align:center'><b>Project</b> &#8594;  <b>Sample Data</b> &#8594;  <b>Example 1: Induction cylindrical furnace</b></p>
+
+<LI><p>The computational domain is the radial section of an induction furnace. The user must upload the mesh <i>malla_horno4.mfm</i> from the <b>Mesh</b> item of the menu bar.</p>
+<P style='text-align:center'><b>Mesh &#8594;  Open &#8594;  </b><b class="gris">Choose mesh file &#8594; </b> <i>malla_horno4.mfm</i> </P>	
+
+<p>The user can display the mesh of the computational domain by choosing the option
+<b>Visualization &#8594;  Mesh</b> of the Menu bar. If not, the computational domain will be
+displayed when selecting any item from the menu bar.</p>
+
+<div align=center>
+<p><img border=0 width=496 height=310 src="ECAX_Graph_images/image005.png"></p>
+<p> <b> Figure 1:</b> Computational domain and material distribution.<p>
+</div>
+
+<p> After we have the mesh, we start to go through the menu bar from the left to right
+and we choose the different options related to the whole simulation.</p>
+<LI><p>The materials considered in this example are <i>Silicon, Graphite, Air</i> and <i>Copper</i>, and their properties have been previously defined in the materials database of the interface.
+To assign these materials to the computational domain, the user must:</p>
+
+<OL type=a> 
+<LI><p>  Select the item <b>Properties &#8594; Materials</b> of the Menu bar.  </p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>1</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Silicon</i> associated to the reference <i>1</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>2</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Graphite</i> associated to the reference <i>2</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>4</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Air</i> associated to the reference <i>4</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>6</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Copper</i> associated to the reference <i>6</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>7</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Copper</i> associated to the reference <i>7</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>8</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Copper</i> associated to the reference <i>8</i> is displayed.
+</p>
+<LI><p> In the <b class="gris">Choose domain references</b> dialog box, select the reference <i>9</i>.</p>
+<LI><p>The dialog box <b class="gris">Choose material</b> appears; 
+by default, the material named <i>Copper</i> associated to the reference <i>9</i> is displayed.
+</p>
+</OL>
+<p> The user can display the different properties of this material in <b>Materials
+database</b> item of the menu bar. To do that, </p>
+<OL type=a>
+<LI> <p>Select the option <b>Materials database &#8594;  Open</b> </p>
+<LI> <p>A dialog box appears where the different materials are displayed. Select, for instance, <i>Graphite</i>. </p>
+<LI> <p>A new dialog box appears where the different electromagnetic magnitudes
+are displayed. Click on the property of your interest, for instance, <b class="gris">Electrical conductivity</b>.</p>
+<LI> <p> Choose <b class="gris">A constant</b> in the box below and then <b class="gris">Isotropic</b>
+in the <b class="gris">Behavior</b> box.</p>
+<LI> <p> In the <b class="gris">Value</b> dialog box the constant value <i>240000</i> appears.</p>
+</OL>
+<LI><p>Now we are going to impose the boundary conditions.
+ A Dirichlet boundary condition is considered; 
+ thus, the default value <i>0</i> corresponds to the &#952;-component of the magnetic vector potential in the boundary of the domain. 
+To impose this boundary condition the user must:</p>
+<OL type=a>
+<LI> <p> Select the option <b>Boundary conditions &#8594; Dirichlet: magnetic vector potential</b> in the menu bar.</p>
+<LI> <p> Click on <i>Dirichlet 1</i> on the <b class="gris">Magnetic vector potential</b> dialog box.</p>
+<LI> <p> In the dialog box <b class="gris">The condition is given by</b>, select the option <b class="gris">A constant</b></p>
+<LI> <p> Click on <b class="gris">Line reference</b>. By default, numbers <i>8, 9, 10, 11</i> associated to this reference are displayed in the box below. Click on <i>8</i> to display the reference in the visualization window. </p>
+<LI> <p>Click on <b class="gris">Constant value</b>. By default, in the dialog box <b class="gris">Constant value</b> below the value <i>0</i> appears.</p>
+<LI> <p>Click on the item <b>Volumetric Sources</b> of the Menu bar to continue with the resolution procedure.</p>
+</OL>
+<LI>  <p>To define the source of the problem, select the option <b>Volumetric Sources &#8594 Solid conductor &rarr; Current intensity, I (A)</b> in the menu bar. 
+A dialog box appears where the user can select/define the source options. In this example, the default options <i>Source 1, Source 2, Source 3</i> and <i>Source 4</i> are displayed.
+So now we need to specify the domain references and the value and phase angle of each source. To do that, the user must:</p>
+<OL type=a>
+<LI> <p>Click on <i>Source 1</i>. A dialog box is displayed below.</p>
+<LI> <p>Click on <b class="gris">Domain references</b> and to display the number of the reference where the source is considered. In this source, the reference <i>6</i> is considered.</p>
+ <LI> <p>Click on <b class="gris">RMS Value</b> to display/define the value of the intensity. In this source, the default value is <i>3000</i> (in A).</p>
+  <LI> <p>Click on <b class="gris">Phase angle</b> to display/define the phase angle of the intensity. In this source, the default value is <i>0</i> (in degrees).</p>
+<LI> <p>Click on <i>Source 2</i>. A dialog box is displayed below.</p>
+<LI> <p>Click on <b class="gris">Domain references</b> and to display the number of the reference where the source is considered. In this source, the reference <i>7</i> is considered.</p>
+ <LI> <p>Click on <b class="gris">RMS Value</b> to display/define the value of the intensity. In this source, the default value is <i>3000</i> (in A).</p>
+  <LI> <p>Click on <b class="gris">Phase angle</b> to display/define the phase angle of the intensity. In this source, the default value is <i>0</i> (in degrees).</p>
+<LI> <p>Click on <i>Source 3</i>. A dialog box is displayed below.</p>
+<LI> <p>Click on <b class="gris">Domain references</b> and to display the number of the reference where the source is considered. In this source, the reference <i>8</i> is considered.</p>
+ <LI> <p>Click on <b class="gris">RMS Value</b> to display/define the value of the intensity. In this source, the default value is <i>3000</i> (in A).</p>
+  <LI> <p>Click on <b class="gris">Phase angle</b> to display/define the phase angle of the intensity. In this source, the default value is <i>0</i> (in degrees).</p>
+<LI> <p>Click on <i>Source 4</i>. A dialog box is displayed below.</p>
+<LI> <p>Click on <b class="gris">Domain references</b> and to display the number of the reference where the source is considered. In this source, the reference <i>9</i> is considered.</p>
+ <LI> <p>Click on <b class="gris">RMS Value</b> to display/define the value of the intensity. In this source, the default value is <i>3000</i> (in A).</p>
+  <LI> <p>Click on <b class="gris">Phase angle</b> to display/define the phase angle of the intensity. In this source, the default value is <i>0</i> (in degrees).</p>
+</OL>
+<p>Now, select the option <b>Volumetric Sources &#8594 Solid conductor &rarr; Potential drop, &#x00394;V (V)</b> in the menu bar. 
+A dialog box appears where the user can select/define the source options. In this example, the default option <i>Source 5</i> is displayed.
+So now we need to specify the domain references and the value and phase angle of the source. To do that, the user must:</p>
+<ol>
+<LI> <p>Click on <b class="gris">Domain references</b> and to display the number of the references where the source is considered. In this example, the references <i>1, 2</i> are considered.</p>
+ <LI> <p>Click on <b class="gris">RMS Value</b> to display/define the value of the potential drop. In this example, the default value is <i>0</i> (in V).</p>
+  <LI> <p>Click on <b class="gris">Phase angle</b> to display/define the phase angle of the intensity. In this example, the default value is <i>0</i> (in degrees).</p>
+</OL>
+<LI> <p>  The item <b>Data</b> of the menu bar allows to introduce different data depending on the application. In eddy currents, the option allows to introduce the current frequency. In this example, the value of the frequency is 3700 Hz. To define it, the user must </p>
+<OL type=a>
+<LI> <p>Select <b>Data &#8594; Frequency</b> in the menu bar.</p>
+<LI> <p> The dialog box <b class="gris">Frequency (Hz)</b> appears. By default, the value <i>3700</i> is displayed.</p>
+</ol>
+
+<LI>  <p>Select the item <b>Run</b> (or <b>run remote</b> depending on your preference) of the menu
+bar to proceed with the resolution of the problem.</p>
+
+<LI>  <p>Select the item <b>Visualization</b> of the menu bar to display the results.</p>
+<OL type=a>
+<LI> <p> Click on the option <b>Current density</b> to display current density. A dialog box appears
+where the user can choose the field representation. </p>
+<LI> <p> Choose the options <b class="gris">Subdomains to plot</b> &rarr; <i>1, 2</i> and <b class="gris">RMS Value &rarr; Filled</b> to display the modulus of the current density in the workpiece.</p>
+<P style='text-align:center'><b>Visualization &#8594;  Current density &#8594;</b><b class="gris"> Subdomains to plot </b>&rarr; <i>1, 2</i>  
+<br><b>Visualization &#8594;  Current density &#8594;</b><b class="gris"> RMS Value &rarr; Filled  </b> </P>
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="ECAX_Graph_images/image007.png"></p>
+<p> <b> Figure 2:</b> Modulus of the current density in the workpiece (metal + crucible).<p>
+</div>
+
+<LI> <p> Choose the options <b class="gris">Subdomains to plot</b> &rarr; <i>1, 2, 6, 7, 8, 9</i> and <b class="gris">RMS Value &rarr; Filled</b> to display the modulus of the current density in all conductors (workpiece and coils).</p>
+<P style='text-align:center'><b>Visualization &#8594;  Current density &#8594;</b><b class="gris"> Subdomains to plot </b>&rarr; <i>1, 2, 6, 7, 8, 9</i>  
+<br><b>Visualization &#8594;  Current density &#8594;</b><b class="gris"> RMS Value &rarr; Filled  </b> </P>
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="ECAX_Graph_images/image020.png"></p>
+<p> <b> Figure 3:</b> Modulus of the current density in all conductors.<p>
+</div>
+
+<LI> <p> To display the active power, choose the option <b>Visualization &#8594; Active power density</b> of the menu bar.
+<br>Select the option <b class="gris">Subdomains to plot</b> &rarr; <i>1, 2</i> and then <b class="gris"> Plot over line </b>  
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="ECAX_Graph_images/image009.png"></p>
+<p> <b> Figure 4:</b> Active power density distribution in the workpiece, plot over line.<p>
+</div>
+
+<li><p>Select the option <b class="gris">Subdomains to plot</b> &rarr; <i>1</i> and then <b class="gris"> Filled </b>  
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="ECAX_Graph_images/image021.png"></p>
+<p> <b> Figure 5:</b> Active power density distribution in the metal.<p>
+</div>
+
+<li><p>Select the option <b class="gris">Subdomains to plot</b> &rarr; <i>2</i> and then <b class="gris"> Filled </b>  
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="ECAX_Graph_images/image022.png"></p>
+<p> <b> Figure 6:</b> Active power density distribution in the crucible.<p>
+</div>
+
+<li><p> Choose the option <b>Visualization &rarr; Magnetic field</b>, <b class="gris">Subdomains to plot</b> &rarr; <i>1, 2</i> and <b class="gris">Vector modulus</b> to plot the vector field of the modulus of the magnetic field H in the workpiece. Select the option <b class="gris">Vectors</b> of the dialog box and then
+state the values for the scale and density of the arrows on the boxes below.
+For this picture, the scale is 3.e-8 and the density is 100.</p>
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="ECAX_Graph_images/image011.png"></p>
+<p> <b> Figure 7:</b> Vector field H in the workpiece.<p>
+</div>
+
+<LI> <p>Select the option <b>Visualization &rarr; Lorentz force density</b>, <b class="gris">Subdomains to plot</b> &rarr; <i>1, 2</i> and <b class="gris">Vectors</b> to represent the Lorentz force in the workpiece. State the values for the scale and density of the arrows on the boxes below.
+For this picture, the scale is 3.e-9 and the density is 100.</p>
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 width=496 height=310 src="ECAX_Graph_images/image013.png"></p>
+<p> <b> Figure 8:</b> Lorentz force in the workpiece.<p>
+</div>
+</OL>
+<li> Select the item <b>Outputs</b> to display the values of the current intensity or the potential drop.
+<ol type=a>
+<li> <p>Choose <b>Outputs &rarr; Current Intensity</b> &rarr; <b class="gris">Choose domain references</b> &rarr; <i>1</i> to display the values associated to the RMS current intensity in this domain.</p>
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 src="ECAX_Graph_images/image025.png"></p>
+<p> <b> Figure 9:</b> Current intensity in the metal.<p>
+</div>
+
+<li><p>Select <b>Outputs &rarr; Solid conductor</b> &rarr; <b class="gris">Choose solid connected component</b> &rarr; <i>Source 1</i> to show the voltage drop and current intensity of the first solid conductor.</p>
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 src="ECAX_Graph_images/image017.png"></p>
+<p> <b> Figure 10:</b> Data and computed result in the first turn of the coil (from bottom to top).<p>
+</div>
+
+<li> <p>Choose <b>Outputs &rarr; Active power</b> &rarr; <b class="gris">Choose domain references</b> &rarr; <i>1</i> to display the value of the active power in this domain.</p>
+<p>&nbsp;</p>
+<div align=center>
+<p><img border=0 src="ECAX_Graph_images/image029.png"></p>
+<p> <b> Figure 11:</b> Active power in the metal.<p>
+</div>
+</ol>
+</OL>
+
+<div class="back"><a href="#top">Back to top</a></div>
+
+<!--  FIN DE EJEMPLO 1  -->
+
+<p>
+&nbsp;
+</p>
+
+</div>
+
+</body>
+
+</html>
